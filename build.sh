@@ -1,0 +1,288 @@
+#!/bin/sh
+#
+#  build.sh
+#
+
+error() {
+	echo -e "ERROR : $1" >&2
+	exit -1
+}
+
+
+dbg() {
+	if [ -z "${DBGLVL}" ]; then
+		return
+	elif [ ${DBGLVL} -ge $1 ]; then
+		echo "$2"
+	fi
+}
+
+
+check_dir() {
+	DIR=$1
+	if [ ! -d ${DIR} ]; then
+		error "Directory \"${DIR}\" does not exist"
+	elif [ ! -x ${DIR} ]  && [ ! -r ${DIR} ]; then
+		error "Directory \"${DIR}\" is not readable"
+	elif [ ! -w ${DIR} ]; then
+		error "Directory \"${DIR}\" is not writable"
+	else
+		dbg 2 "Directory : \"${DIR}\" is OK"
+	fi
+}
+
+
+check_file() {
+	FILE=$1
+	if [ ! -f ${FILE} ]; then
+		error "File \"${FILE}\" does not exist"
+	elif [  ! -r ${FILE} ]; then
+		error "File \"${FILE}\" is not readable"
+	else
+		dbg 2 "File \"${FILE}\" is OK"
+	fi
+}
+
+
+check_md5file() {
+	if [ ! -f ${PKG_MD5} ]; then
+		dbg 1 "MD5 file does not exist one will be created"
+		PKG_NO_MD5=1
+	elif [  ! -r ${PKG_MD5} ]; then
+		error "MDE file (\"$PKG_MD5}\") is not readable"
+	fi
+}
+
+
+check_footprintfile() {
+	if [ ! -f ${PKG_FOOTPRINT} ]; then
+		dbg 1 "Footprint file does not exist one will be created"
+		PKG_NO_FOOTPRINT=1
+	elif [  ! -r ${PKG_FOOTPRINT} ]; then
+		error "MDE file (\"$PKG_FOOTPRINT}\") is not readable"
+	fi
+}
+
+
+clean_work() {
+	rm -rf ${WORK_DIR}
+}
+
+
+prepare_work() {
+	cd ${PKG_ROOT}
+	clean_work
+
+	mkdir -p ${SRC} ${PKG}
+}
+
+
+read_pkgmk() {
+	. ${PKG_MKFILE}
+	if [ -z "${HOST_PKG}" ]; then
+		PKG_TAR="$NAME-$VERSION-cross-pkg.tar.bz2"
+	else
+		PKG_TAR="$NAME-$VERSION-host-pkg.tar.bz2"
+	fi
+
+}
+
+
+add_source() {
+	PKG_SOURCE="${PKG_SOURCE} $1"
+}
+
+
+http_handler_filename() {
+	echo $(basename ${1})
+}
+
+
+http_handler_dl() {
+	URL=$1
+	FILE=$2
+
+	WGET_RESUME=""
+	WGET_OPT="--no-check-certificate -O ${FILE}.partial"
+
+	if [ -f ${FILE} ]; then
+		dbg 2 "${src} already downloaded"
+		return
+	fi
+
+	if [ -f "${FILE}.partial" ]; then
+		dbg 2 "Partial file present. Trying to resume"
+		WGET_RESUME="-c"
+	fi
+
+	wget ${WGET_RESUME} ${WGET_OPT} ${URL}
+
+	if [ ! $? -eq 0 ]; then
+		error "Fail to download ${FILE}"
+	fi
+
+	mv "${FILE}.partial" "${FILE}"
+}
+
+
+check_md5() {
+	FILE=$1
+	COMPUTED_MD5=$(md5sum ${FILE})
+
+	if [ -n "${PKG_NO_MD5}" ]; then
+		echo "${COMPUTED_MD5}" >> ${PKG_MD5}
+		return
+	fi
+
+	EXPECTED_MD5=$(egrep "${FILE}$" ${PKG_MD5})
+	if [ -z "${EXPECTED_MD5}" ]; then
+		error "${FILE} missing from ${PKG_MD5}"
+	elif [ "${COMPUTED_MD5}" != "${EXPECTED_MD5}" ]; then
+		error "MD5 mismatch for ${FILE} :
+			Having : ${COMPUTED_MD5}
+			but Expected : ${EXPECTED_MD5}"
+	else
+		dbg 2 "MD5 matches for ${FILE}"
+	fi
+}
+
+
+extract_src() {
+	FILE=$1
+
+	# TODO check file ?
+
+	case ${FILE} in
+	*.tar.gz)
+		dbg 2 "Untar gz file ${FILE}"
+		tar -xzf ${PKG_ROOT}/${FILE}
+		;;
+	*.tar.xz)
+		dbg 2 "Untar xz file ${FILE}"
+		tar -xJf ${PKG_ROOT}/${FILE}
+		;;
+	*.tar.bz2)
+		dbg 2 "Untar bzip2 file ${FILE}"
+		tar -xjf ${PKG_ROOT}/${FILE}
+		;;
+	*)
+		dbg 2 "Raw copy file ${FILE}"
+		cp ${PKG_ROOT}/${FILE} .
+		;;
+	esac
+}
+
+
+fetch_src() {
+	for src in ${SOURCES}; do
+		case $src in
+		http://*)
+			dbg 2 "Fetch ${src} with http handler"
+			SRC_FILENAME=$(http_handler_filename ${src})
+			http_handler_dl ${src} ${SRC_FILENAME}
+			;;
+		https://*)
+			dbg 2 "Fetch ${src} with http handler"
+			SRC_FILENAME=$(http_handler_filename ${src})
+			http_handler_dl ${src} ${SRC_FILENAME}
+			;;
+		*)
+			error "No handler to fetch ${src}"
+			;;
+		esac
+
+		check_md5 ${SRC_FILENAME}
+        add_source ${SRC_FILENAME}
+	done
+}
+
+
+prepare_src() {
+	cd ${SRC}
+	for f in ${PKG_SOURCE}; do
+		extract_src ${f}
+	done
+}
+
+
+makepkg() {
+	cd ${PKG}
+	tar -cjf ${PKG_TAR} *
+	if [ $? -ne 0 ]; then
+		error "Failed to make package"
+	fi
+	mv  ${PKG_TAR} "${PKG_ROOT}/"
+	cd ${PKG_ROOT}
+}
+
+check_footprint() {
+	COMPUTED_FOOTPRINT=$(tar -tvf ${PKG_TAR} | tr -s ' ' | cut -d' ' -f1,6)
+
+	if [ -n "${PKG_NO_FOOTPRINT}" ]; then
+		echo "${COMPUTED_FOOTPRINT}" >> ${PKG_FOOTPRINT}
+		return
+	fi
+
+	DIFF=$(echo "${COMPUTED_FOOTPRINT}" | diff -u ${PKG_FOOTPRINT} -)
+	if [ $? -ne 0 ]; then
+		error "Footprint mismatch:\n${DIFF}"
+	fi
+}
+
+
+main() {
+	dbg 1 "Package build started"
+
+	#Check files
+	check_file ${PKG_MKFILE}
+	check_md5file
+	check_footprintfile
+
+	#Prepare directories needed to build package
+	prepare_work
+
+	#Read the PkgMk file
+	read_pkgmk
+
+	#Fetch sources
+	fetch_src
+
+	prepare_src
+
+	#call PkgMk
+	pkgmain
+
+	#get pkg
+	makepkg
+
+	#check footprint
+	check_footprint
+
+	clean_work
+	dbg 1 "Package build succeed"
+}
+
+
+#Important files
+PKG_MKFILE="${PWD}/PkgMk"
+PKG_FOOTPRINT=".footprint"
+PKG_MD5=".md5"
+PKG_PATCHES=".patches"
+PKG_TAR=""
+
+#Build files
+PKG_ROOT="${PWD}"
+WORK_DIR="${PKG_ROOT}/work"
+PKG="${WORK_DIR}/pkg"
+SRC="${WORK_DIR}/src"
+
+#Opt
+PKG_NO_MD5=""
+PKG_NO_FOOTPRINT=""
+
+PKG_SOURCES=""
+
+#Debug
+DBGLVL=2
+
+main "$@"

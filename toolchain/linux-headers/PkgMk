@@ -1,0 +1,19 @@
+# Description: Linux kernel headers
+# URL: https://kernel.org
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=linux-headers
+VERSION=3.6.6
+
+
+DEPENDS=""
+SOURCES="http://www.kernel.org/pub/linux/kernel/v3.0/linux-3.6.6.tar.bz2"
+
+
+pkgmain() {
+	cd linux-$VERSION
+	ARCH=arm make mrproper
+	ARCH=arm make headers_check
+	ARCH=arm make INSTALL_HDR_PATH=${PKG}/usr headers_install
+}

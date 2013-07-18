@@ -19,6 +19,16 @@ usage() {
 	error "Usage: $(basename $0) <pkgfile>"
 }
 
+check_file() {
+	FILE=$1
+	if [ ! -f ${FILE} ]; then
+		error "File \"${FILE}\" does not exist"
+	elif [  ! -r ${FILE} ]; then
+		error "File \"${FILE}\" is not readable"
+	else
+		dbg 2 "File \"${FILE}\" is OK"
+	fi
+}
 
 get_args() {
 	if [ ${#} -ne 1 ]; then
@@ -58,6 +68,9 @@ install_footprint() {
 
 
 prepare_cross_install() {
+	check_file ${PKGMK_CROSSCONF}
+    . ${PKGMK_CROSSCONF}
+
 	if [ ! -d ${CLFS_DIR} ]; then
 		dbg 2 "Create clfs dir at ${CLFS_DIR}"
 		mkdir -p ${CLFS_DIR}
@@ -111,11 +124,10 @@ main() {
 
 
 PKGMK_BASEDIR=$(dirname $0)
+PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
 PKG_ROOT=${PWD}
 PKG_FOOTPRINT="${PKG_ROOT}/.footprint"
 PKG_FILE=""
-CLFS_DIR="${PKGMK_BASEDIR}/clfs"
-CROSS_INSTALLDB="${PKGMK_BASEDIR}/.installdb/cross_pkg/"
 DBGLVL=2
 
 main "$@"

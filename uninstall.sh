@@ -19,6 +19,16 @@ usage() {
 	error "Usage: $(basename $0) <pkg>"
 }
 
+check_file() {
+	FILE=$1
+	if [ ! -f ${FILE} ]; then
+		error "File \"${FILE}\" does not exist"
+	elif [  ! -r ${FILE} ]; then
+		error "File \"${FILE}\" is not readable"
+	else
+		dbg 2 "File \"${FILE}\" is OK"
+	fi
+}
 
 get_args() {
 	if [ ${#} -ne 1 ]; then
@@ -66,6 +76,8 @@ pkg_remove() {
 main() {
 	get_args "$@"
 
+    check_file ${PKGMK_CROSSCONF}
+    . ${PKGMK_CROSSCONF}
 
 	# CROSS PACKAGE
 	_FOOTPRINT="${CROSS_INSTALLDB}/${PKG_NAME}"
@@ -94,8 +106,7 @@ main() {
 
 
 PKGMK_BASEDIR=$(dirname $0)
-CLFS_DIR="${PKGMK_BASEDIR}/clfs"
-CROSS_INSTALLDB="${PKGMK_BASEDIR}/.installdb/cross_pkg/"
+PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
 FOOTPRINT=""
 DBGLVL=2
 

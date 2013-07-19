@@ -1,0 +1,11 @@
+drwxr-xr-x include/
+-rw-r--r-- include/mpc.h
+drwxr-xr-x lib/
+lrwxrwxrwx lib/libmpc.so.3
+lrwxrwxrwx lib/libmpc.so
+-rwxr-xr-x lib/libmpc.so.3.0.0
+-rw-r--r-- lib/libmpc.a
+drwxr-xr-x share/
+drwxr-xr-x share/info/
+-rw-r--r-- share/info/dir
+-rw-r--r-- share/info/mpc.info

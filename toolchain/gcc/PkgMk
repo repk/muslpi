@@ -1,0 +1,43 @@
+# Description: C compiler
+# URL: http://gcc.gnu.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=gcc
+VERSION=4.7.2
+HOST_PKG=1
+
+
+DEPENDS="gcc-static musl"
+SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
+PATCHES="gcc-4.7.2-musl.diff"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	process_patches
+
+	#Fix the gcc fix include shit
+	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+
+	mkdir build
+	cd build
+
+	MAKEINFO=missing						\
+	../configure --prefix=${PKG} --target=${CLFS_TARGET}		\
+		--with-headers=${CLFS_DIR}/usr/include --enable-shared	\
+		--disable-multilib --disable-libmudflap			\
+		--with-sysroot=${CLFS_DIR} --disable-nls		\
+		--enable-languages=c,c++ --enable-threads=posix		\
+		--with-mpfr=${TOOLCHAIN_DIR}				\
+		--with-gmp=${TOOLCHAIN_DIR}				\
+		--with-mpc=${TOOLCHAIN_DIR}				\
+		--with-ppl=${TOOLCHAIN_DIR}				\
+		--with-cloog=${TOOLCHAIN} --with-abi=${ABI}		\
+		--with-arch=${ARCH} --with-mode=${MODE}			\
+		--with-float=${FLOAT} --with-fpu=${FPU}
+
+	make -j${NR_JOBS} AS_FOR_TARGET="${CLFS_TARGET}-as" LD_FOR_TARGET="${CLFS_TARGET}-ld"
+	make install
+	${PKGMK_BASEDIR}/uninstall.sh gcc-static
+}

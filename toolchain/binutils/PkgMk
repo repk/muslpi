@@ -1,0 +1,24 @@
+# Description: collection of binary tools
+# URL: http://www.gnu.org/software/binutils/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=binutils
+VERSION=2.23.2
+HOST_PKG=1
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	patch_unknown_target config.sub
+	AR=ar AS=as ./configure --prefix=${PKG} --host=${CLFS_HOST}	\
+		--target=${CLFS_TARGET} --with-sysroot=${CLFS_DIR}	\
+		--disable-nls --enable-shared --disable-multilib	\
+		--enable-interwork
+	make -j${NR_JOBS}
+	make install
+}

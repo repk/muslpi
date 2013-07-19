@@ -68,8 +68,11 @@ install_footprint() {
 
 
 prepare_cross_install() {
+	check_file ${PKGMK_COMMONCONF}
 	check_file ${PKGMK_CROSSCONF}
-    . ${PKGMK_CROSSCONF}
+
+	. ${PKGMK_COMMONCONF}
+	. ${PKGMK_CROSSCONF}
 
 	if [ ! -d ${CLFS_DIR} ]; then
 		dbg 2 "Create clfs dir at ${CLFS_DIR}"
@@ -81,6 +84,22 @@ prepare_cross_install() {
 	fi
 }
 
+prepare_host_install() {
+	check_file ${PKGMK_COMMONCONF}
+	check_file ${PKGMK_HOSTCONF}
+
+	. ${PKGMK_COMMONCONF}
+	. ${PKGMK_HOSTCONF}
+
+	if [ ! -d ${TOOLCHAIN_DIR} ]; then
+		dbg 2 "Create toolchain dir at ${TOOLCHAIN_DIR}"
+		mkdir -p ${TOOLCHAIN_DIR}
+	fi
+	if [ ! -d ${HOST_INSTALLDB} ]; then
+		dbg 2 "Create host package db at ${HOST_INSTALLDB}"
+		mkdir -p ${HOST_INSTALLDB}
+	fi
+}
 
 cross_main() {
 	prepare_cross_install
@@ -103,6 +122,26 @@ cross_main() {
 	) 200>${_FLOCK}
 }
 
+host_main() {
+	prepare_host_install
+	_PKG_NAME=$(echo ${PKG_FILE} | rev | cut -d'-' -f4- | rev)
+	_PKG_VERSION=$(echo ${PKG_FILE} | rev | cut -d'-' -f3 | rev)
+	_FOOTPRINT="${HOST_INSTALLDB}/${_PKG_NAME}"
+	_FLOCK="${HOST_INSTALLDB}/.${_PKG_NAME}.lock"
+
+	dbg 2 "Installing package name: ${_PKG_NAME} version: ${_PKG_VERSION}"
+
+	# Write lock to installed package's footprint
+	(
+		flock -x 200
+		if [ -f ${_FOOTPRINT} ]; then
+			echo "Package already installed skipping..."
+			exit 0
+		fi
+		install_pkg ${TOOLCHAIN_DIR}
+		install_footprint ${HOST_INSTALLDB} ${_PKG_NAME} ${_PKG_VERSION}
+	) 200>${_FLOCK}
+}
 
 main() {
 	get_args "$@"
@@ -123,8 +162,10 @@ main() {
 }
 
 
-PKGMK_BASEDIR=$(dirname $0)
+PKGMK_BASEDIR=$(dirname $(readlink -e $0))
+PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
+PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"
 PKG_ROOT=${PWD}
 PKG_FOOTPRINT="${PKG_ROOT}/.footprint"
 PKG_FILE=""

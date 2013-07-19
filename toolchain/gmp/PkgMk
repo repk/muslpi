@@ -1,0 +1,20 @@
+# Description: Multiple Precision Arithmetic Library
+# URL: http://gmplib.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=gmp
+VERSION=5.0.5
+HOST_PKG=1
+
+
+DEPENDS=""
+SOURCES="ftp://ftp.gmplib.org/pub/gmp-5.0.5/gmp-5.0.5.tar.bz2"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	CPPFLAGS=-fexceptions ABI="" ./configure --prefix=${PKG} --enable-cxx
+	make -j${NR_JOBS}
+	make install
+}

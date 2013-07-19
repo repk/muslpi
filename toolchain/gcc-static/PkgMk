@@ -1,0 +1,39 @@
+# Description: C compiler
+# URL: http://gcc.gnu.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=gcc-static
+VERSION=4.7.2
+HOST_PKG=1
+
+
+DEPENDS="gmp mpfr cloog mpc binutils"
+SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/gcc-4.7.2/gcc-4.7.2.tar.gz"
+PATCHES="gcc-4.7.2-musl.diff"
+
+
+pkgmain() {
+	cd gcc-${VERSION}
+	process_patches
+	mkdir build
+	cd build
+
+	MAKEINFO=missing						\
+	../configure --prefix=${PKG}  --build=${CLFS_HOST}		\
+		--host=${CLFS_HOST} --target=${CLFS_TARGET}		\
+		--disable-multilib --with-sysroot=${CLFS_DIR}		\
+		--disable-nls --without-headers --with-newlib		\
+		--disable-decimal-float --disable-libgomp		\
+		--disable-libmudflap --disable-libssp			\
+		--with-mpfr=${TOOLCHAIN_DIR}				\
+		--with-gmp=${TOOLCHAIN_DIR} --with-ppl=${TOOLCHAIN_DIR}	\
+		--with-cloog=${TOOLCHAIN_DIR}				\
+		--with-mpc=${TOOLCHAIN_DIR}				\
+		--disable-shared --disable-threads --enable-languages=c	\
+		--with-abi=${ABI} --with-arch=${ARCH}			\
+		--with-mode=${MODE} --with-float=${FLOAT}		\
+		--with-fpu=${FPU}
+	make -j${NR_JOBS} all-gcc all-target-libgcc
+	make -j${NR_JOBS} install-gcc install-target-libgcc
+}

@@ -1,0 +1,21 @@
+# Description: C library for the arithmetic of complex numbers
+# URL: http://www.multiprecision.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=mpc
+VERSION=1.0.1
+HOST_PKG=1
+
+
+DEPENDS="gmp mpfr"
+SOURCES="http://www.multiprecision.org/${NAME}/download/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	./configure --prefix=${PKG} --enable-shared --with-gmp=${TOOLCHAIN_DIR} --with-mpfr=${TOOLCHAIN_DIR}
+	make -j${NR_JOBS}
+	make install
+}
+

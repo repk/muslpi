@@ -87,6 +87,18 @@ read_pkgmk() {
 
 }
 
+prepare_env() {
+	check_file ${PKGMK_COMMONCONF}
+	. ${PKGMK_COMMONCONF}
+	if [ -z "${HOST_PKG}" ]; then
+		check_file ${PKGMK_CROSSCONF}
+		. ${PKGMK_CROSSCONF}
+	else
+		check_file ${PKGMK_HOSTCONF}
+		. ${PKGMK_HOSTCONF}
+	fi
+
+}
 
 add_source() {
 	PKG_SOURCE="${PKG_SOURCE} $1"
@@ -182,7 +194,12 @@ fetch_src() {
 			http_handler_dl ${src} ${SRC_FILENAME}
 			;;
 		https://*)
-			dbg 2 "Fetch ${src} with http handler"
+			dbg 2 "Fetch ${src} with https handler"
+			SRC_FILENAME=$(http_handler_filename ${src})
+			http_handler_dl ${src} ${SRC_FILENAME}
+			;;
+		ftp://*)
+			dbg 2 "Fetch ${src} with ftp handler"
 			SRC_FILENAME=$(http_handler_filename ${src})
 			http_handler_dl ${src} ${SRC_FILENAME}
 			;;
@@ -192,7 +209,19 @@ fetch_src() {
 		esac
 
 		check_md5 ${SRC_FILENAME}
-        add_source ${SRC_FILENAME}
+		add_source ${SRC_FILENAME}
+	done
+}
+
+
+process_patches() {
+	for patch in ${PATCHES}; do
+		check_file ${PKG_ROOT}/${patch}
+		dbg 2 "Patching file ${patch}"
+		patch -p1 < ${PKG_ROOT}/${patch}
+		if [ ${?} -ne 0 ]; then
+			error "Cannot apply patch"
+		fi
 	done
 }
 
@@ -207,12 +236,19 @@ prepare_src() {
 
 makepkg() {
 	cd ${PKG}
+	find . -name "lib*.la" -delete
 	tar -cjf ${PKG_TAR} *
 	if [ $? -ne 0 ]; then
 		error "Failed to make package"
 	fi
 	mv  ${PKG_TAR} "${PKG_ROOT}/"
 	cd ${PKG_ROOT}
+}
+
+patch_unknown_target() {
+	_F=${1}
+	check_file ${_F}
+	sed -i "s/linux-uclibc/${CLFS_TARGET_TOKEN}/g" ${_F}
 }
 
 check_footprint() {
@@ -225,6 +261,7 @@ check_footprint() {
 
 	DIFF=$(echo "${COMPUTED_FOOTPRINT}" | diff -u ${PKG_FOOTPRINT} -)
 	if [ $? -ne 0 ]; then
+        rm ${PKG_TAR}
 		error "Footprint mismatch:\n${DIFF}"
 	fi
 }
@@ -244,6 +281,9 @@ main() {
 	#Read the PkgMk file
 	read_pkgmk
 
+	#Prepare env
+	prepare_env
+
 	#Fetch sources
 	fetch_src
 
@@ -251,6 +291,9 @@ main() {
 
 	#call PkgMk
 	pkgmain
+    if [ $? -ne 0 ]; then
+        error "Package build error"
+    fi
 
 	#get pkg
 	makepkg
@@ -263,7 +306,11 @@ main() {
 }
 
 
+PKGMK_BASEDIR=$(dirname $(readlink -e $0))
 #Important files
+PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
+PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
+PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"
 PKG_MKFILE="${PWD}/PkgMk"
 PKG_FOOTPRINT=".footprint"
 PKG_MD5=".md5"

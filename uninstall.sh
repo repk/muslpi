@@ -76,8 +76,13 @@ pkg_remove() {
 main() {
 	get_args "$@"
 
-    check_file ${PKGMK_CROSSCONF}
-    . ${PKGMK_CROSSCONF}
+	check_file ${PKGMK_COMMONCONF}
+	check_file ${PKGMK_CROSSCONF}
+	check_file ${PKGMK_HOSTCONF}
+
+	. ${PKGMK_COMMONCONF}
+	. ${PKGMK_CROSSCONF}
+	. ${PKGMK_HOSTCONF}
 
 	# CROSS PACKAGE
 	_FOOTPRINT="${CROSS_INSTALLDB}/${PKG_NAME}"
@@ -89,7 +94,7 @@ main() {
 			dbg 2 "Removing installed files from footprint: ${FOOTPRINT}"
 			pkg_remove ${CLFS_DIR} ${_FOOTPRINT}
 			remove ${_FOOTPRINT}
-			dbg 1 "${PKG_NAME} uninstalled successfully"
+			dbg 1 "${PKG_NAME} cross package uninstalled successfully"
 			rm ${_FLOCK}
 			exit 0
 		fi
@@ -101,12 +106,37 @@ main() {
 		return
 	fi
 
+	# HOST PACKAGE
+	_FOOTPRINT="${HOST_INSTALLDB}/${PKG_NAME}"
+	_FLOCK="${HOST_INSTALLDB}/.${PKG_NAME}.lock"
+	(
+		flock -x 200
+		get_package ${_FOOTPRINT}
+		if [ $? -eq 0 ]; then
+			dbg 2 "Removing installed files from footprint: ${FOOTPRINT}"
+			pkg_remove ${TOOLCHAIN_DIR} ${_FOOTPRINT}
+			remove ${_FOOTPRINT}
+			dbg 1 "${PKG_NAME} host package uninstalled successfully"
+			rm ${_FLOCK}
+			exit 0
+		fi
+		rm ${_FLOCK}
+		exit -1
+	) 200>${_FLOCK}
+
+	if [ ${?} -eq 0 ]; then
+		return
+	fi
+
+
 	error "${PKG_NAME} is not installed"
 }
 
 
-PKGMK_BASEDIR=$(dirname $0)
+PKGMK_BASEDIR=$(dirname $(readlink -e $0))
+PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
+PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"
 FOOTPRINT=""
 DBGLVL=2
 

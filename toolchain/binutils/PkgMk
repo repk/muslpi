@@ -10,11 +10,13 @@ HOST_PKG=1
 
 DEPENDS=""
 SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="binutils-skip-whitespace.patch"
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
 	patch_unknown_target config.sub
+	process_patches
 	AR=ar AS=as ./configure --prefix=${PKG} --host=${CLFS_HOST}	\
 		--target=${CLFS_TARGET} --with-sysroot=${CLFS_DIR}	\
 		--disable-nls --enable-shared --disable-multilib	\

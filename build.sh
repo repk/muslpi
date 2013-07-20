@@ -291,9 +291,9 @@ main() {
 
 	#call PkgMk
 	pkgmain
-    if [ $? -ne 0 ]; then
-        error "Package build error"
-    fi
+	if [ $? -ne 0 ]; then
+		error "Package build error"
+	fi
 
 	#get pkg
 	makepkg

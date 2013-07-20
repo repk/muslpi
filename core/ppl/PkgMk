@@ -1,0 +1,29 @@
+# Description: Parma Polyhedra Library
+# URL: http://freecode.com/projects/ppl
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=ppl
+VERSION=0.11
+
+
+DEPENDS="gmp"
+SOURCES="ftp://gcc.gnu.org/pub/gcc/infrastructure/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	patch_unknown_target config.sub
+	patch_unknown_target Watchdog/config.sub
+
+
+	env CPPFLAGS=-fexceptions					\
+	./configure --prefix=${PKG}/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET} --with-gmp-prefix=${CLFS_DIR}/usr	\
+		--with-gmpxx-prefix=${CLFS_DIR}/usr --enable-shared	\
+		--disable-optimization  --enable-check=quick
+
+	make -j${NR_JOBS}
+	make install
+}

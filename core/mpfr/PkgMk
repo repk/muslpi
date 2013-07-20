@@ -1,0 +1,23 @@
+# Description: Multiple Precision Arithmetic Library
+# URL: http://gmplib.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=mpfr
+VERSION=3.1.2
+
+
+DEPENDS="gmp"
+SOURCES="http://www.mpfr.org/mpfr-current/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target config.sub
+
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET} --with-gmp_lib=${CLFS_DIR}/usr/lib
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

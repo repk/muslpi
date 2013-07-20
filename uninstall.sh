@@ -16,7 +16,7 @@ dbg() {
 
 
 usage() {
-	error "Usage: $(basename $0) <pkg>"
+	error "Usage: $(basename $0) <pkg> (host)"
 }
 
 check_file() {
@@ -31,10 +31,13 @@ check_file() {
 }
 
 get_args() {
-	if [ ${#} -ne 1 ]; then
+	if [ ${#} -ne 1 ] && [ ${#} -ne 2 ]; then
 		usage
 	fi
 	PKG_NAME=$1
+	if [ ${#} -eq 2 ] && [ $2 == "host" ]; then
+		REMOVE_HOST=1
+	fi
 }
 
 
@@ -73,17 +76,7 @@ pkg_remove() {
 }
 
 
-main() {
-	get_args "$@"
-
-	check_file ${PKGMK_COMMONCONF}
-	check_file ${PKGMK_CROSSCONF}
-	check_file ${PKGMK_HOSTCONF}
-
-	. ${PKGMK_COMMONCONF}
-	. ${PKGMK_CROSSCONF}
-	. ${PKGMK_HOSTCONF}
-
+remove_cross() {
 	# CROSS PACKAGE
 	_FOOTPRINT="${CROSS_INSTALLDB}/${PKG_NAME}"
 	_FLOCK="${CROSS_INSTALLDB}/.${PKG_NAME}.lock"
@@ -101,11 +94,10 @@ main() {
 		rm ${_FLOCK}
 		exit -1
 	) 200>${_FLOCK}
+}
 
-	if [ ${?} -eq 0 ]; then
-		return
-	fi
 
+remove_host() {
 	# HOST PACKAGE
 	_FOOTPRINT="${HOST_INSTALLDB}/${PKG_NAME}"
 	_FLOCK="${HOST_INSTALLDB}/.${PKG_NAME}.lock"
@@ -123,9 +115,30 @@ main() {
 		rm ${_FLOCK}
 		exit -1
 	) 200>${_FLOCK}
+}
 
-	if [ ${?} -eq 0 ]; then
-		return
+
+main() {
+	get_args "$@"
+
+	check_file ${PKGMK_COMMONCONF}
+	check_file ${PKGMK_CROSSCONF}
+	check_file ${PKGMK_HOSTCONF}
+
+	. ${PKGMK_COMMONCONF}
+	. ${PKGMK_CROSSCONF}
+	. ${PKGMK_HOSTCONF}
+
+	if [ ${REMOVE_HOST} -eq 0 ]; then
+		remove_cross
+		if [ ${?} -eq 0 ]; then
+			return
+		fi
+	else
+		remove_host
+		if [ ${?} -eq 0 ]; then
+			return
+		fi
 	fi
 
 
@@ -137,6 +150,7 @@ PKGMK_BASEDIR=$(dirname $(readlink -e $0))
 PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
 PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"
+REMOVE_HOST=0
 FOOTPRINT=""
 DBGLVL=2
 

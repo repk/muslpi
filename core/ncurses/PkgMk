@@ -1,0 +1,43 @@
+# Description: curses emulation library
+# URL: http://www.gnu.org/software/ncurses/ncurses.html
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=ncurses
+VERSION=5.9
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/pub/gnu/ncurses/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	patch_unknown_target config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --libdir=/lib --with-shared		\
+		--enable-widec --without-debug --without-ada		\
+		--with-manpage-format=normal				\
+		--with-build-cc="gcc -D_GNU_SOURCE"
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+
+	mkdir ${PKG}/usr/lib
+	mv -v ${PKG}/lib/lib{panelw,menuw,formw,ncursesw,ncurses++w}.a ${PKG}/usr/lib
+	rm -v ${PKG}/lib/lib{ncursesw,menuw,panelw,formw}.so
+	ln -sfv ../../lib/libncursesw.so.5 ${PKG}/usr/lib/libncursesw.so
+	ln -sfv ../../lib/libmenuw.so.5 ${PKG}/usr/lib/libmenuw.so
+	ln -sfv ../../lib/libpanelw.so.5 ${PKG}/usr/lib/libpanelw.so
+	ln -sfv ../../lib/libformw.so.5 ${PKG}/usr/lib/libformw.so
+	for lib in curses ncurses form panel menu; do
+		echo "INPUT(-l${lib}w)" > ${PKG}/usr/lib/lib${lib}.so
+		ln -sfv lib${lib}w.a ${PKG}/usr/lib/lib${lib}.a
+	done
+	ln -sfv libncursesw.so ${PKG}/usr/lib/libcursesw.so
+	ln -sfv libncursesw.a ${PKG}/usr/lib/libcursesw.a
+	ln -sfv libncurses++w.a ${PKG}/usr/lib/libncurses++.a
+	ln -sfv ncursesw5-config ${PKG}/usr/bin/ncurses5-config
+	ln -sfv ../share/terminfo ${PKG}/usr/lib/terminfo
+}

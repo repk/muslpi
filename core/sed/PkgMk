@@ -1,0 +1,23 @@
+# Description: stream editor
+# URL: http://www.gnu.org/software/sed/manual/sed.html
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=sed
+VERSION=4.2.2
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/sed/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	patch_unknown_target build-aux/config.sub
+
+	./configure --prefix=/usr --bindir=/bin				\
+		--build=${CLFS_HOST} --host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

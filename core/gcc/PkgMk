@@ -1,0 +1,44 @@
+# Description: C compiler
+# URL: http://gcc.gnu.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=gcc
+VERSION=4.7.2
+
+
+DEPENDS="mpfr gmp mpc ppl cloog-ppl"
+SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
+PATCHES="gcc-4.7.2-musl.diff"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	process_patches
+
+	#Fix the gcc fix include shit
+	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+
+	mkdir build
+	cd build
+
+	 LDFLAGS="-Wl,-rpath-link,${TOOLCHAIN_DIR}/${CLFS_TARGET}/lib"	\
+	MAKEINFO=missing						\
+	../configure --prefix=/usr --libexecdir=/usr/lib		\
+		--build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--target=${CLFS_TARGET}	--enable-shared			\
+		--enable-threads=posix --enable-c99 --enable-long-long	\
+		--enable-clocale=gnu --enable-languages=c,c++		\
+		--disable-libstdcxx-pch					\
+		--with-build-sysroot=${CLFS_DIR} --disable-libmudflap	\
+		--with-abi=${ABI} --with-arch=${ARCH}			\
+		--with-mode=${MODE} --with-float=${FLOAT}		\
+		--with-fpu=${FPU}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+
+	mkdir ${PKG}/lib
+	ln -sfv ../usr/bin/cpp ${PKG}/lib/cpp
+	ln -sfv gcc ${PKG}/usr/bin/cc
+}

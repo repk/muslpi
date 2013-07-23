@@ -1,0 +1,27 @@
+# Description: collection of binary tools
+# URL: http://www.gnu.org/software/binutils/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=binutils
+VERSION=2.23.2
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="binutils-skip-whitespace.patch  binutils-sentinel-warning.patch"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	patch_unknown_target config.sub
+	process_patches
+
+	./configure --prefix=/usr --host=${CLFS_HOST}			\
+		--target=${CLFS_TARGET} --enable-shared
+
+	make configure-host
+	make -j${NR_JOBS} tooldir=/usr
+	make DESTDIR=${PKG} tooldir=/usr install
+}

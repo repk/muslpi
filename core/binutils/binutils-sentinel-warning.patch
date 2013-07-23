@@ -1,0 +1,11 @@
+--- a/gas/dw2gencfi.c	2013-07-21 19:03:30.000000000 +0200
++++ b/gas/dw2gencfi.c     2013-07-21 19:03:38.000000000 +0200
+@@ -140,7 +140,7 @@
+        name = dollar;
+     }
+ 
+-  return concat (base_name, name, NULL);
++  return concat (base_name, name, (const char *) 0);
+ }
+ 
+ /* Allocate a dwcfi_seg_list structure.  */

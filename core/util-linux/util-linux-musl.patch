@@ -1,0 +1,381 @@
+--- util-linux-2.23.1-old/fdisks/cfdisk.c	2013-07-23 22:27:35.879967645 +0200
++++ util-linux-2.23.1/fdisks/cfdisk.c	2013-07-23 22:29:54.529966562 +0200
+@@ -325,7 +325,7 @@
+ int logical = 0;
+ long long logical_sectors[MAXIMUM_PARTS];
+ 
+-__sighandler_t old_SIGINT, old_SIGTERM;
++sighandler_t old_SIGINT, old_SIGTERM;
+ 
+ int arrow_cursor = FALSE;
+ int display_units = MEGABYTES;
+--- util-linux-2.23.1-old/fdisks/fdisksunlabel.c	2013-07-23 22:27:35.879967645 +0200
++++ util-linux-2.23.1/fdisks/fdisksunlabel.c	2013-07-23 23:25:09.179940669 +0200
+@@ -25,6 +25,50 @@
+ #include "fdiskdoslabel.h"
+ #include "fdisksunlabel.h"
+ 
++static void qsort_r(void  *base, size_t nel, size_t width,
++		int (*comp)(const void*, const void*, void*), void *arg)
++{
++	size_t wgap, i, j, k;
++	char tmp;
++
++	if ((nel > 1) && (width > 0)) {
++		assert(nel <= ((size_t)(-1)) / width); /* check for overflow */
++		wgap = 0;
++		do {
++			wgap = 3 * wgap + 1;
++		} while (wgap < (nel-1)/3);
++		/* From the above, we know that either wgap == 1 < nel or */
++		/* ((wgap-1)/3 < (int) ((nel-1)/3) <= (nel-1)/3==>wgap <  nel.*/
++		wgap *= width;	/* So this can not overflow if wnel doesn't. */
++		nel *= width;	/* Convert nel to 'wnel' */
++		do {
++			i = wgap;
++			do {
++				j = i;
++				do {
++					register char *a;
++					register char *b;
++
++					j -= wgap;
++					a = j + ((char *)base);
++					b = a + wgap;
++					if ((*comp)(a, b, arg) <= 0) {
++						break;
++					}
++					k = width;
++					do {
++						tmp = *a;
++						*a++ = *b;
++						*b++ = tmp;
++					} while (--k);
++				} while (j >= wgap);
++				i += width;
++			} while (i < nel);
++			wgap = (wgap - width)/3;
++		} while (wgap);
++	}
++}
++
+ /*
+  * in-memory fdisk SUN stuff
+  */
+--- util-linux-2.23.1-old/include/pathnames.h	2013-07-23 22:27:35.889967645 +0200
++++ util-linux-2.23.1/include/pathnames.h	2013-07-23 22:29:08.959966918 +0200
+@@ -139,7 +139,7 @@
+ #define _PATH_DEV_BYPARTUUID	"/dev/disk/by-partuuid"
+ 
+ /* hwclock paths */
+-# define _PATH_ADJTIME		"/etc/adjtime"
++# define _PATH_ADJTIME		"/var/lib/hwclock/adjtime"
+ 
+ #define _PATH_LASTDATE		"/var/lib/lastdate"
+ #ifdef __ia64__
+--- util-linux-2.23.1-old/misc-utils/uuidd.c	2013-07-23 22:27:35.899967645 +0200
++++ util-linux-2.23.1/misc-utils/uuidd.c	2013-07-23 22:30:20.179966362 +0200
+@@ -68,7 +68,7 @@
+ {
+ 	fputs(_("\nUsage:\n"), out);
+ 	fprintf(out,
+-	      _(" %s [options]\n"), program_invocation_short_name);
++	      _(" %s [options]\n"), "uuidd");
+ 
+ 	fputs(_("\nOptions:\n"), out);
+ 	fputs(_(" -p, --pid <path>        path to pid file\n"
+--- util-linux-2.23.1-old/sys-utils/hwclock.8	2013-07-23 22:27:35.879967645 +0200
++++ util-linux-2.23.1/sys-utils/hwclock.8	2013-07-23 22:29:08.959966918 +0200
+@@ -195,7 +195,7 @@
+ .TP
+ .B \-\-noadjfile
+ Disables the facilities provided by
+-.IR /etc/adjtime .
++.IR /var/lib/hwclock/adjtime .
+ .B hwclock
+ will not read nor write to that file with this option.  Either
+ .B \-\-utc
+@@ -205,7 +205,7 @@
+ 
+ .TP
+ .BI \-\-adjfile= filename
+-Overrides the default /etc/adjtime.
++Overrides the default /var/lib/hwclock/adjtime.
+ 
+ .TP
+ .BR \-f , \ \-\-rtc=\fIfilename\fB
+@@ -497,7 +497,7 @@
+ It works like this:
+ .B hwclock
+ keeps a file,
+-.IR /etc/adjtime ,
++.IR /var/lib/hwclock/adjtime ,
+ that keeps some historical information.  This is called the adjtime file.
+ .PP
+ Suppose you start with no adjtime file.  You issue a
+@@ -639,7 +639,7 @@
+ .I TZ
+ 
+ .SH FILES
+-.I /etc/adjtime
++.I /var/lib/hwclock/adjtime
+ .I /usr/share/zoneinfo/
+ .RI ( /usr/lib/zoneinfo
+ on old systems)
+--- util-linux-2.23.1-old/sys-utils/hwclock.c	2013-07-23 22:27:35.879967645 +0200
++++ util-linux-2.23.1/sys-utils/hwclock.c	2013-07-23 22:29:08.949966918 +0200
+@@ -34,7 +34,7 @@
+  * reading '/etc/clock -au' instead of '/etc/clock -u -s', this error
+  * is automatically corrected at every boot.
+  *
+- * To do this job, the program reads and writes the file '/etc/adjtime'
++ * To do this job, the program reads and writes the file '/var/lib/hwclock/adjtime'
+  * to determine the correction, and to save its data. In this file are
+  * three numbers:
+  *
+@@ -47,13 +47,13 @@
+  *
+  * Installation and use of this program:
+  *
+- *	a) create a file '/etc/adjtime' containing as the first and only
++ *	a) create a file '/var/lib/hwclock/adjtime' containing as the first and only
+  *	   line: '0.0 0 0.0'
+  *	b) run 'clock -au' or 'clock -a', depending on whether your cmos is
+  *	   in universal or local time. This updates the second number.
+  *	c) set your system time using the 'date' command.
+  *	d) update your cmos time using 'clock -wu' or 'clock -w'
+- *	e) replace the first number in /etc/adjtime by your correction.
++ *	e) replace the first number in /var/lib/hwclock/adjtime by your correction.
+  *	f) put the command 'clock -au' or 'clock -a' in your '/etc/rc.local'
+  */
+ 
+@@ -229,10 +229,10 @@
+ }
+ 
+ /*
+- * Read the adjustment parameters out of the /etc/adjtime file.
++ * Read the adjustment parameters out of the /var/lib/hwclock/adjtime file.
+  *
+  * Return them as the adjtime structure <*adjtime_p>. If there is no
+- * /etc/adjtime file, return defaults. If values are missing from the file,
++ * /var/lib/hwclock/adjtime file, return defaults. If values are missing from the file,
+  * return defaults for them.
+  *
+  * return value 0 if all OK, !=0 otherwise.
+@@ -894,10 +894,10 @@
+ 	} else if (adjtime_p->last_calib_time != 0) {
+ 		/*
+ 		 * At adjustment time we adjust the hardware clock according
+-		 * to the contents of /etc/adjtime.
++		 * to the contents of /var/lib/hwclock/adjtime.
+ 		 *
+ 		 * At calibration time we set the hardware clock and update
+-		 * /etc/adjtime, that is, for each calibration (except the
++		 * /var/lib/hwclock/adjtime, that is, for each calibration (except the
+ 		 * first) we also do an adjustment.
+ 		 *
+ 		 * We are now at calibration time.
+@@ -1499,7 +1499,7 @@
+  * Returns:
+  *  EX_USAGE: bad invocation
+  *  EX_NOPERM: no permission
+- *  EX_OSFILE: cannot open /dev/rtc or /etc/adjtime
++ *  EX_OSFILE: cannot open /dev/rtc or /var/lib/hwclock/adjtime
+  *  EX_IOERR: ioctl error getting or setting the time
+  *  0: OK (or not)
+  *  1: failure
+@@ -1611,7 +1611,7 @@
+ #ifdef LC_NUMERIC
+ 	/*
+ 	 * We need LC_CTYPE and LC_TIME and LC_MESSAGES, but must avoid
+-	 * LC_NUMERIC since it gives problems when we write to /etc/adjtime.
++	 * LC_NUMERIC since it gives problems when we write to /var/lib/hwclock/adjtime.
+ 	 *  - gqueri@mail.dotcom.fr
+ 	 */
+ 	setlocale(LC_NUMERIC, "C");
+@@ -1909,7 +1909,7 @@
+  *	2) Running the "date" program to interpret the value of our --date
+  *	   option.
+  *
+- * Reading the /etc/adjtime file is the next biggest source of delay and
++ * Reading the /var/lib/hwclock/adjtime file is the next biggest source of delay and
+  * uncertainty.
+  *
+  * The user wants to know what time it was at the moment he invoked us, not
+--- util-linux-2.23.1-old/sys-utils/rtcwake.8	2013-07-23 22:27:35.879967645 +0200
++++ util-linux-2.23.1/sys-utils/rtcwake.8	2013-07-23 22:29:08.949966918 +0200
+@@ -61,17 +61,17 @@
+ .TP
+ \fB-a\fP | \fB--auto\fP
+ Reads the clock mode (whether the hardware clock is set to UTC or local time)
+-from \fI/etc/adjtime\fP. That's the location where the
++from \fI/var/lib/hwclock/adjtime\fP. That's the location where the
+ .BR hwclock (8)
+ stores that information. This is the default.
+ .TP
+ \fB-l\fP | \fB--local\fP
+ Assumes that the hardware clock is set to local time, regardless of the
+-contents of \fI/etc/adjtime\fP.
++contents of \fI/var/lib/hwclock/adjtime\fP.
+ .TP
+ \fB-u\fP | \fB--utc\fP
+ Assumes that the hardware clock is set to UTC (Universal Time Coordinated),
+-regardless of the contents of \fI/etc/adjtime\fP.
++regardless of the contents of \fI/var/lib/hwclock/adjtime\fP.
+ .TP
+ \fB-d\fP \fIdevice\fP | \fB--device\fP \fIdevice\fP
+ Uses \fIdevice\fP instead of \fIrtc0\fP as realtime clock. This option
+--- util-linux-2.23.1-old/include/ttyutils.h	2013-07-23 22:27:35.889967645 +0200
++++ util-linux-2.23.1/include/ttyutils.h	2013-07-23 22:57:35.069953591 +0200
+@@ -13,6 +13,7 @@
+ #ifdef HAVE_SYS_IOCTL_H
+ #include <sys/ioctl.h>
+ #endif
++#include "ttydefaults.h"
+ 
+ /* Some shorthands for control characters. */
+ #define CTL(x)		((x) ^ 0100)	/* Assumes ASCII dialect */
+--- util-linux-2.23.1-old/include/ttydefaults.h	1970-01-01 01:00:00.000000000 +0100
++++ util-linux-2.23.1/include/ttydefaults.h	2013-07-23 22:32:24.409965392 +0200
+@@ -0,0 +1,100 @@
++/*-
++ * Copyright (c) 1982, 1986, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ * (c) UNIX System Laboratories, Inc.
++ * All or some portions of this file are derived from material licensed
++ * to the University of California by American Telephone and Telegraph
++ * Co. or Unix System Laboratories, Inc. and are reproduced herein with
++ * the permission of UNIX System Laboratories, Inc.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 4. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)ttydefaults.h	8.4 (Berkeley) 1/21/94
++ */
++
++/*
++ * System wide defaults for terminal state.  Linux version.
++ */
++#ifndef _SYS_TTYDEFAULTS_H_
++#define	_SYS_TTYDEFAULTS_H_
++
++/*
++ * Defaults on "first" open.
++ */
++#define	TTYDEF_IFLAG	(BRKINT | ISTRIP | ICRNL | IMAXBEL | IXON | IXANY)
++#define TTYDEF_OFLAG	(OPOST | ONLCR | XTABS)
++#define TTYDEF_LFLAG	(ECHO | ICANON | ISIG | IEXTEN | ECHOE|ECHOKE|ECHOCTL)
++#define TTYDEF_CFLAG	(CREAD | CS7 | PARENB | HUPCL)
++#define TTYDEF_SPEED	(B9600)
++
++/*
++ * Control Character Defaults
++ */
++#define CTRL(x)	(x&037)
++#define	CEOF		CTRL('d')
++#ifdef _POSIX_VDISABLE
++# define CEOL		_POSIX_VDISABLE
++#else
++# define CEOL		'\0'		/* XXX avoid _POSIX_VDISABLE */
++#endif
++#define	CERASE		0177
++#define	CINTR		CTRL('c')
++#ifdef _POSIX_VDISABLE
++# define CSTATUS	_POSIX_VDISABLE
++#else
++# define CSTATUS	'\0'		/* XXX avoid _POSIX_VDISABLE */
++#endif
++#define	CKILL		CTRL('u')
++#define	CMIN		1
++#define	CQUIT		034		/* FS, ^\ */
++#define	CSUSP		CTRL('z')
++#define	CTIME		0
++#define	CDSUSP		CTRL('y')
++#define	CSTART		CTRL('q')
++#define	CSTOP		CTRL('s')
++#define	CLNEXT		CTRL('v')
++#define	CDISCARD 	CTRL('o')
++#define	CWERASE 	CTRL('w')
++#define	CREPRINT 	CTRL('r')
++#define	CEOT		CEOF
++/* compat */
++#define	CBRK		CEOL
++#define CRPRNT		CREPRINT
++#define	CFLUSH		CDISCARD
++
++/* PROTECTED INCLUSION ENDS HERE */
++#endif /* !_SYS_TTYDEFAULTS_H_ */
++
++/*
++ * #define TTYDEFCHARS to include an array of default control characters.
++ */
++#ifdef TTYDEFCHARS
++cc_t	ttydefchars[NCCS] = {
++	CEOF,	CEOL,	CEOL,	CERASE, CWERASE, CKILL, CREPRINT,
++	_POSIX_VDISABLE, CINTR,	CQUIT,	CSUSP,	CDSUSP,	CSTART,	CSTOP,	CLNEXT,
++	CDISCARD, CMIN,	CTIME,  CSTATUS, _POSIX_VDISABLE
++};
++#undef TTYDEFCHARS
++#endif
+--- util-linux-2.23.1-old/text-utils/display.c	2013-07-23 22:27:35.919967645 +0200
++++ util-linux-2.23.1/text-utils/display.c	2013-07-23 22:30:42.789966185 +0200
+@@ -39,6 +39,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <sys/types.h>
+ #include "hexdump.h"
+ #include "xalloc.h"
+ #include "c.h"
+--- util-linux-2.23.1-old/text-utils/hexsyntax.c	2013-07-23 22:27:35.919967645 +0200
++++ util-linux-2.23.1/text-utils/hexsyntax.c	2013-07-23 22:30:59.169966057 +0200
+@@ -101,7 +101,7 @@
+ 			break;
+ 		case 'V':
+ 			printf(_("%s from %s\n"),
+-					program_invocation_short_name,
++					"hexdump",
+ 					PACKAGE_STRING);
+ 			exit(EXIT_SUCCESS);
+ 			break;
+@@ -122,7 +122,7 @@
+ {
+ 	fprintf(out, _("\nUsage:\n"
+ 		       " %s [options] file...\n"),
+-		       program_invocation_short_name);
++		       "hexdump");
+ 	fprintf(out, _(
+ 		       "\nOptions:\n"
+ 		       " -b              one-byte octal display\n"
+--- util-linux-2.23.1-old/text-utils/pg.c	2013-07-23 22:27:35.919967645 +0200
++++ util-linux-2.23.1/text-utils/pg.c	2013-07-23 22:30:51.309966119 +0200
+@@ -37,7 +37,7 @@
+ #ifndef	TIOCGWINSZ
+ # include <sys/ioctl.h>
+ #endif
+-#include <sys/termios.h>
++#include <termios.h>
+ #include <fcntl.h>
+ #include <regex.h>
+ #include <stdio.h>

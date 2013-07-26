@@ -33,7 +33,7 @@ pkgmain() {
 		--with-gmp=${TOOLCHAIN_DIR}				\
 		--with-mpc=${TOOLCHAIN_DIR}				\
 		--with-ppl=${TOOLCHAIN_DIR}				\
-		--with-cloog=${TOOLCHAIN} --with-abi=${ABI}		\
+		--with-cloog=${TOOLCHAIN_DIR} --with-abi=${ABI}		\
 		--with-arch=${ARCH} --with-mode=${MODE}			\
 		--with-float=${FLOAT} --with-fpu=${FPU}
 

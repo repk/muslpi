@@ -226,6 +226,15 @@ process_patches() {
 }
 
 
+copy_files() {
+	for f in ${FILES}; do
+		check_file ${PKG_ROOT}/${f}
+		dbg 2 "Additional file ${f}"
+		cp ${PKG_ROOT}/${f} .
+	done
+}
+
+
 prepare_src() {
 	cd ${SRC}
 	for f in ${PKG_SOURCE}; do

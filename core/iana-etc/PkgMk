@@ -1,0 +1,20 @@
+# Description: /etc/services and /etc/protocols using data from the Internet
+#		Assigned Numbers Authority
+# URL: http://freecode.com/projects/iana-etc
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=iana-etc
+VERSION=2.30
+
+
+DEPENDS=""
+SOURCES="http://sethwklein.net/${NAME}-${VERSION}.tar.bz2"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

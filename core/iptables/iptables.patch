@@ -1,0 +1,113 @@
+--- a/extensions/libip6t_ipv6header.c	2012-10-18 10:50:00.000000000 +0200
++++ b/extensions/libip6t_ipv6header.c	2013-07-28 19:15:43.069983181 +0200
+@@ -10,6 +10,9 @@
+ #include <netdb.h>
+ #include <xtables.h>
+ #include <linux/netfilter_ipv6/ip6t_ipv6header.h>
++#ifndef IPPROTO_HOPOPTS
++#      define IPPROTO_HOPOPTS 0
++#endif
+ 
+ enum {
+ 	O_HEADER = 0,
+--- a/extensions/libxt_TCPOPTSTRIP.c	2012-10-18 10:50:00.000000000 +0200
++++ b/extensions/libxt_TCPOPTSTRIP.c	2013-07-28 19:17:39.369982272 +0200
+@@ -12,6 +12,21 @@
+ #ifndef TCPOPT_MD5SIG
+ #	define TCPOPT_MD5SIG 19
+ #endif
++#ifndef TCPOPT_MAXSEG
++#      define TCPOPT_MAXSEG 2
++#endif
++#ifndef TCPOPT_WINDOW
++#      define TCPOPT_WINDOW 3
++#endif
++#ifndef TCPOPT_SACK_PERMITTED
++#      define TCPOPT_SACK_PERMITTED 4
++#endif
++#ifndef TCPOPT_SACK
++#      define TCPOPT_SACK 5
++#endif
++#ifndef TCPOPT_TIMESTAMP
++#      define TCPOPT_TIMESTAMP 8
++#endif
+ 
+ enum {
+ 	O_STRIP_OPTION = 0,
+--- a/include/linux/netfilter/xt_osf.h	2012-10-18 10:50:00.000000000 +0200
++++ b/include/linux/netfilter/xt_osf.h	2013-07-28 19:18:40.729981793 +0200
+@@ -21,6 +21,9 @@
+ #define _XT_OSF_H
+ 
+ #include <linux/types.h>
++#if !defined(__UCLIBC__)
++#include <linux/tcp.h>
++#endif
+ 
+ #define MAXGENRELEN		32
+ 
+--- a/include/linux/netfilter_ipv4/ip_tables.h	2012-10-18 10:50:00.000000000 +0200
++++ b/include/linux/netfilter_ipv4/ip_tables.h	2013-07-28 19:18:16.999981978 +0200
+@@ -16,6 +16,7 @@
+ #define _IPTABLES_H
+ 
+ #include <linux/types.h>
++#include <sys/types.h>
+ 
+ #include <linux/netfilter_ipv4.h>
+ 
+--- a/iptables/ip6tables-restore.c	2012-10-18 10:50:00.000000000 +0200
++++ b/iptables/ip6tables-restore.c	2013-07-28 19:19:08.529981576 +0200
+@@ -9,7 +9,7 @@
+  */
+ 
+ #include <getopt.h>
+-#include <sys/errno.h>
++#include <errno.h>
+ #include <stdbool.h>
+ #include <string.h>
+ #include <stdio.h>
+--- a/iptables/ip6tables-save.c	2012-10-18 10:50:00.000000000 +0200
++++ b/iptables/ip6tables-save.c	2013-07-28 19:19:31.539981396 +0200
+@@ -6,7 +6,7 @@
+  * This code is distributed under the terms of GNU GPL v2
+  */
+ #include <getopt.h>
+-#include <sys/errno.h>
++#include <errno.h>
+ #include <stdio.h>
+ #include <fcntl.h>
+ #include <stdlib.h>
+--- a/iptables/iptables-restore.c	2012-10-18 10:50:00.000000000 +0200
++++ b/iptables/iptables-restore.c	2013-07-28 19:20:00.859981167 +0200
+@@ -6,7 +6,7 @@
+  */
+ 
+ #include <getopt.h>
+-#include <sys/errno.h>
++#include <errno.h>
+ #include <stdbool.h>
+ #include <string.h>
+ #include <stdio.h>
+--- a/iptables/iptables-save.c	2012-10-18 10:50:00.000000000 +0200
++++ b/iptables/iptables-save.c	2013-07-28 19:19:48.609981263 +0200
+@@ -6,7 +6,7 @@
+  *
+  */
+ #include <getopt.h>
+-#include <sys/errno.h>
++#include <errno.h>
+ #include <stdio.h>
+ #include <fcntl.h>
+ #include <stdlib.h>
+--- a/iptables/iptables-xml.c	2012-10-18 10:50:00.000000000 +0200
++++ b/iptables/iptables-xml.c	2013-07-28 19:20:30.969980932 +0200
+@@ -7,7 +7,7 @@
+  */
+ 
+ #include <getopt.h>
+-#include <sys/errno.h>
++#include <errno.h>
+ #include <string.h>
+ #include <stdio.h>
+ #include <stdlib.h>

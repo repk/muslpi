@@ -1,0 +1,32 @@
+# Description: Userspace command line program used to configure Linux
+#		packet filtering ruleset
+# URL: http://netfilter.org/projects/iptables/index.html
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=iptables
+VERSION=1.4.19.1
+
+
+DEPENDS=""
+SOURCES="ftp://ftp.netfilter.org/pub/${NAME}/${NAME}-${VERSION}.tar.bz2"
+PATCHES="iptables.patch"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target build-aux/config.sub
+	process_patches
+
+	CFLAGS="-D__GLIBC__=2"						\
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --libexecdir=/lib/iptables		\
+		--without-kernel --enable-devel --enable-shared
+
+	make -j${NR_JOBS}
+	#Bypass libtool nightmare.
+	for f in $(find . -name "*.la"); do
+		sed -i "s#libdir='/usr/lib'#libdir='${PKG}/usr/lib'#g" ${f}
+	done
+	make DESTDIR=${PKG} install
+}

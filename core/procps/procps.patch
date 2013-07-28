@@ -1,0 +1,94 @@
+diff -Nru procps-3.2.8/proc/readproc.c procps-3.2.8-new/proc/readproc.c
+--- procps-3.2.8/proc/readproc.c	2006-06-16 10:18:13.000000000 +0200
++++ procps-3.2.8-new/proc/readproc.c	2013-07-28 13:20:51.649957406 +0200
+@@ -23,9 +23,13 @@
+ #include <unistd.h>
+ #include <signal.h>
+ #include <fcntl.h>
+-#include <sys/dir.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
++#include <limits.h>
++#include <features.h>
++#include <dirent.h>
++
++#define direct  dirent
+ 
+ // sometimes it's easier to do this manually, w/o gcc helping
+ #ifdef PROF
+diff -Nru procps-3.2.8/proc/sysinfo.h procps-3.2.8-new/proc/sysinfo.h
+--- procps-3.2.8/proc/sysinfo.h	2006-06-25 08:41:48.000000000 +0200
++++ procps-3.2.8-new/proc/sysinfo.h	2013-07-28 13:21:54.439956915 +0200
+@@ -1,9 +1,12 @@
+ #ifndef PROC_SYSINFO_H
+ #define PROC_SYSINFO_H
+ #include <sys/types.h>
+-#include <sys/dir.h>
++#include <features.h>
++#include <dirent.h>
+ #include "procps.h"
+ 
++#define direct dirent
++
+ EXTERN_C_BEGIN
+ 
+ extern unsigned long long Hertz;   /* clock tick frequency */
+diff -Nru procps-3.2.8/top.c procps-3.2.8-new/top.c
+--- procps-3.2.8/top.c	2007-05-28 18:04:00.000000000 +0200
++++ procps-3.2.8-new/top.c	2013-07-28 13:18:02.469958728 +0200
+@@ -41,7 +41,8 @@
+ #include <termios.h>
+ #include <time.h>
+ #include <unistd.h>
+-#include <values.h>
++#include <limits.h>
++#include <float.h>
+ 
+ #include "proc/devname.h"
+ #include "proc/wchan.h"
+@@ -1813,7 +1814,7 @@
+       .  we tolerate NO whitespace and NO switches -- maybe too tolerant? */
+    static const char usage[] =
+       " -hv | -bcisSH -d delay -n iterations [-u user | -U user] -p pid [,pid ...]";
+-   float tmp_delay = MAXFLOAT;
++   float tmp_delay = FLT_MAX;
+    char *p;
+ 
+    while (*args) {
+@@ -1918,7 +1919,7 @@
+    } /* end: while (*args) */
+ 
+       /* fixup delay time, maybe... */
+-   if (MAXFLOAT != tmp_delay) {
++   if (FLT_MAX != tmp_delay) {
+       if (Secure_mode || tmp_delay < 0)
+          msg_save("Delay time Not changed");
+       else
+@@ -2393,7 +2394,7 @@
+       Screen_rows = wz.ws_row;
+    }
+ 
+-   if (Batch) Screen_rows = MAXINT;
++   if (Batch) Screen_rows = INT_MAX;
+ 
+    env_columns = getenv("COLUMNS");
+    if(env_columns && *env_columns){
+diff -Nru procps-3.2.8/vmstat.c procps-3.2.8-new/vmstat.c
+--- procps-3.2.8/vmstat.c	2007-05-28 02:14:57.000000000 +0200
++++ procps-3.2.8-new/vmstat.c	2013-07-28 13:22:48.579956493 +0200
+@@ -23,12 +23,14 @@
+ #include <unistd.h>
+ #include <sys/types.h>
+ #include <sys/ioctl.h>
+-#include <sys/dir.h>
++#include <features.h>
+ #include <dirent.h>
+ 
+ #include "proc/sysinfo.h"
+ #include "proc/version.h"
+ 
++#define direct  dirent
++
+ static unsigned long dataUnit=1024;
+ static char szDataUnit [16];
+ #define UNIT_B        1

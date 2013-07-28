@@ -1,0 +1,33 @@
+# Description: Ext2/3/4 Filesystem Utilities
+# URL: http://e2fsprogs.sourceforge.net/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=e2fsprogs
+VERSION=1.42.8
+
+
+DEPENDS="util-linux"
+SOURCES="https://www.kernel.org/pub/linux/kernel/people/tytso/${NAME}/v${VERSION}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target config/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --with-root-prefix="" --enable-elf-shlibs	\
+		--disable-libblkid --disable-libuuid --disable-fsck	\
+		--disable-uuid
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+	make DESTDIR=${PKG} install-libs
+
+
+	rm -v ${PKG}/usr/lib/lib{com_err,e2p,ext2fs,ss}.so
+	ln -sv ../../lib/libcom_err.so.2 ${PKG}/usr/lib/libcom_err.so
+	ln -sv ../../lib/libe2p.so.2 ${PKG}/usr/lib/libe2p.so
+	ln -sv ../../lib/libext2fs.so.2 ${PKG}/usr/lib/libext2fs.so
+	ln -sv ../../lib/libss.so.2 ${PKG}/usr/lib/libss.so
+}

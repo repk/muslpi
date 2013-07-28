@@ -1,0 +1,42 @@
+# Description: Basic file, shell and text manipulation utilities
+# URL: https://www.kernel.org/pub/linux/utils/util-linux/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=coreutils
+VERSION=8.21
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.xz"
+PATCHES="coreutils.patch"
+FILES="config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target build-aux/config.sub
+	copy_files
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --enable-no-install-program=uptime,kill	\
+		--cache-file=config.cache --enable-install-program=hostname
+
+	cp -v Makefile{,.orig}
+	sed -e 's/^#run_help2man\|^run_help2man/#&/' \
+		-e 's/^\##run_help2man/run_help2man/' Makefile.orig > Makefile
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+
+	mkdir ${PKG}/bin
+	mv -v ${PKG}/usr/bin/{cat,chgrp,chmod,chown,cp,date} ${PKG}/bin
+	mv -v ${PKG}/usr/bin/{dd,df,echo,false,hostname,ln,ls,mkdir} ${PKG}/bin
+	mv -v ${PKG}/usr/bin/{mv,pwd,rm,rmdir,stty,true,uname} ${PKG}/bin
+	mv -v ${PKG}/usr/bin/chroot ${PKG}/usr/sbin
+
+	#This is needed by CLFS bootscripts
+	mv -v ${PKG}/usr/bin/{[,basename,head,install,nice} ${PKG}/bin
+	mv -v ${PKG}/usr/bin/{readlink,sleep,sync,test,touch} ${PKG}/bin
+	ln -sfv ../../bin/install ${PKG}/usr/bin
+}

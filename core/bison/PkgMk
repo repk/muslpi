@@ -1,0 +1,23 @@
+# Description: Bison is a general-purpose parser generator
+# URL: http://www.gnu.org/software/bison/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=bison
+VERSION=2.7.1
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target build-aux/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

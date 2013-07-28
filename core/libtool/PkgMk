@@ -1,0 +1,21 @@
+# Description: Generic library support script
+# URL: http://www.gnu.org/software/libtool/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=libtool
+VERSION=2.4.2
+
+
+DEPENDS=""
+SOURCES="http://ftp.igh.cnrs.fr/pub/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target libltdl/config/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET} --prefix=/usr
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

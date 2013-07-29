@@ -1,0 +1,67 @@
+diff -Nru iproute2-3.10.0/bridge/fdb.c iproute2-3.10.0-new/bridge/fdb.c
+--- iproute2-3.10.0/bridge/fdb.c	2013-07-16 19:06:36.000000000 +0200
++++ iproute2-3.10.0-new/bridge/fdb.c	2013-07-29 20:25:23.909984073 +0200
+@@ -20,6 +20,7 @@
+ #include <linux/if_ether.h>
+ #include <linux/neighbour.h>
+ #include <string.h>
++#include <limits.h>
+ 
+ #include "libnetlink.h"
+ #include "br_common.h"
+diff -Nru iproute2-3.10.0/misc/lnstat.h iproute2-3.10.0-new/misc/lnstat.h
+--- iproute2-3.10.0/misc/lnstat.h	2013-07-16 19:06:36.000000000 +0200
++++ iproute2-3.10.0-new/misc/lnstat.h	2013-07-29 20:32:36.489980694 +0200
+@@ -2,6 +2,7 @@
+ #define _LNSTAT_H
+ 
+ #include <limits.h>
++#include <sys/time.h>
+ 
+ #define LNSTAT_VERSION "0.02 041002"
+ 
+diff -Nru iproute2-3.10.0/misc/Makefile iproute2-3.10.0-new/misc/Makefile
+--- iproute2-3.10.0/misc/Makefile	2013-07-16 19:06:36.000000000 +0200
++++ iproute2-3.10.0-new/misc/Makefile	2013-07-29 20:28:06.849982800 +0200
+@@ -1,7 +1,7 @@
+ SSOBJ=ss.o ssfilter.o
+ LNSTATOBJ=lnstat.o lnstat_util.o
+ 
+-TARGETS=ss nstat ifstat rtacct arpd lnstat
++TARGETS=ss nstat ifstat rtacct  lnstat
+ 
+ include ../Config
+ 
+diff -Nru iproute2-3.10.0/tc/tc_stab.c iproute2-3.10.0-new/tc/tc_stab.c
+--- iproute2-3.10.0/tc/tc_stab.c	2013-07-16 19:06:36.000000000 +0200
++++ iproute2-3.10.0-new/tc/tc_stab.c	2013-07-29 20:13:58.189989430 +0200
+@@ -21,6 +21,7 @@
+ #include <arpa/inet.h>
+ #include <string.h>
+ #include <malloc.h>
++#include <sys/param.h>
+ 
+ #include "utils.h"
+ #include "tc_util.h"
+diff -Nru iproute2-3.10.0/tc/tc_util.c iproute2-3.10.0-new/tc/tc_util.c
+--- iproute2-3.10.0/tc/tc_util.c	2013-07-16 19:06:36.000000000 +0200
++++ iproute2-3.10.0-new/tc/tc_util.c	2013-07-29 20:18:51.389987139 +0200
+@@ -20,6 +20,7 @@
+ #include <arpa/inet.h>
+ #include <string.h>
+ #include <math.h>
++#include <sys/param.h>
+ 
+ #include "utils.h"
+ #include "tc_util.h"
+diff -Nru iproute2-3.10.0/tc/tc_util.h iproute2-3.10.0-new/tc/tc_util.h
+--- iproute2-3.10.0/tc/tc_util.h	2013-07-16 19:06:36.000000000 +0200
++++ iproute2-3.10.0-new/tc/tc_util.h	2013-07-29 20:22:09.719985590 +0200
+@@ -6,6 +6,7 @@
+ #include <linux/pkt_cls.h>
+ #include <linux/gen_stats.h>
+ #include "tc_core.h"
++#include <sys/socket.h>
+ 
+ /* This is the deprecated multiqueue interface */
+ #ifndef TCA_PRIO_MAX

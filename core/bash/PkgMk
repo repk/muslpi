@@ -1,0 +1,30 @@
+# Description: Unix shell
+# URL: http://tiswww.case.edu/php/chet/bash/bashtop.html
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=bash
+VERSION=4.2
+
+
+DEPENDS="readline"
+SOURCES="ftp://ftp.cwru.edu/pub/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="bash.patch"
+FILES="config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	patch_unknown_target support/config.sub
+	process_patches
+	copy_files
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr  --bindir=/bin --without-bash-malloc	\
+		--with-installed-readline
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} htmldir=/usr/share/doc/bash-4.0  install
+	ln -sfv bash ${PKG}/bin/sh
+}

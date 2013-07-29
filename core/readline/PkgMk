@@ -1,0 +1,31 @@
+# Description: Set of functions for use by applications that allow users to edit
+#		command lines as they are typed in
+# URL: ftp://ftp.cwru.edu/pub/bash/${NAME}-${VERSION}.tar.gz
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=readline
+VERSION=6.2
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target support/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --libdir=/lib
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+	make DESTDIR=${PKG} install-doc
+
+	mkdir ${PKG}/usr/lib
+	mv -v ${PKG}/lib/lib{readline,history}.a ${PKG}/usr/lib
+	rm -v ${PKG}/lib/lib{readline,history}.so
+	ln -sfv ../../lib/libreadline.so.6 ${PKG}/usr/lib/libreadline.so
+	ln -sfv ../../lib/libhistory.so.6 ${PKG}/usr/lib/libhistory.so
+}

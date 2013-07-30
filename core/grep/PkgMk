@@ -1,0 +1,24 @@
+# Description: Program to search one or more input files for lines containing a
+#	match to a specified pattern
+# URL: http://www.gnu.org/software/grep/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=grep
+VERSION=2.14
+
+
+DEPENDS=""
+SOURCES="ftp://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.xz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target build-aux/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --bindir=/bin --disable-perl-regexp
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

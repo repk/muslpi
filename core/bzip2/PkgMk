@@ -1,0 +1,31 @@
+# Description: Data compressor
+# URL: http://www.bzip.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=bzip2
+VERSION=1.0.6
+
+
+DEPENDS=""
+SOURCES="http://www.bzip.org/${VERSION}/${NAME}-${VERSION}.tar.gz"
+PATCHES="bzip2.patch"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	copy_files
+	make -f Makefile-libbz2_so CC="${CC}" AR="${AR}" RANLIB="${RANLIB}"
+	make clean
+	make CC="${CC}" AR="${AR}" RANLIB="${RANLIB}"
+	make PREFIX=${PKG}/usr install
+
+	mkdir ${PKG}/bin ${PKG}/lib
+	cp -v bzip2-shared ${PKG}/bin/bzip2
+	cp -av libbz2.so* ${PKG}/lib
+	ln -sfv ../../lib/libbz2.so.1.0 ${PKG}/usr/lib/libbz2.so
+	rm -v ${PKG}/usr/bin/{bunzip2,bzcat,bzip2}
+	ln -sfv bzip2 ${PKG}/bin/bunzip2
+	ln -sfv bzip2 ${PKG}/bin/bzcat
+}

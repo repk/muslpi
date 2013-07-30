@@ -1,0 +1,25 @@
+# Description: interpreter of awk, a programming language typically used as a
+#		data extraction
+# URL: http://www.gnu.org/software/gawk/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=gawk
+VERSION=4.1.0
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target config.sub
+	patch_unknown_target extension/build-aux/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --libexecdir=/usr/lib --without-libsigsegv-prefix
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

@@ -1,0 +1,29 @@
+# Description: Programs related to finding differences between files
+# URL: http://www.gnu.org/software/diffutils/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=diffutils
+VERSION=3.3
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.xz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target build-aux/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr
+
+	# Use vi as default editor instead of ed
+	sed -i 's@\(^#define DEFAULT_EDITOR_PROGRAM \).*@\1"vi"@' lib/config.h
+
+	# Do not recreate man pages as it needs help2man
+	touch man/*.1
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

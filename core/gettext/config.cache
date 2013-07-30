@@ -1,0 +1,6 @@
+am_cv_func_iconv_works=yes
+gl_cv_func_wcwidth_works=yes
+gt_cv_func_printf_posix=yes
+gt_cv_int_divbyzero_sigfpe=yes
+gl_cv_func_fflush_stdin=yes
+gl_cv_func_gettimeofday_clobber=no

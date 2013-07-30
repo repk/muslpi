@@ -1,0 +1,29 @@
+# Description: Typesetting package which reads plain text mixed with formatting
+#		commands and produces formatted output
+# URL: http://www.gnu.org/software/groff/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=groff
+VERSION=1.22.2
+
+
+DEPENDS=""
+SOURCES="ftp://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target config.sub
+
+	PAGE=A4								\
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr
+
+	make -j${NR_JOBS} TROFFBIN=troff GROFFBIN=groff GROFF_BIN_PATH=
+	make DESTDIR=${PKG} install
+
+	ln -sfv soelim ${PKG}/usr/bin/zsoelim
+	ln -sfv eqn ${PKG}/usr/bin/geqn
+	ln -sfv tbl ${PKG}/usr/bin/gtbl
+}

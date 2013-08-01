@@ -1,0 +1,10 @@
+drwxr-xr-x bin/
+-rwxr-xr-x bin/ping
+drwxr-xr-x usr/
+drwxr-xr-x usr/bin/
+-rwxr-xr-x usr/bin/rdisc
+-rwxr-xr-x usr/bin/traceroute6
+-rwxr-xr-x usr/bin/tracepath6
+-rwxr-xr-x usr/bin/arping
+-rwxr-xr-x usr/bin/clockdiff
+-rwxr-xr-x usr/bin/tracepath

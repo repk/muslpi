@@ -1,0 +1,263 @@
+diff -Nru a/arping.c b/arping.c
+--- a/arping.c	2012-12-21 15:01:07.000000000 +0100
++++ b/arping.c	2013-08-01 21:52:02.869987393 +0200
+@@ -16,7 +16,7 @@
+ #include <linux/sockios.h>
+ #include <sys/file.h>
+ #include <sys/time.h>
+-#include <sys/signal.h>
++#include <signal.h>
+ #include <sys/ioctl.h>
+ #include <net/if.h>
+ #include <linux/if_packet.h>
+diff -Nru a/clockdiff.c b/clockdiff.c
+--- a/clockdiff.c	2012-12-21 15:01:07.000000000 +0100
++++ b/clockdiff.c	2013-08-01 21:56:17.359985405 +0200
+@@ -14,7 +14,6 @@
+ #include <netinet/ip.h>
+ #include <netinet/ip_icmp.h>
+ #define TSPTYPES
+-#include <protocols/timed.h>
+ #include <fcntl.h>
+ #include <netdb.h>
+ #include <arpa/inet.h>
+diff -Nru a/Makefile b/Makefile
+--- a/Makefile	2012-12-21 15:01:07.000000000 +0100
++++ b/Makefile	2013-08-01 21:44:02.499991146 +0200
+@@ -3,7 +3,7 @@
+ #
+ 
+ # CC
+-CC=gcc
++CC?=gcc
+ # Path to parent kernel include files directory
+ LIBC_INCLUDE=/usr/include
+ # Libraries
+@@ -23,7 +23,7 @@
+ #
+ 
+ # Capability support (with libcap) [yes|static|no]
+-USE_CAP=yes
++USE_CAP=no
+ # sysfs support (with libsysfs - deprecated) [no|yes|static]
+ USE_SYSFS=no
+ # IDN support (experimental) [no|yes|static]
+@@ -110,8 +110,8 @@
+ IPV6_TARGETS=tracepath6 traceroute6 ping6
+ TARGETS=$(IPV4_TARGETS) $(IPV6_TARGETS)
+ 
+-CFLAGS=$(CCOPTOPT) $(CCOPT) $(GLIBCFIX) $(DEFINES)
+-LDLIBS=$(LDLIB) $(ADDLIB)
++CFLAGS+=$(CCOPTOPT) $(CCOPT) $(GLIBCFIX) $(DEFINES)
++LDLIBS+=$(LDLIB) $(ADDLIB)
+ 
+ UNAME_N:=$(shell uname -n)
+ LASTTAG:=$(shell git describe HEAD | sed -e 's/-.*//')
+diff -Nru a/ping.c b/ping.c
+--- a/ping.c	2012-12-21 15:01:07.000000000 +0100
++++ b/ping.c	2013-08-01 21:54:14.829986362 +0200
+@@ -91,7 +91,7 @@
+ int optlen = 0;
+ int settos = 0;			/* Set TOS, Precendence or other QOS options */
+ int icmp_sock;			/* socket file descriptor */
+-u_char outpack[0x10000];
++unsigned char outpack[0x10000];
+ int maxpacket = sizeof(outpack);
+ 
+ static int broadcast_pings = 0;
+@@ -100,7 +100,7 @@
+ static void pr_options(unsigned char * cp, int hlen);
+ static void pr_iph(struct iphdr *ip);
+ static void usage(void) __attribute__((noreturn));
+-static u_short in_cksum(const u_short *addr, int len, u_short salt);
++static unsigned short in_cksum(const unsigned short *addr, int len, unsigned short salt);
+ static void pr_icmph(__u8 type, __u8 code, __u32 info, struct icmphdr *icp);
+ static int parsetos(char *str);
+ 
+@@ -122,7 +122,7 @@
+ 	struct hostent *hp;
+ 	int ch, hold, packlen;
+ 	int socket_errno;
+-	u_char *packet;
++	unsigned char *packet;
+ 	char *target;
+ #ifdef USE_IDN
+ 	char *hnamebuf = NULL;
+@@ -575,7 +575,7 @@
+ 	if (datalen >= sizeof(struct timeval))	/* can we time transfer */
+ 		timing = 1;
+ 	packlen = datalen + MAXIPLEN + MAXICMPLEN;
+-	if (!(packet = (u_char *)malloc((u_int)packlen))) {
++	if (!(packet = (unsigned char *)malloc((unsigned int)packlen))) {
+ 		fprintf(stderr, "ping: out of memory.\n");
+ 		exit(2);
+ 	}
+@@ -720,13 +720,13 @@
+ 	cc = datalen + 8;			/* skips ICMP portion */
+ 
+ 	/* compute ICMP checksum here */
+-	icp->checksum = in_cksum((u_short *)icp, cc, 0);
++	icp->checksum = in_cksum((unsigned short *)icp, cc, 0);
+ 
+ 	if (timing && !(options&F_LATENCY)) {
+ 		struct timeval tmp_tv;
+ 		gettimeofday(&tmp_tv, NULL);
+ 		memcpy(icp+1, &tmp_tv, sizeof(tmp_tv));
+-		icp->checksum = in_cksum((u_short *)&tmp_tv, sizeof(tmp_tv), ~icp->checksum);
++		icp->checksum = in_cksum((unsigned short *)&tmp_tv, sizeof(tmp_tv), ~icp->checksum);
+ 	}
+ 
+ 	do {
+@@ -779,7 +779,7 @@
+ 	/* Now the ICMP part */
+ 	cc -= hlen;
+ 	icp = (struct icmphdr *)(buf + hlen);
+-	csfailed = in_cksum((u_short *)icp, cc, 0);
++	csfailed = in_cksum((unsigned short *)icp, cc, 0);
+ 
+ 	if (icp->type == ICMP_ECHOREPLY) {
+ 		if (icp->un.echo.id != ident)
+@@ -894,17 +894,17 @@
+ #if BYTE_ORDER == LITTLE_ENDIAN
+ # define ODDBYTE(v)	(v)
+ #elif BYTE_ORDER == BIG_ENDIAN
+-# define ODDBYTE(v)	((u_short)(v) << 8)
++# define ODDBYTE(v)	((unsigned short)(v) << 8)
+ #else
+-# define ODDBYTE(v)	htons((u_short)(v) << 8)
++# define ODDBYTE(v)	htons((unsigned short)(v) << 8)
+ #endif
+ 
+-u_short
+-in_cksum(const u_short *addr, register int len, u_short csum)
++unsigned short
++in_cksum(const unsigned short *addr, register int len, unsigned short csum)
+ {
+ 	register int nleft = len;
+-	const u_short *w = addr;
+-	register u_short answer;
++	const unsigned short *w = addr;
++	register unsigned short answer;
+ 	register int sum = csum;
+ 
+ 	/*
+@@ -920,7 +920,7 @@
+ 
+ 	/* mop up an odd byte, if necessary */
+ 	if (nleft == 1)
+-		sum += ODDBYTE(*(u_char *)w); /* le16toh() may be unavailable on old systems */
++		sum += ODDBYTE(*(unsigned char *)w); /* le16toh() may be unavailable on old systems */
+ 
+ 	/*
+ 	 * add back carry outs from top 16 bits to low 16 bits
+@@ -1238,10 +1238,10 @@
+ void pr_iph(struct iphdr *ip)
+ {
+ 	int hlen;
+-	u_char *cp;
++	unsigned char *cp;
+ 
+ 	hlen = ip->ihl << 2;
+-	cp = (u_char *)ip + 20;		/* point to options */
++	cp = (unsigned char *)ip + 20;		/* point to options */
+ 
+ 	printf("Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst Data\n");
+ 	printf(" %1x  %1x  %02x %04x %04x",
+diff -Nru a/ping_common.c b/ping_common.c
+--- a/ping_common.c	2012-12-21 15:01:07.000000000 +0100
++++ b/ping_common.c	2013-08-01 21:54:20.359986319 +0200
+@@ -205,7 +205,7 @@
+ 	int ii, jj, kk;
+ 	int pat[16];
+ 	char *cp;
+-	u_char *bp = outpack+8;
++	unsigned char *bp = outpack+8;
+ 
+ #ifdef USE_IDN
+ 	setlocale(LC_ALL, "C");
+@@ -666,7 +666,7 @@
+ 
+ 	if (!(options & F_PINGFILLED)) {
+ 		int i;
+-		u_char *p = outpack+8;
++		unsigned char *p = outpack+8;
+ 
+ 		/* Do not forget about case of small datalen,
+ 		 * fill timestamp area too!
+@@ -952,13 +952,13 @@
+ 			printf(" (BAD CHECKSUM!)");
+ 
+ 		/* check the data */
+-		cp = ((u_char*)ptr) + sizeof(struct timeval);
++		cp = ((unsigned char*)ptr) + sizeof(struct timeval);
+ 		dp = &outpack[8 + sizeof(struct timeval)];
+ 		for (i = sizeof(struct timeval); i < datalen; ++i, ++cp, ++dp) {
+ 			if (*cp != *dp) {
+ 				printf("\nwrong data byte #%d should be 0x%x but was 0x%x",
+ 				       i, *dp, *cp);
+-				cp = (u_char*)ptr + sizeof(struct timeval);
++				cp = (unsigned char*)ptr + sizeof(struct timeval);
+ 				for (i = sizeof(struct timeval); i < datalen; ++i, ++cp) {
+ 					if ((i % 32) == sizeof(struct timeval))
+ 						printf("\n#%d\t", i);
+diff -Nru a/ping_common.h b/ping_common.h
+--- a/ping_common.h	2012-12-21 15:01:07.000000000 +0100
++++ b/ping_common.h	2013-08-01 21:54:41.589986153 +0200
+@@ -7,7 +7,7 @@
+ #include <linux/sockios.h>
+ #include <sys/file.h>
+ #include <sys/time.h>
+-#include <sys/signal.h>
++#include <signal.h>
+ #include <sys/ioctl.h>
+ #include <net/if.h>
+ #include <sys/uio.h>
+@@ -32,6 +32,8 @@
+ #include <arpa/inet.h>
+ #include <linux/types.h>
+ #include <linux/errqueue.h>
++#include <asm-generic/socket.h>
++#include <asm-generic/param.h>
+ 
+ #include "SNAPSHOT.h"
+ 
+@@ -118,7 +120,7 @@
+ 	return A(bit) & B(bit);
+ }
+ 
+-extern u_char outpack[];
++extern unsigned char outpack[];
+ extern int maxpacket;
+ 
+ extern int datalen;
+diff -Nru a/tracepath6.c b/tracepath6.c
+--- a/tracepath6.c	2012-12-21 15:01:07.000000000 +0100
++++ b/tracepath6.c	2013-08-01 22:05:08.809981254 +0200
+@@ -25,6 +25,7 @@
+ #include <sys/time.h>
+ #include <sys/uio.h>
+ #include <arpa/inet.h>
++#include <limits.h>
+ 
+ #ifdef USE_IDN
+ #include <idna.h>
+diff -Nru a/tracepath.c b/tracepath.c
+--- a/tracepath.c	2012-12-21 15:01:07.000000000 +0100
++++ b/tracepath.c	2013-08-01 21:57:32.929984815 +0200
+@@ -23,6 +23,7 @@
+ #include <sys/time.h>
+ #include <sys/uio.h>
+ #include <arpa/inet.h>
++#include <limits.h>
+ #ifdef USE_IDN
+ #include <idna.h>
+ #include <locale.h>
+@@ -372,7 +373,7 @@
+ 
+ 	he = gethostbyname(p);
+ 	if (he == NULL) {
+-		herror("gethostbyname");
++		fprintf(stderr, "gethostbyname %s", hstrerror(h_errno));
+ 		exit(1);
+ 	}
+ 

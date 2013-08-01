@@ -1,0 +1,32 @@
+# Description: Set of small useful utilities for Linux networking
+# URL: http://www.skbuff.net/iputils/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=iputils
+VERSION=s20121221
+
+
+DEPENDS=""
+SOURCES="http://www.skbuff.net/${NAME}/${NAME}-${VERSION}.tar.bz2"
+PATCHES="iputils.patch"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	process_patches
+
+	CFLAGS="-I ${CLFS_DIR}/usr/include/ -D__GLIBC__=2"		\
+	LDLIBS="-L ${CLFS_DIR}/usr/lib/ -lc"				\
+	make -j${NR_JOBS} CC=${CC}					\
+	IPV4_TARGETS="tracepath ping clockdiff rdisc arping"		\
+	IPV6_TARGETS="tracepath6 traceroute6"
+
+	mkdir -p ${PKG}/bin ${PKG}/usr/bin
+	install -v -m755 ping ${PKG}/bin
+	install -v -m755 arping ${PKG}/usr/bin
+	install -v -m755 clockdiff ${PKG}/usr/bin
+	install -v -m755 rdisc ${PKG}/usr/bin
+	install -v -m755 tracepath ${PKG}/usr/bin
+	install -v -m755 trace{path,route}6 ${PKG}/usr/bin
+}

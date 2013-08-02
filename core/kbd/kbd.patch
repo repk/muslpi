@@ -1,0 +1,420 @@
+diff -Nru kbd-1.15.5/data/Makefile.in kbd-1.15.5-new/data/Makefile.in
+--- kbd-1.15.5/data/Makefile.in	2012-12-05 20:27:05.000000000 +0100
++++ kbd-1.15.5-new/data/Makefile.in	2013-08-02 19:35:03.949990400 +0200
+@@ -107,7 +107,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/Makefile.in kbd-1.15.5-new/Makefile.in
+--- kbd-1.15.5/Makefile.in	2012-12-05 20:27:06.000000000 +0100
++++ kbd-1.15.5-new/Makefile.in	2013-08-02 19:35:03.959990400 +0200
+@@ -169,7 +169,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/man/Makefile.in kbd-1.15.5-new/man/Makefile.in
+--- kbd-1.15.5/man/Makefile.in	2012-12-05 20:27:05.000000000 +0100
++++ kbd-1.15.5-new/man/Makefile.in	2013-08-02 19:35:03.969990400 +0200
+@@ -148,7 +148,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/man/man1/Makefile.in kbd-1.15.5-new/man/man1/Makefile.in
+--- kbd-1.15.5/man/man1/Makefile.in	2012-12-05 20:27:05.000000000 +0100
++++ kbd-1.15.5-new/man/man1/Makefile.in	2013-08-02 19:35:03.979990400 +0200
+@@ -141,7 +141,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/man/man1misc/Makefile.in kbd-1.15.5-new/man/man1misc/Makefile.in
+--- kbd-1.15.5/man/man1misc/Makefile.in	2012-12-05 20:27:05.000000000 +0100
++++ kbd-1.15.5-new/man/man1misc/Makefile.in	2013-08-02 19:35:03.979990400 +0200
+@@ -139,7 +139,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/man/man5/Makefile.in kbd-1.15.5-new/man/man5/Makefile.in
+--- kbd-1.15.5/man/man5/Makefile.in	2012-12-05 20:27:05.000000000 +0100
++++ kbd-1.15.5-new/man/man5/Makefile.in	2013-08-02 19:35:03.959990400 +0200
+@@ -139,7 +139,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/man/man8/Makefile.in kbd-1.15.5-new/man/man8/Makefile.in
+--- kbd-1.15.5/man/man8/Makefile.in	2012-12-05 20:27:05.000000000 +0100
++++ kbd-1.15.5-new/man/man8/Makefile.in	2013-08-02 19:35:03.989990400 +0200
+@@ -140,7 +140,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/man/man8misc/Makefile.in kbd-1.15.5-new/man/man8misc/Makefile.in
+--- kbd-1.15.5/man/man8misc/Makefile.in	2012-12-05 20:27:05.000000000 +0100
++++ kbd-1.15.5-new/man/man8misc/Makefile.in	2013-08-02 19:35:03.999990400 +0200
+@@ -139,7 +139,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/src/dumpkeys.c kbd-1.15.5-new/src/dumpkeys.c
+--- kbd-1.15.5/src/dumpkeys.c	2012-12-01 22:41:38.000000000 +0100
++++ kbd-1.15.5-new/src/dumpkeys.c	2013-08-01 22:39:57.049964941 +0200
+@@ -107,7 +107,7 @@
+ }
+ 
+ static int
+-get_bind(u_char kb_index, u_char kb_table) {
++get_bind(unsigned char kb_index, unsigned char kb_table) {
+ 	struct kbentry ke;
+ 
+ 	ke.kb_index = kb_index;
+@@ -169,7 +169,7 @@
+ 	return status;
+ }
+ 
+-static u_char
++static unsigned char
+ maximum_val(int t) {
+ 	struct kbentry ke, ke0;
+ 	int i;
+@@ -440,7 +440,7 @@
+ 			 (val >= 'a' && val <= 'z')));
+ 	    isasexpected = 0;
+ 	    if (isletter) {
+-		u_short defs[16];
++		unsigned short defs[16];
+ 		defs[0] = K(KT_LETTER, val);
+ 		defs[1] = K(KT_LETTER, val ^ 32);
+ 		defs[2] = defs[0];
+diff -Nru kbd-1.15.5/src/kbdinfo.c kbd-1.15.5-new/src/kbdinfo.c
+--- kbd-1.15.5/src/kbdinfo.c	2012-12-01 22:41:38.000000000 +0100
++++ kbd-1.15.5-new/src/kbdinfo.c	2013-08-01 22:54:07.669958296 +0200
+@@ -1,6 +1,5 @@
+ #include <stdio.h>
+ #include <errno.h>
+-#include <error.h>
+ #include <unistd.h>
+ #include <sys/ioctl.h>
+ #include <linux/kd.h>
+@@ -74,8 +73,10 @@
+ 	fd = getfd(console);
+ 
+ 	if (!strcasecmp("GETMODE", action)) {
+-		if (ioctl(fd, KDGETMODE, &mode) == -1)
+-			error(EXIT_FAILURE, errno, "ioctl");
++		if (ioctl(fd, KDGETMODE, &mode) == -1) {
++			perror("ioctl");
++			return EXIT_FAILURE;
++		}
+ 
+ 		switch (mode) {
+ 			case KD_TEXT:		rc = answer("text");		break;
+@@ -83,8 +84,10 @@
+ 		}
+ 
+ 	} else if (!strcasecmp("GKBMODE", action)) {
+-		if (ioctl(fd, KDGKBMODE, &mode) == -1)
+-			error(EXIT_FAILURE, errno, "ioctl");
++		if (ioctl(fd, KDGKBMODE, &mode) == -1) {
++			perror("ioctl");
++			return EXIT_FAILURE;
++		}
+ 
+ 		switch (mode) {
+ 			case K_RAW:		rc = answer("raw");		break;
+@@ -94,8 +97,10 @@
+ 		}
+ 
+ 	} else if (!strcasecmp("GKBMETA", action)) {
+-		if (ioctl(fd, KDGKBMETA, &mode) == -1)
+-			error(EXIT_FAILURE, errno, "ioctl");
++		if (ioctl(fd, KDGKBMETA, &mode) == -1) {
++			perror("ioctl");
++			return EXIT_FAILURE;
++		}
+ 
+ 		switch (mode) {
+ 			case K_METABIT:		rc = answer("metabit");		break;
+@@ -103,8 +108,10 @@
+ 		}
+ 
+ 	} else if (!strcasecmp("GKBLED", action)) {
+-		if (ioctl(fd, KDGKBLED, &flags) == -1)
+-			error(EXIT_FAILURE, errno, "ioctl");
++		if (ioctl(fd, KDGKBLED, &flags) == -1) {
++			perror("ioctl");
++			return EXIT_FAILURE;
++		}
+ 
+ 		mode = (flags & 0x7);
+ 
+diff -Nru kbd-1.15.5/src/kbdrate.c kbd-1.15.5-new/src/kbdrate.c
+--- kbd-1.15.5/src/kbdrate.c	2012-12-01 22:41:38.000000000 +0100
++++ kbd-1.15.5-new/src/kbdrate.c	2013-08-01 22:50:50.179959839 +0200
+@@ -74,6 +74,7 @@
+ #include <errno.h>
+ #include <sys/file.h>
+ #include <sys/ioctl.h>
++#include <fcntl.h>
+ 
+ #ifdef __sparc__
+ #include <asm/param.h>
+diff -Nru kbd-1.15.5/src/loadkeys.y kbd-1.15.5-new/src/loadkeys.y
+--- kbd-1.15.5/src/loadkeys.y	2012-12-01 22:41:38.000000000 +0100
++++ kbd-1.15.5-new/src/loadkeys.y	2013-08-01 22:39:57.969964934 +0200
+@@ -59,7 +59,7 @@
+ int alt_is_meta = 0;
+ 
+ /* the kernel structures we want to set or print */
+-u_short *key_map[MAX_NR_KEYMAPS];
++unsigned short *key_map[MAX_NR_KEYMAPS];
+ char *func_table[MAX_NR_FUNC];
+ 
+ accent_entry accent_table[MAX_DIACR];
+@@ -199,7 +199,7 @@
+ 
+ 	if (!key_map[k_table]) {
+ 		key_map[k_table] =
+-		    (u_short *) xmalloc(NR_KEYS * sizeof(u_short));
++		    (unsigned short *) xmalloc(NR_KEYS * sizeof(unsigned short));
+ 		for (i = 0; i < NR_KEYS; i++)
+ 			(key_map[k_table])[i] = K_HOLE;
+ 	}
+@@ -520,7 +520,7 @@
+ 	return kd.kb_cnt;
+ }
+ 
+-static void do_constant_key(int i, u_short key)
++static void do_constant_key(int i, unsigned short key)
+ {
+ 	int typ, val, j;
+ 
+@@ -529,7 +529,7 @@
+ 
+ 	if ((typ == KT_LATIN || typ == KT_LETTER) &&
+ 	    ((val >= 'a' && val <= 'z') || (val >= 'A' && val <= 'Z'))) {
+-		u_short defs[16];
++		unsigned short defs[16];
+ 		defs[0] = K(KT_LETTER, val);
+ 		defs[1] = K(KT_LETTER, val ^ 32);
+ 		defs[2] = defs[0];
+@@ -574,7 +574,7 @@
+ 
+ 	for (i = 0; i < NR_KEYS; i++) {
+ 		if (key_is_constant[i]) {
+-			u_short key;
++			unsigned short key;
+ 
+ 			if (!key_map[r0])
+ 				lkfatal(_("impossible error in do_constant"));
+@@ -754,7 +754,7 @@
+ 			keymap_count++;
+ 			if (i)
+ 				printf("static ");
+-			printf("u_short %s_map[NR_KEYS] = {", mk_mapname(i));
++			printf("unsigned short %s_map[NR_KEYS] = {", mk_mapname(i));
+ 			for (j = 0; j < NR_KEYS; j++) {
+ 				if (!(j % 8))
+ 					printf("\n");
+diff -Nru kbd-1.15.5/src/Makefile.in kbd-1.15.5-new/src/Makefile.in
+--- kbd-1.15.5/src/Makefile.in	2012-12-05 20:27:06.000000000 +0100
++++ kbd-1.15.5-new/src/Makefile.in	2013-08-02 19:35:04.009990400 +0200
+@@ -156,7 +156,7 @@
+ loadunimap_OBJECTS = $(am_loadunimap_OBJECTS)
+ loadunimap_LDADD = $(LDADD)
+ loadunimap_LINK = $(CCLD) $(loadunimap_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+-	$(LDFLAGS) -o $@
++	-o $@ $(LDFLAGS)
+ am__objects_13 = mapscrn-findfile.$(OBJEXT)
+ am__objects_14 = mapscrn-utf8.$(OBJEXT)
+ am__objects_15 = mapscrn-xmalloc.$(OBJEXT)
+@@ -168,7 +168,7 @@
+ mapscrn_OBJECTS = $(am_mapscrn_OBJECTS)
+ mapscrn_LDADD = $(LDADD)
+ mapscrn_LINK = $(CCLD) $(mapscrn_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+-	$(LDFLAGS) -o $@
++	-o $@ $(LDFLAGS)
+ am_openvt_OBJECTS = $(am__objects_1) openvt.$(OBJEXT) $(am__objects_2) \
+ 	$(am__objects_5)
+ openvt_OBJECTS = $(am_openvt_OBJECTS)
+@@ -283,7 +283,7 @@
+ am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
+ am__v_at_0 = @
+ CCLD = $(CC)
+-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
++LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) -o $@ $(LDFLAGS)
+ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+ am__v_CCLD_0 = @echo "  CCLD  " $@;
+@@ -395,7 +395,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+diff -Nru kbd-1.15.5/src/openvt.c kbd-1.15.5-new/src/openvt.c
+--- kbd-1.15.5/src/openvt.c	2012-12-01 22:41:38.000000000 +0100
++++ kbd-1.15.5-new/src/openvt.c	2013-08-01 22:49:17.669960562 +0200
+@@ -10,6 +10,7 @@
+ #include <sys/vt.h>
+ #include <sys/wait.h>
+ #include <sys/file.h>
++#include <fcntl.h>
+ 
+ #include "version.h"
+ #include "xmalloc.h"
+diff -Nru kbd-1.15.5/src/setvtrgb.c kbd-1.15.5-new/src/setvtrgb.c
+--- kbd-1.15.5/src/setvtrgb.c	2012-12-01 22:41:38.000000000 +0100
++++ kbd-1.15.5-new/src/setvtrgb.c	2013-08-01 23:00:59.049955083 +0200
+@@ -5,7 +5,6 @@
+ #include <sys/ioctl.h>
+ #include <linux/kd.h>
+ #include <errno.h>
+-#include <error.h>
+ #include "kbd.h"
+ #include "getfd.h"
+ #include "nls.h"
+@@ -59,8 +58,10 @@
+ 	int fd = getfd(NULL);
+ 
+ 	/* Apply the color map to the tty via ioctl */
+-	if (ioctl(fd, PIO_CMAP, colormap) == -1)
+-		error(EXIT_FAILURE, errno, "ioctl");
++	if (ioctl(fd, PIO_CMAP, colormap) == -1) {
++		perror("ioctl");
++		exit(EXIT_FAILURE);
++	}
+ 
+ 	close(fd);
+ }
+@@ -71,36 +72,47 @@
+ 	int c;
+ 	unsigned int rows, cols, val;
+ 
+-	if ((cmap = calloc(3 * 16, sizeof(unsigned char))) == NULL)
+-		error(EXIT_FAILURE, errno, "calloc");
++	if ((cmap = calloc(3 * 16, sizeof(unsigned char))) == NULL) {
++		perror("calloc");
++		exit(EXIT_FAILURE);
++	}
+ 
+ 	for (rows = 0; rows < 3; rows++) {
+ 		cols = 0;
+ 
+ 		while (cols < 16) {
+ 			if ((c = fscanf(fd, "%u", &val)) != 1) {
+-				if (c == EOF)
+-					error(EXIT_FAILURE, errno, "fscanf");
+-
+-				error(EXIT_FAILURE, 0, _("Error: %s: Invalid value in field %u in line %u."),
+-				      filename, rows + 1, cols + 1);
++				if (c == EOF) {
++					perror("fscanf");
++					exit(EXIT_FAILURE);
++				}
++
++				fprintf(stderr, "Error: %s: Invalid value in field %u in line %u.\n",
++						filename, rows + 1, cols + 1);
++				exit(EXIT_FAILURE);
+ 			}
+ 
+ 			cmap[rows + cols * 3] = (unsigned char) val;
+ 
+-			if (cols < 15 && fgetc(fd) != ',')
+-				error(EXIT_FAILURE, 0, _("Error: %s: Insufficient number of fields in line %u."),
+-				      filename, rows + 1);
++			if (cols < 15 && fgetc(fd) != ',') {
++				fprintf(stderr, "Error: %s: Insufficient number of fields in line %u.\n",
++						filename, rows + 1);
++				exit(EXIT_FAILURE);
++			}
+ 			cols++;
+ 		}
+ 
+-		if ((c = fgetc(fd)) == EOF)
+-			error(EXIT_FAILURE, 0, _("Error: %s: Line %u has ended unexpectedly.\n"),
+-			      filename, rows + 1); 
+-
+-		if (c != '\n')
+-			error(EXIT_FAILURE, 0, _("Error: %s: Line %u is too long.\n"),
+-			      filename, rows + 1);
++		if ((c = fgetc(fd)) == EOF) {
++			fprintf(stderr, "Error: %s: Line %u has ended unexpectedly.\n",
++					filename, rows + 1);
++			exit(EXIT_FAILURE);
++		}
++
++		if (c != '\n') {
++			fprintf(stderr, "Error: %s: Line %u is too long.\n",
++					filename, rows + 1);
++			exit(EXIT_FAILURE);
++		}
+ 	}
+ }
+ 
+@@ -140,8 +152,10 @@
+ 		parse_file(stdin, "stdin");
+ 
+ 	} else {
+-		if ((fd = fopen(file, "r")) == NULL)
+-			error(EXIT_FAILURE, errno, "fopen");
++		if ((fd = fopen(file, "r")) == NULL) {
++			perror("fopen");
++			exit(EXIT_FAILURE);
++		}
+ 
+ 		parse_file(fd, file);
+ 		fclose(fd);
+diff -Nru kbd-1.15.5/src/vlock/Makefile.in kbd-1.15.5-new/src/vlock/Makefile.in
+--- kbd-1.15.5/src/vlock/Makefile.in	2012-12-05 20:27:06.000000000 +0100
++++ kbd-1.15.5-new/src/vlock/Makefile.in	2013-08-02 19:35:04.009990400 +0200
+@@ -132,7 +132,7 @@
+ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ INTLLIBS = @INTLLIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ @LTLIBINTL@
+ LEX = @LEX@
+ LEXLIB = @LEXLIB@
+ LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@

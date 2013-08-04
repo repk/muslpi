@@ -1,0 +1,205 @@
+diff -Nru shadow-4.1.4.2/configure shadow-4.1.4.2-new/configure
+--- shadow-4.1.4.2/configure	2009-07-24 03:15:56.000000000 +0200
++++ shadow-4.1.4.2-new/configure	2013-08-02 21:18:16.519985224 +0200
+@@ -18404,7 +18404,7 @@
+ 
+ 
+ cat >>confdefs.h <<\_ACEOF
+-#define RUSEROK 0
++/*#define RUSEROK 0*/
+ _ACEOF
+ 
+ 
+diff -Nru shadow-4.1.4.2/libmisc/utmp.c shadow-4.1.4.2-new/libmisc/utmp.c
+--- shadow-4.1.4.2/libmisc/utmp.c	2009-04-28 22:03:20.000000000 +0200
++++ shadow-4.1.4.2-new/libmisc/utmp.c	2013-08-02 21:22:26.619983271 +0200
+@@ -44,6 +44,8 @@
+ #include <assert.h>
+ #include <netdb.h>
+ #include <stdio.h>
++#include <sys/socket.h>
++#include <netinet/in.h>
+ 
+ #ident "$Id: utmp.c 2834 2009-04-28 20:03:23Z nekral-guest $"
+ 
+diff -Nru shadow-4.1.4.2/man/cs/Makefile.in shadow-4.1.4.2-new/man/cs/Makefile.in
+--- shadow-4.1.4.2/man/cs/Makefile.in	2009-07-24 03:15:59.000000000 +0200
++++ shadow-4.1.4.2-new/man/cs/Makefile.in	2013-08-02 21:21:22.849983769 +0200
+@@ -201,7 +201,7 @@
+ 	groupadd.8 \
+ 	groupdel.8 \
+ 	groupmod.8 \
+-	groups.1 \
++	\
+ 	grpck.8 \
+ 	gshadow.5 \
+ 	lastlog.8 \
+diff -Nru shadow-4.1.4.2/man/de/Makefile.in shadow-4.1.4.2-new/man/de/Makefile.in
+--- shadow-4.1.4.2/man/de/Makefile.in	2009-07-24 03:15:59.000000000 +0200
++++ shadow-4.1.4.2-new/man/de/Makefile.in	2013-08-02 21:21:22.859983769 +0200
+@@ -198,7 +198,7 @@
+ man_MANS = \
+ 	chsh.1 \
+ 	chfn.1 \
+-	groups.1 \
++	\
+ 	login.1 \
+ 	newgrp.1 \
+ 	passwd.1 \
+diff -Nru shadow-4.1.4.2/man/fr/Makefile.in shadow-4.1.4.2-new/man/fr/Makefile.in
+--- shadow-4.1.4.2/man/fr/Makefile.in	2009-07-24 03:15:59.000000000 +0200
++++ shadow-4.1.4.2-new/man/fr/Makefile.in	2013-08-02 21:21:22.879983768 +0200
+@@ -199,7 +199,7 @@
+ top_srcdir = @top_srcdir@
+ man_MANS = chage.1 chfn.1 chpasswd.8 chsh.1 expiry.1 faillog.5 \
+ 	faillog.8 getspnam.3 gpasswd.1 groupadd.8 groupdel.8 \
+-	groupmod.8 groups.1 grpck.8 grpconv.8 grpunconv.8 gshadow.5 \
++	groupmod.8 grpck.8 grpconv.8 grpunconv.8 gshadow.5 \
+ 	lastlog.8 login.1 login.defs.5 logoutd.8 newgrp.1 newusers.8 \
+ 	passwd.1 passwd.5 pwck.8 pwconv.8 pwunconv.8 sg.1 shadow.3 \
+ 	shadow.5 su.1 suauth.5 useradd.8 userdel.8 usermod.8 vigr.8 \
+diff -Nru shadow-4.1.4.2/man/hu/Makefile.in shadow-4.1.4.2-new/man/hu/Makefile.in
+--- shadow-4.1.4.2/man/hu/Makefile.in	2009-07-24 03:15:59.000000000 +0200
++++ shadow-4.1.4.2-new/man/hu/Makefile.in	2013-08-02 21:21:22.889983768 +0200
+@@ -196,7 +196,7 @@
+ man_MANS = \
+ 	chsh.1 \
+ 	gpasswd.1 \
+-	groups.1 \
++	\
+ 	lastlog.8 \
+ 	login.1 \
+ 	newgrp.1 \
+diff -Nru shadow-4.1.4.2/man/it/Makefile.in shadow-4.1.4.2-new/man/it/Makefile.in
+--- shadow-4.1.4.2/man/it/Makefile.in	2009-07-24 03:15:59.000000000 +0200
++++ shadow-4.1.4.2-new/man/it/Makefile.in	2013-08-02 21:21:22.899983768 +0200
+@@ -199,7 +199,7 @@
+ top_srcdir = @top_srcdir@
+ man_MANS = chage.1 chfn.1 chpasswd.8 chsh.1 expiry.1 faillog.5 \
+ 	faillog.8 getspnam.3 gpasswd.1 groupadd.8 groupdel.8 \
+-	groupmod.8 groups.1 grpck.8 grpconv.8 grpunconv.8 lastlog.8 \
++	groupmod.8 grpck.8 grpconv.8 grpunconv.8 lastlog.8 \
+ 	login.1 newgrp.1 newusers.8 passwd.1 passwd.5 pwck.8 pwconv.8 \
+ 	pwunconv.8 sg.1 shadow.3 shadow.5 su.1 useradd.8 userdel.8 \
+ 	usermod.8 vigr.8 vipw.8 $(am__append_1)
+diff -Nru shadow-4.1.4.2/man/ja/Makefile.in shadow-4.1.4.2-new/man/ja/Makefile.in
+--- shadow-4.1.4.2/man/ja/Makefile.in	2009-07-24 03:15:59.000000000 +0200
++++ shadow-4.1.4.2-new/man/ja/Makefile.in	2013-08-02 21:21:22.909983768 +0200
+@@ -195,7 +195,7 @@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ man_MANS = chage.1 chfn.1 chpasswd.8 chsh.1 expiry.1 faillog.5 \
+-	faillog.8 gpasswd.1 groupadd.8 groupdel.8 groupmod.8 groups.1 \
++	faillog.8 gpasswd.1 groupadd.8 groupdel.8 groupmod.8 \
+ 	grpck.8 grpconv.8 grpunconv.8 lastlog.8 login.1 login.defs.5 \
+ 	logoutd.8 newgrp.1 newusers.8 passwd.1 passwd.5 pwck.8 \
+ 	pwconv.8 pwunconv.8 sg.1 shadow.5 su.1 suauth.5 useradd.8 \
+diff -Nru shadow-4.1.4.2/man/ko/Makefile.in shadow-4.1.4.2-new/man/ko/Makefile.in
+--- shadow-4.1.4.2/man/ko/Makefile.in	2009-07-24 03:15:59.000000000 +0200
++++ shadow-4.1.4.2-new/man/ko/Makefile.in	2013-08-02 21:21:22.909983768 +0200
+@@ -196,7 +196,7 @@
+ man_MANS = \
+ 	chfn.1 \
+ 	chsh.1 \
+-	groups.1 \
++	\
+ 	login.1 \
+ 	passwd.5 \
+ 	su.1 \
+diff -Nru shadow-4.1.4.2/man/Makefile.in shadow-4.1.4.2-new/man/Makefile.in
+--- shadow-4.1.4.2/man/Makefile.in	2009-07-24 03:16:14.000000000 +0200
++++ shadow-4.1.4.2-new/man/Makefile.in	2013-08-02 21:21:22.849983769 +0200
+@@ -216,7 +216,7 @@
+ @USE_NLS_TRUE@SUBDIRS = po cs de es fi fr hu id it ja ko pl pt_BR ru sv tr zh_CN zh_TW
+ man_MANS = chage.1 chfn.1 chgpasswd.8 chpasswd.8 chsh.1 expiry.1 \
+ 	faillog.5 faillog.8 getspnam.3 gpasswd.1 groupadd.8 groupdel.8 \
+-	groupmems.8 groupmod.8 groups.1 grpck.8 grpconv.8 grpunconv.8 \
++	groupmems.8 groupmod.8 grpck.8 grpconv.8 grpunconv.8 \
+ 	gshadow.5 lastlog.8 login.1 login.defs.5 logoutd.8 newgrp.1 \
+ 	newusers.8 nologin.8 passwd.1 passwd.5 pwck.8 pwconv.8 \
+ 	pwunconv.8 sg.1 shadow.3 shadow.5 su.1 suauth.5 useradd.8 \
+@@ -240,7 +240,6 @@
+ 	groupdel.8.xml \
+ 	groupmems.8.xml \
+ 	groupmod.8.xml \
+-	groups.1.xml \
+ 	grpck.8.xml \
+ 	gshadow.5.xml \
+ 	lastlog.8.xml \
+diff -Nru shadow-4.1.4.2/man/pl/Makefile.in shadow-4.1.4.2-new/man/pl/Makefile.in
+--- shadow-4.1.4.2/man/pl/Makefile.in	2009-07-24 03:16:00.000000000 +0200
++++ shadow-4.1.4.2-new/man/pl/Makefile.in	2013-08-02 21:21:22.919983768 +0200
+@@ -198,7 +198,7 @@
+ top_srcdir = @top_srcdir@
+ man_MANS = chage.1 chfn.1 chgpasswd.8 chpasswd.8 chsh.1 expiry.1 \
+ 	faillog.5 faillog.8 gpasswd.1 groupadd.8 groupdel.8 \
+-	groupmems.8 groupmod.8 groups.1 grpck.8 grpconv.8 grpunconv.8 \
++	groupmems.8 groupmod.8 grpck.8 grpconv.8 grpunconv.8 \
+ 	lastlog.8 login.defs.5 logoutd.8 newgrp.1 newusers.8 passwd.1 \
+ 	passwd.5 pwck.8 pwconv.8 pwunconv.8 sg.1 shadow.5 suauth.5 \
+ 	useradd.8 userdel.8 usermod.8 vigr.8 vipw.8 $(am__append_1)
+diff -Nru shadow-4.1.4.2/man/ru/Makefile.in shadow-4.1.4.2-new/man/ru/Makefile.in
+--- shadow-4.1.4.2/man/ru/Makefile.in	2009-07-24 03:16:00.000000000 +0200
++++ shadow-4.1.4.2-new/man/ru/Makefile.in	2013-08-02 21:21:22.929983768 +0200
+@@ -199,7 +199,7 @@
+ top_srcdir = @top_srcdir@
+ man_MANS = $(man_nopam) chage.1 chfn.1 chgpasswd.8 chpasswd.8 chsh.1 \
+ 	expiry.1 faillog.5 faillog.8 getspnam.3 gpasswd.1 groupadd.8 \
+-	groupdel.8 groupmems.8 groupmod.8 groups.1 grpck.8 grpconv.8 \
++	groupdel.8 groupmems.8 groupmod.8 grpck.8 grpconv.8 \
+ 	grpunconv.8 gshadow.5 lastlog.8 login.1 login.defs.5 logoutd.8 \
+ 	newgrp.1 newusers.8 nologin.8 passwd.1 passwd.5 pwck.8 \
+ 	pwconv.8 pwunconv.8 sg.1 shadow.3 shadow.5 su.1 suauth.5 \
+diff -Nru shadow-4.1.4.2/man/sv/Makefile.in shadow-4.1.4.2-new/man/sv/Makefile.in
+--- shadow-4.1.4.2/man/sv/Makefile.in	2009-07-24 03:16:00.000000000 +0200
++++ shadow-4.1.4.2-new/man/sv/Makefile.in	2013-08-02 21:21:22.939983768 +0200
+@@ -199,7 +199,7 @@
+ top_srcdir = @top_srcdir@
+ man_MANS = chage.1 chfn.1 chgpasswd.8 chpasswd.8 chsh.1 expiry.1 \
+ 	faillog.5 faillog.8 getspnam.3 gpasswd.1 groupadd.8 groupdel.8 \
+-	groupmems.8 groupmod.8 groups.1 grpck.8 grpconv.8 grpunconv.8 \
++	groupmems.8 groupmod.8 grpck.8 grpconv.8 grpunconv.8 \
+ 	gshadow.5 lastlog.8 login.1 login.defs.5 logoutd.8 newgrp.1 \
+ 	newusers.8 nologin.8 passwd.1 passwd.5 pwck.8 pwconv.8 \
+ 	pwunconv.8 sg.1 shadow.3 shadow.5 su.1 suauth.5 useradd.8 \
+diff -Nru shadow-4.1.4.2/src/Makefile.in shadow-4.1.4.2-new/src/Makefile.in
+--- shadow-4.1.4.2/src/Makefile.in	2009-07-24 03:16:00.000000000 +0200
++++ shadow-4.1.4.2-new/src/Makefile.in	2013-08-02 21:20:13.439984311 +0200
+@@ -32,7 +32,7 @@
+ POST_UNINSTALL = :
+ build_triplet = @build@
+ host_triplet = @host@
+-bin_PROGRAMS = groups$(EXEEXT) login$(EXEEXT) su$(EXEEXT)
++bin_PROGRAMS = login$(EXEEXT) su$(EXEEXT)
+ sbin_PROGRAMS = nologin$(EXEEXT)
+ ubin_PROGRAMS = faillog$(EXEEXT) lastlog$(EXEEXT) chage$(EXEEXT) \
+ 	chfn$(EXEEXT) chsh$(EXEEXT) expiry$(EXEEXT) gpasswd$(EXEEXT) \
+@@ -123,12 +123,6 @@
+ groupmod_OBJECTS = groupmod.$(OBJEXT)
+ groupmod_DEPENDENCIES = $(am__DEPENDENCIES_2) $(am__DEPENDENCIES_3) \
+ 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+-groups_SOURCES = groups.c
+-groups_OBJECTS = groups.$(OBJEXT)
+-groups_LDADD = $(LDADD)
+-groups_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+-	$(top_builddir)/libmisc/libmisc.a \
+-	$(top_builddir)/lib/libshadow.la
+ grpck_SOURCES = grpck.c
+ grpck_OBJECTS = grpck.$(OBJEXT)
+ grpck_DEPENDENCIES = $(am__DEPENDENCIES_2) $(am__DEPENDENCIES_1)
+@@ -223,13 +217,13 @@
+ 	$(LDFLAGS) -o $@
+ SOURCES = chage.c chfn.c chgpasswd.c chpasswd.c chsh.c expiry.c \
+ 	faillog.c gpasswd.c groupadd.c groupdel.c groupmems.c \
+-	groupmod.c groups.c grpck.c grpconv.c grpunconv.c id.c \
++	groupmod.c grpck.c grpconv.c grpunconv.c id.c \
+ 	lastlog.c $(login_SOURCES) logoutd.c newgrp.c newusers.c \
+ 	nologin.c passwd.c pwck.c pwconv.c pwunconv.c $(su_SOURCES) \
+ 	sulogin.c useradd.c userdel.c usermod.c vipw.c
+ DIST_SOURCES = chage.c chfn.c chgpasswd.c chpasswd.c chsh.c expiry.c \
+ 	faillog.c gpasswd.c groupadd.c groupdel.c groupmems.c \
+-	groupmod.c groups.c grpck.c grpconv.c grpunconv.c id.c \
++	groupmod.c grpck.c grpconv.c grpunconv.c id.c \
+ 	lastlog.c $(login_SOURCES) logoutd.c newgrp.c newusers.c \
+ 	nologin.c passwd.c pwck.c pwconv.c pwunconv.c $(su_SOURCES) \
+ 	sulogin.c useradd.c userdel.c usermod.c vipw.c

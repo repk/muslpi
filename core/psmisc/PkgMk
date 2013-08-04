@@ -1,0 +1,32 @@
+# Description: Set of some small useful utilities that use the proc filesystem
+# URL: http://psmisc.sourceforge.net/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=psmisc
+VERSION=22.20
+
+
+DEPENDS="gettext"
+SOURCES="http://downloads.sourceforge.net/project/${NAME}/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="psmisc.patch"
+FILES="config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target config/config.sub
+	process_patches
+	copy_files
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --exec-prefix=""				\
+		--cache-file=config.cache				\
+		--with-libintl-prefix=${CLFS_DIR}/usr
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+
+	mv ${PKG}/bin/pstree* ${PKG}/usr/bin
+	ln -sfv killall ${PKG}/bin/pidof
+}

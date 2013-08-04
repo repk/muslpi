@@ -1,0 +1,25 @@
+# Description: A terminal pager program
+# URL: http://www.gnu.org/software/less/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=less
+VERSION=451
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --sysconfdir=/etc
+
+	make -j${NR_JOBS}
+	make prefix=${PKG}/usr install
+
+	mkdir ${PKG}/bin
+	mv -v ${PKG}/usr/bin/less ${PKG}/bin
+}

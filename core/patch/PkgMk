@@ -1,0 +1,24 @@
+# Description: Apply diff result file
+# URL: http://e2fsprogs.sourceforge.net/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=patch
+VERSION=2.7.1
+
+
+DEPENDS=""
+SOURCES="ftp://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+FILES="config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	copy_files
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --cache-file=config.cache
+
+	make -j${NR_JOBS}
+	make prefix=${PKG}/usr install
+}

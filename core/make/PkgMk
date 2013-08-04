@@ -1,0 +1,23 @@
+# Description: Tool which controls the generation of executables
+# URL: http://www.gnu.org/software/make/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=make
+VERSION=3.82
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target config/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

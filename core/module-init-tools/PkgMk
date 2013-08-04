@@ -1,0 +1,24 @@
+# Description: Programs for handling kernel modules
+# URL: http://git.kernel.org/cgit/utils/kernel/module-init-tools/module-init-tools.git
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=module-init-tools
+VERSION=3.15
+
+
+DEPENDS="zlib"
+SOURCES="https://www.kernel.org/pub/linux/utils/kernel/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --bindir=/bin --sbindir=/sbin		\
+		--enable-zlib-dynamic
+
+	make -j${NR_JOBS} DOCBOOKTOMAN=
+	make DESTDIR=${PKG} INSTALL=install install
+}

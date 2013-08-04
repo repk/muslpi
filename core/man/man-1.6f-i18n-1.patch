@@ -1,0 +1,334 @@
+Submitted By: Jim Gifford <jim at cross-lfs dot org>
+Date: 2009-01-08
+Initial Package Version: 1.6f
+Upstream Status: Unkown
+Origin: Mandriva
+Description: i18n Updates
+
+diff -Naur man-1.6f.orig/catopen/catopen.c man-1.6f/catopen/catopen.c
+--- man-1.6f.orig/catopen/catopen.c	2005-08-20 16:26:06.000000000 -0700
++++ man-1.6f/catopen/catopen.c	2009-01-08 22:01:17.000000000 -0800
+@@ -9,22 +9,63 @@
+ extern char *index (const char *, int);         /* not always in <string.h> */
+ extern char *my_malloc(int);	/* in util.c */
+ 
++/* if the program has sgid/suid privileges then getenv doesn't return
++ * NLSPATH; so we set here a good default value.
++ */
+ #ifndef DEFAULT_NLSPATH
+ # if __GLIBC__ >= 2
+-#  define DEFAULT_NLSPATH "/usr/share/locale/%L/%N"
++#  define DEFAULT_NLSPATH "/usr/share/locale/%L/%N:/usr/share/locale/%l_%t/%N:/usr/share/locale/%l/%N"
+ # else
+ #  define DEFAULT_NLSPATH "/usr/lib/locale/%N/%L"
+ # endif
+ #endif
+ 
+-static nl_catd my_catopenpath(char *name, char *path);
++static nl_catd my_catopenpath(char *name, char *path, char *lang);
+ 
+ static				/* this source included in gripes.c */
+ nl_catd
+ my_catopen(char *name, int oflag) {
+-  nl_catd fd;
++  nl_catd fd = (nl_catd) -1;
++
++  /* using first the my_catopenpath, which looks with LANGUAGE
++   * and only if it fails ressort to catopen, it gives better i18n
++   */
++  {
++    char *nlspath, *lang, *s;
+ 
+-  fd = catopen(name, oflag);
++    /*
++     * "If NLSPATH does not exist in the environment, or if a
++     * message catalog cannot be opened in any of the paths specified
++     * by NLSPATH, then an implementation defined default path is used"
++     */
++    nlspath = getenv("NLSPATH");
++    if (!nlspath)
++      nlspath = DEFAULT_NLSPATH;
++ 
++    lang = getenv("LANGUAGE");
++    if (!lang)
++      lang = getenv("LC_ALL");
++    if (!lang)
++      lang = getenv("LC_MESSAGES");
++    if (!lang)
++      lang = getenv("LANG");
++    if (!lang)
++      lang = "";
++ 
++    while(*lang && (fd == (nl_catd) -1)) {
++      s = index(lang, ':');
++      if (s) *s = 0;
++        fd = my_catopenpath(name, nlspath, lang);
++      if (s) lang=s+1;
++      else lang = "";
++    }
++    if (fd == (nl_catd) -1)
++      fd = my_catopenpath(name, nlspath, "en");
++  }
++
++  /* still not found, use the system catopen */
++  if (fd == (nl_catd) -1)
++    fd = catopen(name, oflag);
+ 
+   if (fd == (nl_catd) -1 && oflag) {
+     oflag = 0;
+@@ -32,8 +73,6 @@
+   }
+ 
+   if (fd == (nl_catd) -1) {
+-    char *nlspath;
+-
+     /* The libc catopen fails - let us see if we can do better */
+     /* The quotes below are from X/Open, XPG 1987, Vol. 3. */
+ 
+@@ -58,17 +97,6 @@
+ #endif
+     }
+ 
+-    /*
+-     * "If NLSPATH does not exist in the environment, or if a
+-     * message catalog cannot be opened in any of the paths specified
+-     * by NLSPATH, then an implementation defined default path is used"
+-     */
+-
+-    nlspath = getenv("NLSPATH");
+-    if (nlspath)
+-      fd = my_catopenpath(name, nlspath);
+-    if (fd == (nl_catd) -1)
+-      fd = my_catopenpath(name, DEFAULT_NLSPATH);
+   }
+   return fd;
+ }
+@@ -90,15 +118,13 @@
+  *
+  */
+ static nl_catd
+-my_catopenpath(char *name, char *nlspath) {
+-  int fd;
++my_catopenpath(char *name, char *nlspath, char *lang) {
+   nl_catd cfd = (nl_catd) -1;
+-  char *path0, *path, *s, *file, *lang, *lang_l, *lang_t, *lang_c;
++  char *path0, *path, *s, *file, *lang_l, *lang_t, *lang_c;
+   int langsz, namesz, sz, lang_l_sz, lang_t_sz, lang_c_sz;
+ 
+   namesz = strlen(name);
+ 
+-  lang = getenv("LANG");
+   if (!lang)
+     lang = "";
+   langsz = strlen(lang);
+@@ -194,14 +220,9 @@
+       path = s+1;
+     } else
+       path = 0;
+-    fd = open(file, O_RDONLY);
+-    if (fd != -1) {
+-      /* we found the right catalog - but we don't know the
+-	 type of nl_catd, so close it again and ask libc */
+-      close(fd);
+-      cfd = catopen(file, 0);
+-      break;
+-    }
++	cfd = catopen(file, 0);
++	if (cfd != (nl_catd) -1)
++			break;
+   }
+ 
+   free(path0);
+diff -Naur man-1.6f.orig/configure man-1.6f/configure
+--- man-1.6f.orig/configure	2007-08-20 21:15:21.000000000 -0700
++++ man-1.6f/configure	2009-01-08 22:29:17.000000000 -0800
+@@ -412,9 +412,9 @@
+       fi
+     done
+   done
+-  troff=""
+-  nroff=""
+-  jnroff=""
++  troff=/usr/bin/troff
++  nroff=/usr/bin/nroff
++  jnroff=/usr/bin/nroff
+   eqn=""
+   neqn=""
+   jneqn=""
+@@ -472,29 +472,32 @@
+   done
+ # -Tlatin1 is bad when utf8 is used, but needed for groff, not for nroff
+ # Hmm - also needed for nroff, to prevent double conversion on uxterm
++  Fgroff=/usr/bin/groff
++  Fnroff=/usr/bin/nroff
++  Fjnroff=/usr/bin/nroff
+   if test $Fgroff = "missing"
+   then
+     if test $Fnroff = "missing"
+     then
+-      nroff="nroff -Tlatin1 -mandoc"
++      nroff="nroff -Tutf8 -mandoc"
+     else
+-      nroff="$Fnroff -Tlatin1 -mandoc"
++      nroff="$Fnroff -Tutf8 -mandoc"
+     fi
+     troff="troff -mandoc"
+     echo "Warning: could not find groff"
+   else
+     if test $Fnroff = "missing"
+     then
+-      nroff="$Fgroff -Tlatin1 -mandoc"
++      nroff="$Fgroff -Tutf8 -mandoc"
+     else
+-      nroff="$Fnroff -Tlatin1 -mandoc"
++      nroff="$Fnroff -Tutf8 -mandoc"
+     fi
+     troff="$Fgroff -Tps -mandoc"
+-    jnroff="$Fgroff -Tnippon -mandocj"
++    jnroff="$Fjnroff -Tutf8 -mandocj"
+   fi
+   eqn="$Fgeqn -Tps"
+-  neqn="$Fgeqn -Tlatin1"
+-  jneqn="$Fgeqn -Tnippon"
++  neqn="$Fgeqn -Tutf8"
++  jneqn="$Fgeqn -Tutf8"
+   tbl="$Fgtbl"
+   col="$Fcol"
+   vgrind="$Fvgrind"
+@@ -960,7 +963,7 @@
+ 
+ # What sections do we anticipate?
+ 
+-tmpsections="1 1p 8 2 3 3p 4 5 6 7 9 0p tcl n l p o"
++tmpsections="1 1p 8 2 3 3p 3pm 4 5 6 7 9 0p tcl n l p o"
+ 
+ if [ x$default = x ]; then
+   echo ""
+diff -Naur man-1.6f.orig/msgs/inst.sh man-1.6f/msgs/inst.sh
+--- man-1.6f.orig/msgs/inst.sh	2005-08-20 16:26:06.000000000 -0700
++++ man-1.6f/msgs/inst.sh	2009-01-08 22:01:46.000000000 -0800
+@@ -27,8 +27,7 @@
+ for j in $M; do
+   if [ -f $j ]; then
+     i=`echo $j | sed -e 's/mess.//; s/.cat//'`
+-    dest=`echo $locdir | sed -e "s/%N/man/; s/%L/$i/"`
+-    dest=${PREFIX}$dest
++    dest=${PREFIX}/`echo $locdir | sed -e "s/%N/man/; s/%L/$i/"`
+     echo "mkdir -p `dirname $dest`"
+     mkdir -p `dirname $dest`;
+     echo "install -c -m 644 $j $dest"
+diff -Naur man-1.6f.orig/src/apropos.sh man-1.6f/src/apropos.sh
+--- man-1.6f.orig/src/apropos.sh	2005-08-20 16:26:06.000000000 -0700
++++ man-1.6f/src/apropos.sh	2009-01-08 22:02:47.000000000 -0800
+@@ -60,16 +60,56 @@
+     esac
+ done
+ 
++# list of languages to look for
++LANG_LIST=`echo $LANGUAGE:$LC_ALL:$LC_MESSAGES:$LANG | tr ':' ' '`
++DIR_LIST=""
++for d in /var/cache/man $manpath /usr/lib
++do
++    for l in $LANG_LIST
++    do
++        if [ -d $d/$l ]
++        then
++            # check that the path is not already in the list
++            if ! echo "$DIR_LIST" | grep " $d/$l\b" > /dev/null
++            then
++                DIR_LIST="$DIR_LIST $d/$l"
++            fi
++        fi
++    done
++    DIR_LIST="$DIR_LIST $d"
++    # check that the path is not already in the list
++    if ! echo "$DIR_LIST" | grep " $d\b" > /dev/null
++    then
++        DIR_LIST="$DIR_LIST $d/$l"
++    fi
++done
++
+ while [ "$1" != "" ]
+ do
+     found=0
+-    for d in /var/cache/man $manpath /usr/lib
++    # in order not to display lines in more than one language for
++    # a same man page; we check that a given man page name
++    # hasn't already been displayed
++    BAZ=""
++    for d in $DIR_LIST
+     do
+         if [ -f $d/whatis ]
+         then
+-            if grep -"$grepopt1" "$grepopt2""$1" $d/whatis
++            if FOO=`grep -"$grepopt1" "$grepopt2""$1" $d/whatis`
+             then
+-                found=1
++                # the LC_ALL=C is needed in case the text is
++                # in a different encoding than the locale
++                BAR=`echo -e "$FOO" | LC_ALL=C sed 's/ - .*$//' | tr ' []' '_' | sort -u`
++                for i in $BAR
++                do
++                    if ! echo "$BAZ" | grep "$i" > /dev/null
++                    then
++                        BAZ="$BAZ $i"
++                        i="^`echo $i | sed 's:_\+:\\\(\[_ \]\\\|\\\[\\\|\\\]\\\)\\\+:g'`"
++                        echo -e "$FOO" | grep "$i"
++                        found=1
++                    fi
++                done
+ # Some people are satisfied with a single occurrence
+ # But it is better to give all
+ #               break
+diff -Naur man-1.6f.orig/src/makewhatis.sh man-1.6f/src/makewhatis.sh
+--- man-1.6f.orig/src/makewhatis.sh	2007-09-17 11:35:14.000000000 -0700
++++ man-1.6f/src/makewhatis.sh	2009-01-08 22:02:47.000000000 -0800
+@@ -55,6 +55,9 @@
+ dc=
+ for d in /usr/man/preformat /usr/man /usr/share/man/preformat /usr/share/man
+ do
++    if [ -n "$LANG" -a -d "$d/$LANG" ]; then
++	if [ x$dc = x ]; then dm="$d/$LANG"; else dm=$dc:"$d/$LANG"; fi
++    fi
+     if [ -d $d ]; then
+ 	if [ x$dc = x ]; then dc=$d; else dc=$dc:$d; fi
+     fi
+@@ -227,7 +230,7 @@
+ 	    section=$i
+ 	    curdir=$mandir/${pages}$i
+ 	    export section verbose curdir
+-	    find $mandir/${pages}$i/. -name '*' $findarg0 $findarg -print | $AWK '
++	    find $mandir/${pages}$i/. -name '*' $findarg0 $findarg -print | LC_ALL=C $AWK -v MAN_NAME="$MAN_NAME" -v MAN_DESCRIPTION="$MAN_DESCRIPTION" '
+ 
+ 	    function readline() {
+               if (use_zcat || use_bzcat || use_lzcat) {
+@@ -315,6 +318,7 @@
+ 		  if ($1 ~ /^\.[Ss][HhYS]/ ||
+ 		    (pages == "cat" &&
+ 		    ($1 ~ /^S[yYeE]/ || $1 ~ /^DESCRIPTION/ ||
++		     $1 ~ MAN_DESCRIPTION ||
+ 		     $1 ~ /^COMMAND/ || $1 ~ /^OVERVIEW/ ||
+ 		     $1 ~ /^STRUCTURES/ || $1 ~ /^INTRODUCTION/ ||
+ 		     $0 ~ /^[^ ]/))) {
+diff -Naur man-1.6f.orig/src/manpath.c man-1.6f/src/manpath.c
+--- man-1.6f.orig/src/manpath.c	2006-08-03 14:18:33.000000000 -0700
++++ man-1.6f/src/manpath.c	2009-01-08 22:01:17.000000000 -0800
+@@ -282,13 +282,14 @@
+ 		/* We cannot use "lang = setlocale(LC_MESSAGES, NULL)" or so:
+ 		   the return value of setlocale is an opaque string. */
+ 		/* POSIX prescribes the order: LC_ALL, LC_MESSAGES, LANG */
+-		if((lang = getenv("LC_ALL")) != NULL)
++	        /* LANGUAGE is GNU/Linux and overrules all */
++		if((lang = getenv("LANGUAGE")) != NULL)
+ 			split2(dir, lang, add_to_mandirlist_x, perrs);
+-		if((lang = getenv("LC_MESSAGES")) != NULL)
++		else if((lang = getenv("LC_ALL")) != NULL)
+ 			split2(dir, lang, add_to_mandirlist_x, perrs);
+-		if((lang = getenv("LANG")) != NULL)
++		else if((lang = getenv("LC_MESSAGES")) != NULL)
+ 			split2(dir, lang, add_to_mandirlist_x, perrs);
+-		if((lang = getenv("LANGUAGE")) != NULL)
++		else if((lang = getenv("LANG")) != NULL)
+ 			split2(dir, lang, add_to_mandirlist_x, perrs);
+ 		add_to_mandirlist_x(dir, 0, perrs);
+ 	}

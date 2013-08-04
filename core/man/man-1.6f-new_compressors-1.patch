@@ -1,0 +1,100 @@
+Submitted By: Jim Gifford <jim at cross-lfs dot org>
+Date: 2009-02-21
+Initial Package Version: 1.6f
+Upstream Status: Unknown
+Origin: Jim Gifford
+Description: For using lzip compression
+             For using xz compression
+
+diff -Naur man-1.6f.orig/configure man-1.6f/configure
+--- man-1.6f.orig/configure	2007-08-20 21:15:21.000000000 -0700
++++ man-1.6f/configure	2009-02-22 19:30:14.602512641 -0800
+@@ -1015,7 +1015,7 @@
+   then
+     DO_COMPRESSION=true
+     compress=
+-    for i in lzma bzip2 gzip bzip tzip pack compress freeze yabba
++    for i in xz lzip lzma bzip2 gzip bzip tzip pack compress freeze yabba
+     do
+       eval F$i=missing
+       for j in $DEFPATH
+@@ -1068,6 +1068,8 @@
+     fi
+ 
+     case $compress in
++      *xz*) ext=".xz" ;;
++      *lzip*) ext=".lz" ;;
+       *lzma*) ext=".lzma" ;;
+       *bzip2*) ext=".bz2" ;;
+       *gzip*) ext=".gz" ;;
+@@ -1111,7 +1113,7 @@
+ fi
+ 
+ # unconditionally handle uncompression
+-UNCOMPRESSORS="unlzma gunzip bzip2 pcat zcat fcat unyabba"
++UNCOMPRESSORS="unxz lzip unlzma gunzip bzip2 pcat zcat fcat unyabba"
+ for i in $UNCOMPRESSORS
+ do
+   eval F$i=missing
+@@ -1132,10 +1134,18 @@
+ if [ $Fbzip2 != missing ]; then
+   bzip2="$Fbzip2 -c -d"
+ fi
++unxz=missing
++if [ $Funxz != missing ]; then
++  unxz="$Funxz -c -d"
++fi
+ unlzma=missing
+ if [ $Funlzma != missing ]; then
+   unlzma="$Funlzma -c -d"
+ fi
++lzip=missing
++if [ $Flzip != missing ]; then
++  lzip="$Flzip -c -d"
++fi
+ pcat="$Fpcat"
+ zcat="$Fzcat"
+ fcat="$Ffcat"
+@@ -1164,6 +1174,12 @@
+ 	bzip2)
+ 	  echo "Command to use for .bz2 files (standard bzip2)"
+ 	  echo $n "[`eval echo \\$$filter`] $c" ;;
++	xz)
++	  echo "Command to use for .xz files (standard xz)"
++	  echo $n "[`eval echo \\$$filter`] $c" ;;
++	lzip)
++	  echo "Command to use for .lz files (standard lzip)"
++	  echo $n "[`eval echo \\$$filter`] $c" ;;
+ 	lzma)
+ 	  echo "Command to use for .lzma files (standard lzma)"
+ 	  echo $n "[`eval echo \\$$filter`] $c" ;;
+@@ -1228,6 +1244,8 @@
+ case $compress_ext in
+   .gz) decompress=$gunzip ;;
+   .bz2) decompress=$bzip2 ;;
++  .xz) decompress=$unxz ;;
++  .lz) decompress=$lzip ;;
+   .lzma) decompress=$unlzma ;;
+   .z) decompress=$pcat ;;
+   .Z) decompress=$zcat ;;
+@@ -1321,6 +1339,8 @@
+ s,@zcat@,$zcat,
+ s,@gunzip@,$gunzip,
+ s,@bzip2@,$bzip2,
++s,@lzip@,$lzip,
++s,@unxz@,$unxz,
+ s,@unlzma@,$unlzma,
+ s,@unyabba@,$unyabba,
+ s,@compress@,$compress,
+diff -Naur man-1.6f.orig/src/man.conf.in man-1.6f/src/man.conf.in
+--- man-1.6f.orig/src/man.conf.in	2007-08-20 21:15:21.000000000 -0700
++++ man-1.6f/src/man.conf.in	2009-02-22 19:30:38.916070400 -0800
+@@ -132,6 +132,8 @@
+ #
+ .gz		@gunzip@
+ .bz2		@bzip2@
++.xz		@unxz@
++.lz		@lzip@
+ .lzma		@unlzma@
+ .z		@pcat@
+ .Z		@zcat@

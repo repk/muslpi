@@ -1,0 +1,26 @@
+# Description: Provides the ability to create tar archives
+# URL: http://www.gnu.org/software/tar/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=tar
+VERSION=1.26
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+FILES="config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target build-aux/config.sub
+	copy_files
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --bindir=/bin --libexecdir=/usr/sbin	\
+		--cache-file=config.cache
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

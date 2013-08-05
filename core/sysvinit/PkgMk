@@ -1,0 +1,31 @@
+# Description: Very first process that fathers the others
+# URL: http://freecode.com/projects/sysvinit
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=sysvinit
+VERSION=2.88dsf
+
+
+DEPENDS=""
+SOURCES="http://download.savannah.gnu.org/releases/${NAME}/${NAME}-${VERSION}.tar.bz2"
+PATCHES="sysvinit.patch"
+FILES="inittab"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	process_patches
+	copy_files
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--sysconfdir=/etc --without-libpam --without-audit	\
+		--without-selinux --without-nscd --cache-file=config.cache
+
+	make -C src clobber
+	make -C src ROOT=${PKG} CC="${CC}"
+	mkdir ${PKG}/dev
+	install -d ${PKG}/etc
+	install -m 644 inittab ${PKG}/etc/
+	make -C src ROOT=${PKG} INSTALL="install" install
+}

@@ -1,0 +1,200 @@
+diff -Nru sysvinit-2.88dsf/src/ifdown.c sysvinit-2.88dsf-new/src/ifdown.c
+--- sysvinit-2.88dsf/src/ifdown.c	2010-03-23 15:37:01.000000000 +0100
++++ sysvinit-2.88dsf-new/src/ifdown.c	2013-08-05 22:04:26.529975842 +0200
+@@ -30,7 +30,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
+ #include <sys/time.h>
+-#include <sys/errno.h>
++#include <errno.h>
+ 
+ #include <net/if.h>
+ #include <netinet/in.h>
+diff -Nru sysvinit-2.88dsf/src/init.h sysvinit-2.88dsf-new/src/init.h
+--- sysvinit-2.88dsf/src/init.h	2009-11-24 11:03:19.000000000 +0100
++++ sysvinit-2.88dsf-new/src/init.h	2013-08-05 22:13:28.429971609 +0200
+@@ -22,6 +22,9 @@
+  *
+  */
+ 
++#include <utime.h>
++#include "ttydefaults.h"
++
+ /* Standard configuration */
+ #define CHANGE_WAIT 0			/* Change runlevel while
+ 					   waiting for a process to exit? */
+diff -Nru sysvinit-2.88dsf/src/last.c sysvinit-2.88dsf-new/src/last.c
+--- sysvinit-2.88dsf/src/last.c	2010-02-19 16:51:36.000000000 +0100
++++ sysvinit-2.88dsf-new/src/last.c	2013-08-05 22:10:40.069972924 +0200
+@@ -28,7 +28,7 @@
+ 
+ #include <sys/types.h>
+ #include <sys/stat.h>
+-#include <sys/fcntl.h>
++#include <fcntl.h>
+ #include <time.h>
+ #include <stdio.h>
+ #include <ctype.h>
+@@ -43,6 +43,7 @@
+ #include <netinet/in.h>
+ #include <netdb.h>
+ #include <arpa/inet.h>
++#include <sys/socket.h>
+ #include "oldutmp.h"
+ 
+ #ifndef SHUTDOWN_TIME
+diff -Nru sysvinit-2.88dsf/src/Makefile sysvinit-2.88dsf-new/src/Makefile
+--- sysvinit-2.88dsf/src/Makefile	2010-04-11 11:30:27.000000000 +0200
++++ sysvinit-2.88dsf-new/src/Makefile	2013-08-05 21:47:39.779983707 +0200
+@@ -78,7 +78,7 @@
+ endif
+ 
+ # Additional libs for GNU libc.
+-ifneq ($(wildcard /usr/lib*/libcrypt.a),)
++ifneq ($(wildcard $(ROOT)/usr/lib*/libcrypt.a),)
+   SULOGINLIBS	+= -lcrypt
+ endif
+ 
+@@ -172,12 +172,12 @@
+ 		for i in $(MAN8); do \
+ 			$(INSTALL_DATA) ../man/$$i $(ROOT)$(MANDIR)/man8/; \
+ 		done
+-ifeq ($(ROOT),)
++ifeq (,)
+ 		#
+ 		# This part is skipped on Debian systems, the
+ 		# debian.preinst script takes care of it.
+-		@if [ ! -p /dev/initctl ]; then \
+-		 echo "Creating /dev/initctl"; \
+-		 rm -f /dev/initctl; \
+-		 mknod -m 600 /dev/initctl p; fi
++		@if [ ! -p $(ROOT)/dev/initctl ]; then \
++		 echo "Creating $(ROOT)/dev/initctl"; \
++		 rm -f $(ROOT)/dev/initctl; \
++		 mknod $(ROOT)/dev/initctl p; chmod 600 $(ROOT)/dev/initctl ; fi
+ endif
+diff -Nru sysvinit-2.88dsf/src/mountpoint.c sysvinit-2.88dsf-new/src/mountpoint.c
+--- sysvinit-2.88dsf/src/mountpoint.c	2009-09-10 10:28:49.000000000 +0200
++++ sysvinit-2.88dsf-new/src/mountpoint.c	2013-08-05 21:54:45.919980378 +0200
+@@ -31,6 +31,7 @@
+ #include <stdarg.h>
+ #include <getopt.h>
+ #include <stdio.h>
++#include <sys/sysmacros.h>
+ 
+ int dostat(char *path, struct stat *st, int do_lstat, int quiet)
+ {
+diff -Nru sysvinit-2.88dsf/src/sulogin.c sysvinit-2.88dsf-new/src/sulogin.c
+--- sysvinit-2.88dsf/src/sulogin.c	2010-04-08 11:07:36.000000000 +0200
++++ sysvinit-2.88dsf-new/src/sulogin.c	2013-08-05 22:06:56.389974672 +0200
+@@ -39,7 +39,7 @@
+ #include <pwd.h>
+ #include <shadow.h>
+ #include <termios.h>
+-#include <sys/ttydefaults.h>
++#include "ttydefaults.h"
+ #include <errno.h>
+ #include <sys/ioctl.h>
+ #if defined(__GLIBC__)
+diff -Nru sysvinit-2.88dsf/src/ttydefaults.h sysvinit-2.88dsf-new/src/ttydefaults.h
+--- sysvinit-2.88dsf/src/ttydefaults.h	1970-01-01 01:00:00.000000000 +0100
++++ sysvinit-2.88dsf-new/src/ttydefaults.h	2013-08-05 22:00:55.189977493 +0200
+@@ -0,0 +1,98 @@
++/*-
++ * Copyright (c) 1982, 1986, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ * (c) UNIX System Laboratories, Inc.
++ * All or some portions of this file are derived from material licensed
++ * to the University of California by American Telephone and Telegraph
++ * Co. or Unix System Laboratories, Inc. and are reproduced herein with
++ * the permission of UNIX System Laboratories, Inc.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. All advertising materials mentioning features or use of this software
++ *    must display the following acknowledgement:
++ *	This product includes software developed by the University of
++ *	California, Berkeley and its contributors.
++ * 4. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)ttydefaults.h	8.4 (Berkeley) 1/21/94
++ * $FreeBSD: src/sys/sys/ttydefaults.h,v 1.13.2.1 2001/03/06 03:37:08 jkh Exp $
++ */
++
++/*
++ * System wide defaults for terminal state.
++ */
++#ifndef _SYS_TTYDEFAULTS_H_
++#define	_SYS_TTYDEFAULTS_H_
++
++/*
++ * Defaults on "first" open.
++ */
++#define	TTYDEF_IFLAG	(BRKINT	| ICRNL	| IMAXBEL | IXON | IXANY)
++#define TTYDEF_OFLAG	(OPOST | ONLCR)
++#define TTYDEF_LFLAG	(ECHO | ICANON | ISIG | IEXTEN | ECHOE|ECHOKE|ECHOCTL)
++#define	TTYDEF_CFLAG	(CREAD | CS8 | HUPCL)
++#define TTYDEF_SPEED	(B9600)
++
++/*
++ * Control Character Defaults
++ */
++#define CTRL(x)	(x&037)
++#define	CEOF		CTRL('d')
++#define	CEOL		0xff		/* XXX avoid _POSIX_VDISABLE */
++#define	CERASE		0177
++#define	CERASE2		CTRL('h')
++#define	CINTR		CTRL('c')
++#define	CSTATUS		CTRL('t')
++#define	CKILL		CTRL('u')
++#define	CMIN		1
++#define	CQUIT		034		/* FS, ^\ */
++#define	CSUSP		CTRL('z')
++#define	CTIME		0
++#define	CDSUSP		CTRL('y')
++#define	CSTART		CTRL('q')
++#define	CSTOP		CTRL('s')
++#define	CLNEXT		CTRL('v')
++#define	CDISCARD 	CTRL('o')
++#define	CWERASE 	CTRL('w')
++#define	CREPRINT 	CTRL('r')
++#define	CEOT		CEOF
++/* compat */
++#define	CBRK		CEOL
++#define CRPRNT		CREPRINT
++#define	CFLUSH		CDISCARD
++
++/* PROTECTED INCLUSION ENDS HERE */
++#endif /* !_SYS_TTYDEFAULTS_H_ */
++
++/*
++ * #define TTYDEFCHARS to include an array of default control characters.
++ */
++#ifdef TTYDEFCHARS
++static cc_t	ttydefchars[NCCS] = {
++	CEOF,	CEOL,	CEOL,	CERASE, CWERASE, CKILL, CREPRINT,
++	CERASE2, CINTR,	CQUIT,	CSUSP,	CDSUSP,	CSTART,	CSTOP,	CLNEXT,
++	CDISCARD, CMIN,	CTIME,  CSTATUS, _POSIX_VDISABLE
++};
++#undef TTYDEFCHARS
++#endif

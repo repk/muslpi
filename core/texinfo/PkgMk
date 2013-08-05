@@ -1,0 +1,26 @@
+# Description: Official documentation format of the GNU project
+# URL: http://www.gnu.org/software/texinfo/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=texinfo
+VERSION=5.1
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.xz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target build-aux/config.sub
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr
+
+	make -j${NR_JOBS} tools/gnulib/lib
+	make -j${NR_JOBS} tools
+	make -j${NR_JOBS}
+
+	make DESTDIR=${PKG} install
+}

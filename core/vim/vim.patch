@@ -1,0 +1,60 @@
+diff -Nru vim73/src/auto/config.cache vim73-new/src/auto/config.cache
+--- vim73/src/auto/config.cache	1970-01-01 01:00:00.000000000 +0100
++++ vim73-new/src/auto/config.cache	2013-08-05 22:48:34.869955154 +0200
+@@ -0,0 +1,9 @@
++vim_cv_getcwd_broken=no
++vim_cv_memmove_handles_overlap=yes
++vim_cv_stat_ignores_slash=no
++vim_cv_terminfo=yes
++vim_cv_tgent=zero
++vim_cv_toupper_broken=no
++vim_cv_tty_group=world
++ac_cv_sizeof_int=4
++ac_cv_c_uint32_t=yes
+diff -Nru vim73/src/auto/configure vim73-new/src/auto/configure
+--- vim73/src/auto/configure	2010-08-13 16:17:15.000000000 +0200
++++ vim73-new/src/auto/configure	2013-08-05 22:50:21.129954324 +0200
+@@ -11641,34 +11641,8 @@
+ 
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking uint32_t is 32 bits" >&5
+ $as_echo_n "checking uint32_t is 32 bits... " >&6; }
+-if test "$cross_compiling" = yes; then :
+-  as_fn_error "could not compile program using uint32_t." "$LINENO" 5
+-else
+-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+-/* end confdefs.h.  */
+-
+-#ifdef HAVE_STDINT_H
+-# include <stdint.h>
+-#endif
+-#ifdef HAVE_INTTYPES_H
+-# include <inttypes.h>
+-#endif
+-main() {
+-  uint32_t nr1 = (uint32_t)-1;
+-  uint32_t nr2 = (uint32_t)0xffffffffUL;
+-  if (sizeof(uint32_t) != 4 || nr1 != 0xffffffffUL || nr2 + 1 != 0) exit(1);
+-  exit(0);
+-}
+-_ACEOF
+-if ac_fn_c_try_run "$LINENO"; then :
+-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ok" >&5
++  { $as_echo "$as_me:${as_lineno-$LINENO}: result: assuming ok" >&5
+ $as_echo "ok" >&6; }
+-else
+-  as_fn_error "WRONG!  uint32_t not defined correctly." "$LINENO" 5
+-fi
+-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+-  conftest.$ac_objext conftest.beam conftest.$ac_ext
+-fi
+ 
+ 
+ 
+diff -Nru vim73/src/feature.h vim73-new/src/feature.h
+--- vim73/src/feature.h	2010-07-27 21:45:42.000000000 +0200
++++ vim73-new/src/feature.h	2013-08-05 22:48:59.599954961 +0200
+@@ -1312,3 +1312,4 @@
+ #ifdef FEAT_NORMAL
+ # define FEAT_PERSISTENT_UNDO
+ #endif
++#define SYS_VIMRC_FILE "/etc/vimrc"

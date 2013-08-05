@@ -1,0 +1,31 @@
+# Description: Highly configurable text editor
+# URL: http://www.vim.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=vim
+VERSION=7.3
+
+
+DEPENDS=""
+SOURCES="ftp://ftp.vim.org/pub/${NAME}/unix/${NAME}-${VERSION}.tar.bz2"
+PATCHES="vim.patch"
+
+
+pkgmain() {
+	cd ${NAME}73
+	process_patches
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --enable-multibyte --enable-gui=no	\
+		--disable-gtktest --disable-xim --with-features=normal	\
+		--disable-gpm --without-x --disable-netbeans		\
+		--with-tlib=ncurses
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+
+	mkdir -p ${PKG}/usr/share/doc
+	ln -sfv vim ${PKG}/usr/bin/vi
+	ln -sfnv ../vim/vim73/doc ${PKG}/usr/share/doc/vim-7.3
+}

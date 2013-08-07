@@ -1,0 +1,28 @@
+# Description: Set of small useful utilities for Linux networking
+# URL: http://www.skbuff.net/iputils/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=bsd-init-scripts
+VERSION=0.1
+
+
+DEPENDS=""
+SOURCES=""
+FILES="rc rc.conf rc.modules rc.multi rc.shutdown rc.single sysctl.conf"
+
+
+pkgmain() {
+	mkdir ${NAME}-${VERSION}
+	cd ${NAME}-${VERSION}
+	copy_files
+
+	mkdir ${PKG}/etc
+	install -v -m755 rc ${PKG}/etc/rc
+	install -v -m755 rc.modules ${PKG}/etc/rc.modules
+	install -v -m755 rc.multi ${PKG}/etc/rc.multi
+	install -v -m755 rc.shutdown ${PKG}/etc/rc.shutdown
+	install -v -m755 rc.single ${PKG}/etc/rc.single
+	install -v -m644 rc.conf ${PKG}/etc/rc.conf
+	install -v -m644 sysctl.conf ${PKG}/etc/sysctl.conf
+}

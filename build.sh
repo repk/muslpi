@@ -254,7 +254,7 @@ prepare_src() {
 
 makepkg() {
 	cd ${PKG}
-	find . -name "lib*.la" -delete
+	find . -name "*.la" -delete
 	tar -cjf ${PKG_TAR} *
 	if [ $? -ne 0 ]; then
 		error "Failed to make package"

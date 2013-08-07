@@ -21,8 +21,6 @@ pkgmain() {
 		--prefix=/usr --cache-file=config.cache
 
 	make -j${NR_JOBS}
-	for f in $(find . -name *.la); do
-		sed -i "s#libdir='/usr/lib'#libdir='${PKG}/usr/lib'#g" ${f}
-	done
+	fix_temporary_libtool_files
 	make DESTDIR=${PKG} install
 }

@@ -234,6 +234,15 @@ copy_files() {
 	done
 }
 
+fix_temporary_libtool_files() {
+	for f in $(find . -name "*.la"); do
+		tmp=/tmp/$(basename ${f})_old
+		cp ${f} ${tmp}
+		sed "s#libdir='/usr/lib'#libdir='${PKG}/usr/lib'#g" ${tmp} > $f
+		rm ${tmp}
+	done
+}
+
 
 prepare_src() {
 	cd ${SRC}

@@ -24,12 +24,7 @@ pkgmain() {
 		--disable-makeinstall-chown
 
 	make -j${NR_JOBS}
-
-	#Bypass libtool nightmare.
-	for f in *.la; do
-		sed -i "s#libdir='/usr/lib'#libdir='${PKG}/usr/lib'#g" ${f}
-	done
-
+	fix_temporary_libtool_files
 	make DESTDIR=${PKG} install
 
 	mkdir -p ${PKG}/var/lib/hwclock

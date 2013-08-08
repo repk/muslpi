@@ -13,13 +13,33 @@ and then build cross compiled core package.
 
 == Instruction ==
 
+= First step =
+First to simplify use add tools directory to your PATH to run build scripts
+directly :
+
+	export PATH=${PWD}/tools:${PATH}
+or
+	setenv PATH ${PWD}/tools:${PATH}
+
+The next part will suppose that PATH env variable has been set accordingly if
+not you have to prefix calls of build.sh, install.sh and uninstall.sh with
+path to tools directory
+
 = Build a package =
-In order to build a package, go to the package directory and run ../../build.sh,
+In order to build a package, go to the package directory and run build.sh,
 this will build a tar.gz-based package
 
 = Install a package =
-Run ../../install.sh <pkg.tar.gz>
+Run install.sh <pkg.tar.gz>
 
 = Uninstall a package =
 To uninstall a cross package use "uninstall.sh pkg" and to uninstall a host
 package use "uninstall.sh pkg host"
+
+= configure =
+You can play with some build options by modifying files in config/
+
+= Result =
+Toolchain and clfs result will be placed in build directory. When done you can
+dd the clfs dir in a well formatted disk, add a /etc/fstab file and boot up your
+raspberry pi. If you get lucky this possibly can boot sometime.

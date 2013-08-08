@@ -162,7 +162,7 @@ main() {
 }
 
 
-PKGMK_BASEDIR=$(dirname $(readlink -e $0))
+PKGMK_BASEDIR=$(dirname $(dirname $(readlink -e $0)))
 PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
 PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"

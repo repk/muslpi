@@ -1,34 +1,13 @@
 #!/bin/sh
 
-error() {
-	echo -e "ERROR : $1" >&2
-	exit -1
+load_utils() {
+	. ${TOOLS_BASEDIR}/utils.sh
 }
-
-
-dbg() {
-	if [ -z "${DBGLVL}" ]; then
-		return
-	elif [ ${DBGLVL} -ge $1 ]; then
-		echo "$2"
-	fi
-}
-
 
 usage() {
 	error "Usage: $(basename $0) <pkg> (host)"
 }
 
-check_file() {
-	FILE=$1
-	if [ ! -f ${FILE} ]; then
-		error "File \"${FILE}\" does not exist"
-	elif [  ! -r ${FILE} ]; then
-		error "File \"${FILE}\" is not readable"
-	else
-		dbg 2 "File \"${FILE}\" is OK"
-	fi
-}
 
 get_args() {
 	if [ ${#} -ne 1 ] && [ ${#} -ne 2 ]; then
@@ -119,6 +98,7 @@ remove_host() {
 
 
 main() {
+	load_utils
 	get_args "$@"
 
 	check_file ${PKGMK_COMMONCONF}
@@ -145,8 +125,9 @@ main() {
 	error "${PKG_NAME} is not installed"
 }
 
+TOOLS_BASEDIR=$(dirname $(readlink -e $0))
+PKGMK_BASEDIR=$(dirname ${TOOLS_BASEDIR})
 
-PKGMK_BASEDIR=$(dirname $(dirname $(readlink -e $0)))
 PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
 PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"

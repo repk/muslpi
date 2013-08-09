@@ -1,33 +1,11 @@
 #!/bin/sh
 
-error() {
-	echo -e "ERROR : $1" >&2
-	exit -1
+load_utils() {
+	. ${TOOLS_BASEDIR}/utils.sh
 }
-
-
-dbg() {
-	if [ -z "${DBGLVL}" ]; then
-		return
-	elif [ ${DBGLVL} -ge $1 ]; then
-		echo "$2"
-	fi
-}
-
 
 usage() {
 	error "Usage: $(basename $0) <pkgfile>"
-}
-
-check_file() {
-	FILE=$1
-	if [ ! -f ${FILE} ]; then
-		error "File \"${FILE}\" does not exist"
-	elif [  ! -r ${FILE} ]; then
-		error "File \"${FILE}\" is not readable"
-	else
-		dbg 2 "File \"${FILE}\" is OK"
-	fi
 }
 
 get_args() {
@@ -35,11 +13,6 @@ get_args() {
 		usage
 	fi
 	PKG_FILE=${1}
-}
-
-
-host_main() {
-	echo super
 }
 
 
@@ -144,6 +117,7 @@ host_main() {
 }
 
 main() {
+	load_utils
 	get_args "$@"
 
 	case ${PKG_FILE} in
@@ -162,7 +136,10 @@ main() {
 }
 
 
-PKGMK_BASEDIR=$(dirname $(dirname $(readlink -e $0)))
+TOOLS_BASEDIR=$(dirname $(readlink -e $0))
+PKGMK_BASEDIR=$(dirname ${TOOLS_BASEDIR})
+
+
 PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
 PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"

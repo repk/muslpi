@@ -3,46 +3,9 @@
 #  build.sh
 #
 
-error() {
-	echo -e "ERROR : $1" >&2
-	exit -1
+load_utils() {
+	. ${TOOLS_BASEDIR}/utils.sh
 }
-
-
-dbg() {
-	if [ -z "${DBGLVL}" ]; then
-		return
-	elif [ ${DBGLVL} -ge $1 ]; then
-		echo "$2"
-	fi
-}
-
-
-check_dir() {
-	DIR=$1
-	if [ ! -d ${DIR} ]; then
-		error "Directory \"${DIR}\" does not exist"
-	elif [ ! -x ${DIR} ]  && [ ! -r ${DIR} ]; then
-		error "Directory \"${DIR}\" is not readable"
-	elif [ ! -w ${DIR} ]; then
-		error "Directory \"${DIR}\" is not writable"
-	else
-		dbg 2 "Directory : \"${DIR}\" is OK"
-	fi
-}
-
-
-check_file() {
-	FILE=$1
-	if [ ! -f ${FILE} ]; then
-		error "File \"${FILE}\" does not exist"
-	elif [  ! -r ${FILE} ]; then
-		error "File \"${FILE}\" is not readable"
-	else
-		dbg 2 "File \"${FILE}\" is OK"
-	fi
-}
-
 
 check_md5file() {
 	if [ ! -f ${PKG_MD5} ]; then
@@ -286,6 +249,8 @@ check_footprint() {
 
 
 main() {
+	load_utils
+
 	dbg 1 "Package build started"
 
 	#Check files
@@ -324,7 +289,9 @@ main() {
 }
 
 
-PKGMK_BASEDIR=$(dirname $(dirname $(readlink -e $0)))
+TOOLS_BASEDIR=$(dirname $(readlink -e $0))
+PKGMK_BASEDIR=$(dirname ${TOOLS_BASEDIR})
+
 #Important files
 PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"

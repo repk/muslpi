@@ -36,6 +36,17 @@ Run install.sh <pkg.tar.gz>
 To uninstall a cross package use "uninstall.sh pkg" and to uninstall a host
 package use "uninstall.sh pkg host"
 
+= Auto build =
+Lazy people can use install_pkglist to automatically build a package list. You
+can find two usefull package list in config/pkg_lists directory. For example to
+make a complete install run these two commands :
+
+install_pkglist config/pkg_lists/toolchain
+install_pkglist config/pkg_lists/core
+
+And go take a beer and 6 others because ths will take a long long time.
+
+
 = configure =
 You can play with some build options by modifying files in config/
 

@@ -1,0 +1,10 @@
+PKGLIST="toolchain/linux-headers	\
+	 toolchain/gmp			\
+	 toolchain/mpfr			\
+	 toolchain/ppl			\
+	 toolchain/cloog-ppl		\
+	 toolchain/mpc			\
+	 toolchain/binutils		\
+	 toolchain/gcc-static		\
+	 toolchain/musl			\
+	 toolchain/gcc"

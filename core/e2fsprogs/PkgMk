@@ -9,11 +9,13 @@ VERSION=1.42.8
 
 DEPENDS="util-linux"
 SOURCES="https://www.kernel.org/pub/linux/kernel/people/tytso/${NAME}/v${VERSION}/${NAME}-${VERSION}.tar.gz"
+PATCHES="e2fsprogs.patch"
 
 
 pkgmain() {
 	cd ${NAME}-${VERSION}
 	patch_unknown_target config/config.sub
+	process_patches
 
 	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
 		--prefix=/usr --with-root-prefix="" --enable-elf-shlibs	\

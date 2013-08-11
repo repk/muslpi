@@ -39,5 +39,5 @@ pkgmain() {
 
 	make -j${NR_JOBS} AS_FOR_TARGET="${CLFS_TARGET}-as" LD_FOR_TARGET="${CLFS_TARGET}-ld"
 	make install
-	${PKGMK_BASEDIR}/uninstall.sh gcc-static
+	${TOOLS_BASEDIR}/uninstall.sh gcc-static host
 }

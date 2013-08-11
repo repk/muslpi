@@ -99,6 +99,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sys/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/ucontext.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/resource.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/ptrace.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/dir.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/cachectl.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/ipc.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/msg.h
@@ -108,13 +109,17 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sys/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/uio.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/vfs.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/syscall.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/signal.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/personality.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/stropts.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/timerfd.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/sysinfo.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/fcntl.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/ttydefaults.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/epoll.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/inotify.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/soundcard.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/errno.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/acct.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/times.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/timex.h
@@ -135,6 +140,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sys/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/stat.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/time.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/swap.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/termios.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/user.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/wait.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/statfs.h
@@ -211,6 +217,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/scsi/fc/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/scsi/.install
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/scsi/scsi.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/scsi/scsi_netlink_fc.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/scsi/scsi_ioctl.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/libintl.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/ucontext.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/pthread.h

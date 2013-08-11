@@ -39,6 +39,9 @@ main() {
 		OLD=${PWD}
 		check_dir ${PKGMK_BASEDIR}/${pkg}
 		cd ${PKGMK_BASEDIR}/${pkg}
+		if [ $? -ne 0 ]; then
+			error "Fail to build package"
+		fi
 		${TOOLS_BASEDIR}/build.sh
 		if [ -f *-host-pkg.tar.bz2 ]; then
 			${TOOLS_BASEDIR}/install.sh *-host-pkg.tar.bz2

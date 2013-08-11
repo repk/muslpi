@@ -251,7 +251,6 @@ check_footprint() {
 
 	DIFF=$(echo "${COMPUTED_FOOTPRINT}" | diff -u ${PKG_FOOTPRINT} -)
 	if [ $? -ne 0 ]; then
-        rm ${PKG_TAR}
 		error "Footprint mismatch:\n${DIFF}"
 	fi
 }

@@ -1,7 +1,9 @@
 drwxr-xr-x lib/
 -rwxr-xr-x lib/libc.so
-lrwxrwxrwx lib/ld-musl-arm.so.1
+lrwxrwxrwx lib/ld-musl-armhf.so.1
 drwxr-xr-x usr/
+drwxr-xr-x usr/bin/
+lrwxrwxrwx usr/bin/ldd
 drwxr-xr-x usr/lib/
 -rw-r--r-- usr/lib/libutil.a
 -rw-r--r-- usr/lib/libxnet.a
@@ -30,6 +32,7 @@ drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/sys/ucontext.h
 -rw-r--r-- usr/include/sys/resource.h
 -rw-r--r-- usr/include/sys/ptrace.h
+-rw-r--r-- usr/include/sys/dir.h
 -rw-r--r-- usr/include/sys/cachectl.h
 -rw-r--r-- usr/include/sys/ipc.h
 -rw-r--r-- usr/include/sys/msg.h
@@ -39,13 +42,17 @@ drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/sys/uio.h
 -rw-r--r-- usr/include/sys/vfs.h
 -rw-r--r-- usr/include/sys/syscall.h
+-rw-r--r-- usr/include/sys/signal.h
 -rw-r--r-- usr/include/sys/personality.h
 -rw-r--r-- usr/include/sys/stropts.h
 -rw-r--r-- usr/include/sys/timerfd.h
 -rw-r--r-- usr/include/sys/sysinfo.h
+-rw-r--r-- usr/include/sys/fcntl.h
+-rw-r--r-- usr/include/sys/ttydefaults.h
 -rw-r--r-- usr/include/sys/epoll.h
 -rw-r--r-- usr/include/sys/inotify.h
 -rw-r--r-- usr/include/sys/soundcard.h
+-rw-r--r-- usr/include/sys/errno.h
 -rw-r--r-- usr/include/sys/acct.h
 -rw-r--r-- usr/include/sys/times.h
 -rw-r--r-- usr/include/sys/timex.h
@@ -66,6 +73,7 @@ drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/sys/stat.h
 -rw-r--r-- usr/include/sys/time.h
 -rw-r--r-- usr/include/sys/swap.h
+-rw-r--r-- usr/include/sys/termios.h
 -rw-r--r-- usr/include/sys/user.h
 -rw-r--r-- usr/include/sys/wait.h
 -rw-r--r-- usr/include/sys/statfs.h
@@ -116,6 +124,7 @@ drwxr-xr-x usr/include/bits/
 drwxr-xr-x usr/include/scsi/
 -rw-r--r-- usr/include/scsi/sg.h
 -rw-r--r-- usr/include/scsi/scsi.h
+-rw-r--r-- usr/include/scsi/scsi_ioctl.h
 -rw-r--r-- usr/include/libintl.h
 -rw-r--r-- usr/include/ucontext.h
 -rw-r--r-- usr/include/pthread.h

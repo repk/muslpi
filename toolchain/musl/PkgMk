@@ -4,7 +4,7 @@
 
 
 NAME=musl
-VERSION=0.9.11
+VERSION=0.9.12
 
 
 DEPENDS="gcc-static"
@@ -17,7 +17,12 @@ pkgmain() {
 		--target=${CLFS_TARGET}
 	make -j${NR_JOBS}
 	make install
-    mv ${PKG}/usr/lib/libc.so ${PKG}/lib/libc.so
-    rm ${PKG}/lib/ld-musl-arm.so.1
-    ln -s /lib/libc.so ${PKG}/lib/ld-musl-arm.so.1
+	mv ${PKG}/usr/lib/libc.so ${PKG}/lib/libc.so
+
+	# Find interp name (this can change by arch)
+	FILE=$(ls ${PKG}/lib/ld-musl*.so.1)
+	rm ${FILE}
+	ln -s /lib/libc.so ${FILE}
+	mkdir ${PKG}/usr/bin
+	ln -s /lib/libc.so ${PKG}/usr/bin/ldd
 }

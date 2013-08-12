@@ -1,0 +1,12 @@
+diff -Nru binutils-2.23.2/libiberty/Makefile.in binutils-2.23.2-new/libiberty/Makefile.in
+--- binutils-2.23.2/libiberty/Makefile.in	2012-04-27 20:03:26.000000000 +0200
++++ binutils-2.23.2-new/libiberty/Makefile.in	2013-08-12 11:26:28.383636574 +0200
+@@ -352,7 +352,7 @@
+ # multilib-specific flags, it's overridden by FLAGS_TO_PASS from the
+ # default multilib, so we have to take CFLAGS into account as well,
+ # since it will be passed the multilib flags.
+-MULTIOSDIR = `$(CC) $(CFLAGS) -print-multi-os-directory`
++MULTIOSDIR = 
+ install_to_libdir: all
+ 	${mkinstalldirs} $(DESTDIR)$(libdir)/$(MULTIOSDIR)
+ 	$(INSTALL_DATA) $(TARGETLIB) $(DESTDIR)$(libdir)/$(MULTIOSDIR)/$(TARGETLIB)n

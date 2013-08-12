@@ -10,7 +10,7 @@ HOST_PKG=1
 
 DEPENDS=""
 SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
-PATCHES="binutils-skip-whitespace.patch"
+PATCHES="binutils-skip-whitespace.patch binutils-libiberty-path.patch"
 
 
 pkgmain() {

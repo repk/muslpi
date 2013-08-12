@@ -242,7 +242,7 @@ patch_unknown_target() {
 }
 
 check_footprint() {
-	COMPUTED_FOOTPRINT=$(tar -tvf ${PKG_TAR} | tr -s ' ' | cut -d' ' -f1,6)
+	COMPUTED_FOOTPRINT=$(tar -tvf ${PKG_TAR} | tr -s ' ' | cut -d' ' -f1,6 | sort -k 2)
 
 	if [ -n "${PKG_NO_FOOTPRINT}" ]; then
 		echo "${COMPUTED_FOOTPRINT}" >> ${PKG_FOOTPRINT}

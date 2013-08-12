@@ -1,10 +1,12 @@
 drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
 -rwxr-xr-x usr/bin/file
+drwxr-xr-x usr/include/
+-rw-r--r-- usr/include/magic.h
 drwxr-xr-x usr/lib/
+lrwxrwxrwx usr/lib/libmagic.so
 lrwxrwxrwx usr/lib/libmagic.so.1
 -rwxr-xr-x usr/lib/libmagic.so.1.0.0
-lrwxrwxrwx usr/lib/libmagic.so
 drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/man1/
@@ -16,5 +18,3 @@ drwxr-xr-x usr/share/man/man4/
 drwxr-xr-x usr/share/man/man5/
 drwxr-xr-x usr/share/misc/
 -rw-r--r-- usr/share/misc/magic.mgc
-drwxr-xr-x usr/include/
--rw-r--r-- usr/include/magic.h

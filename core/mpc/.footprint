@@ -1,12 +1,12 @@
 drwxr-xr-x usr/
+drwxr-xr-x usr/include/
+-rw-r--r-- usr/include/mpc.h
 drwxr-xr-x usr/lib/
-lrwxrwxrwx usr/lib/libmpc.so.3
-lrwxrwxrwx usr/lib/libmpc.so
--rwxr-xr-x usr/lib/libmpc.so.3.0.0
 -rw-r--r-- usr/lib/libmpc.a
+lrwxrwxrwx usr/lib/libmpc.so
+lrwxrwxrwx usr/lib/libmpc.so.3
+-rwxr-xr-x usr/lib/libmpc.so.3.0.0
 drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/info/
 -rw-r--r-- usr/share/info/dir
 -rw-r--r-- usr/share/info/mpc.info
-drwxr-xr-x usr/include/
--rw-r--r-- usr/include/mpc.h

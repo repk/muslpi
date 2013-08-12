@@ -1,8 +1,8 @@
 drwxr-xr-x etc/
 -rwxr-xr-x etc/rc
--rwxr-xr-x etc/rc.single
--rw-r--r-- etc/sysctl.conf
--rwxr-xr-x etc/rc.shutdown
+-rw-r--r-- etc/rc.conf
 -rwxr-xr-x etc/rc.modules
 -rwxr-xr-x etc/rc.multi
--rw-r--r-- etc/rc.conf
+-rwxr-xr-x etc/rc.shutdown
+-rwxr-xr-x etc/rc.single
+-rw-r--r-- etc/sysctl.conf

@@ -1,9 +1,9 @@
 drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
-hrwxr-xr-x usr/bin/aclocal
+-rwxr-xr-x usr/bin/aclocal
 -rwxr-xr-x usr/bin/aclocal-1.14
 -rwxr-xr-x usr/bin/automake
-hrwxr-xr-x usr/bin/automake-1.14
+-rwxr-xr-x usr/bin/automake-1.14
 drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/aclocal/
 drwxr-xr-x usr/share/aclocal-1.14/

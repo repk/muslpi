@@ -1,5 +1,5 @@
 drwxr-xr-x bin/
-hrwxr-xr-x bin/gunzip
+-rwxr-xr-x bin/gunzip
 -rwxr-xr-x bin/gzexe
 -rwxr-xr-x bin/gzip
 -rwxr-xr-x bin/uncompress

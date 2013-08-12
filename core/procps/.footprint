@@ -9,12 +9,12 @@ drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
 -r-xr-xr-x usr/bin/free
 -r-xr-xr-x usr/bin/pgrep
-hr-xr-xr-x usr/bin/pkill
+-r-xr-xr-x usr/bin/pkill
 -r-xr-xr-x usr/bin/pmap
 -r-xr-xr-x usr/bin/pwdx
 -r-xr-xr-x usr/bin/skill
 -r-xr-xr-x usr/bin/slabtop
-hr-xr-xr-x usr/bin/snice
+-r-xr-xr-x usr/bin/snice
 -r-xr-xr-x usr/bin/tload
 -r-xr-xr-x usr/bin/top
 -r-xr-xr-x usr/bin/uptime

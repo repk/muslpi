@@ -2,7 +2,7 @@ drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
 lrwxrwxrwx usr/bin/awk
 -rwxr-xr-x usr/bin/gawk
-hrwxr-xr-x usr/bin/gawk-4.1.0
+-rwxr-xr-x usr/bin/gawk-4.1.0
 -rwxr-xr-x usr/bin/igawk
 drwxr-xr-x usr/include/
 -rw-r--r-- usr/include/gawkapi.h

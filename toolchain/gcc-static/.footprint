@@ -1,7 +1,7 @@
 drwxr-xr-x bin/
 -rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-cpp
 -rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-gcc
-hrwxr-xr-x bin/arm-repkhardfp-linux-musleabi-gcc-4.7.2
+-rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-gcc-4.7.2
 -rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-gcc-ar
 -rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-gcc-nm
 -rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-gcc-ranlib

@@ -19,14 +19,18 @@ load_utils() {
 
 
 usage() {
-	error "Usage: $(basename $0) <pkglist_file>"
+	error "Usage: $(basename $0) [OPTION] <pkglist_file>\nOPTION\n\t-f: Force build event if footprint mismatches"
 }
 
 get_args() {
-	if [ ${#} -ne 1 ]; then
+	if [ ${#} -eq 1 ]; then
+		PKG_LIST_FILE=${1}
+	elif [ ${#} -eq 2 ] && [ ${1} == "-f" ]; then
+		PKG_BUILD_OPT="-f"
+		PKG_LIST_FILE=${2}
+	else
 		usage
 	fi
-	PKG_LIST_FILE=${1}
 }
 
 main() {
@@ -39,7 +43,7 @@ main() {
 		OLD=${PWD}
 		check_dir ${PKGMK_BASEDIR}/${pkg}
 		cd ${PKGMK_BASEDIR}/${pkg}
-		${TOOLS_BASEDIR}/build.sh
+		${TOOLS_BASEDIR}/build.sh ${PKG_BUILD_OPT}
 		if [ $? -ne 0 ]; then
 			error "Fail to build package"
 		fi
@@ -59,6 +63,7 @@ TOOLS_BASEDIR=$(dirname $(readlink -e $0))
 PKGMK_BASEDIR=$(dirname ${TOOLS_BASEDIR})
 
 PKG_LIST_FILE=""
+PKG_BUILD_OPT=""
 
 #Debug
 DBGLVL=2

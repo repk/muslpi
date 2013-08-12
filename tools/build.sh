@@ -16,6 +16,19 @@ load_utils() {
 	. ${TOOLS_BASEDIR}/utils.sh
 }
 
+usage() {
+	error "Usage: $(basename $0) [OPTION]\nOPTION\n\t-f: Force build event if footprint mismatches"
+}
+
+
+get_args() {
+	if [ ${#} -ne 0 ] && [ ${1} != "-f" ]; then
+		usage
+	elif [ ${#} -ne 0 ]; then
+		FORCE=1
+	fi
+}
+
 check_md5file() {
 	if [ ! -f ${PKG_MD5} ]; then
 		dbg 1 "MD5 file does not exist one will be created"
@@ -242,7 +255,10 @@ patch_unknown_target() {
 }
 
 check_footprint() {
-	COMPUTED_FOOTPRINT=$(tar -tvf ${PKG_TAR} | tr -s ' ' | cut -d' ' -f1,6 | sort -k 2)
+	if [ ${FORCE} -eq 1 ]; then
+		return
+	fi
+	COMPUTED_FOOTPRINT=$(compute_footprint ${PKG_TAR})
 
 	if [ -n "${PKG_NO_FOOTPRINT}" ]; then
 		echo "${COMPUTED_FOOTPRINT}" >> ${PKG_FOOTPRINT}
@@ -259,6 +275,7 @@ check_footprint() {
 main() {
 	load_utils
 
+	get_args "${@}"
 	dbg 1 "Package build started"
 
 	#Check files
@@ -321,6 +338,7 @@ PKG_NO_MD5=""
 PKG_NO_FOOTPRINT=""
 
 PKG_SOURCES=""
+FORCE=0
 
 #Debug
 DBGLVL=2

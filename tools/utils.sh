@@ -59,3 +59,7 @@ check_file() {
 	fi
 }
 
+compute_footprint() {
+	FILE=$1
+	tar -tvf ${FILE} | tr -s ' ' | cut -d' ' -f1,6 | sort -k 2
+}

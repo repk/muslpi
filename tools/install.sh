@@ -48,7 +48,7 @@ install_footprint() {
 	echo "PACKAGE_NAME:${_PKG_NAME}" >> ${FOOTPRINT_FILE}
 	echo "PACKAGE_VERSION:${_PKG_VERSION}" >> ${FOOTPRINT_FILE}
 	echo "PACKAGE_TIMESTAMP:$(date '+%s')" >> ${FOOTPRINT_FILE}
-	cat ${PKG_FOOTPRINT} >> ${FOOTPRINT_FILE}
+	compute_footprint ${PKG_FILE} >> ${FOOTPRINT_FILE}
 }
 
 

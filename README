@@ -29,6 +29,9 @@ path to tools directory
 In order to build a package, go to the package directory and run build.sh,
 this will build a tar.gz-based package
 
+As footprints have not been well tested on different environment you can use
+"build.sh -f" to not check package footprint.
+
 = Install a package =
 Run install.sh <pkg.tar.gz>
 
@@ -41,11 +44,12 @@ Lazy people can use install_pkglist to automatically build a package list. You
 can find two usefull package list in config/pkg_lists directory. For example to
 make a complete install run these two commands :
 
-install_pkglist config/pkg_lists/toolchain
-install_pkglist config/pkg_lists/core
+install_pkglist.sh config/pkg_lists/toolchain
+install_pkglist.sh config/pkg_lists/core
 
 And go take a beer and 6 others because ths will take a long long time.
 
+You can use "install_pkglist.sh -f" if you want to not check package footprint.
 
 = configure =
 You can play with some build options by modifying files in config/

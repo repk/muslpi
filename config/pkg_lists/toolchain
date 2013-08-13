@@ -7,4 +7,5 @@ PKGLIST="toolchain/linux-headers	\
 	 toolchain/binutils		\
 	 toolchain/gcc-static		\
 	 toolchain/musl			\
-	 toolchain/gcc"
+	 toolchain/gcc			\
+	 toolchain/file"

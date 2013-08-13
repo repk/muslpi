@@ -1,5 +1,6 @@
 drwxr-xr-x etc/
 drwxr-xr-x etc/xtables/
+-rw-r--r-- etc/xtables/connlabel.conf
 drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
 lrwxrwxrwx usr/bin/iptables-xml

@@ -26,4 +26,5 @@ pkgmain() {
 	make -j${NR_JOBS}
 	fix_temporary_libtool_files
 	make DESTDIR=${PKG} install
+    install -D -m 0644 etc/xtables/connlabel.conf ${PKG}/etc/xtables/connlabel.conf
 }

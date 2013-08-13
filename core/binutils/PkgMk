@@ -18,8 +18,8 @@ pkgmain() {
 	patch_unknown_target config.sub
 	process_patches
 
-	./configure --prefix=/usr --host=${CLFS_HOST}			\
-		--target=${CLFS_TARGET} --enable-shared
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET} --target=${CLFS_TARGET} --enable-shared
 
 	make configure-host
 	make -j${NR_JOBS} tooldir=/usr

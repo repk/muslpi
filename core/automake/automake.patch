@@ -1,0 +1,12 @@
+diff -Nru a/configure b/configure
+--- a/configure	2013-08-13 16:02:49.325894128 +0200
++++ b/configure	2013-08-13 16:05:28.462087119 +0200
+@@ -2928,7 +2928,7 @@
+ # following tests, but some users were unable to figure out that their
+ # installation was broken since --version appeared to work.
+ 
+-required_autoconf_version=2.65
++required_autoconf_version=2.13
+ 
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether autoconf is installed" >&5
+ $as_echo_n "checking whether autoconf is installed... " >&6; }

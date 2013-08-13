@@ -65,3 +65,51 @@ diff -Nru iproute2-3.10.0/tc/tc_util.h iproute2-3.10.0-new/tc/tc_util.h
  
  /* This is the deprecated multiqueue interface */
  #ifndef TCA_PRIO_MAX
+diff -Nru a/misc/arpd.c b/misc/arpd.c
+--- a/misc/arpd.c	2013-08-13 12:03:27.950740814 +0200
++++ b/misc/arpd.c	2013-08-13 12:04:27.153928695 +0200
+@@ -18,7 +18,7 @@
+ #include <netdb.h>
+ #include <db_185.h>
+ #include <sys/ioctl.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <sys/uio.h>
+diff -Nru a/misc/ifstat.c b/misc/ifstat.c
+--- a/misc/ifstat.c	2013-08-13 12:03:27.950740814 +0200
++++ b/misc/ifstat.c	2013-08-13 12:04:27.156928755 +0200
+@@ -21,7 +21,7 @@
+ #include <sys/file.h>
+ #include <sys/socket.h>
+ #include <sys/un.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ #include <sys/wait.h>
+ #include <sys/stat.h>
+ #include <signal.h>
+diff -Nru a/misc/nstat.c b/misc/nstat.c
+--- a/misc/nstat.c	2013-08-13 12:03:27.950740814 +0200
++++ b/misc/nstat.c	2013-08-13 12:04:27.158928795 +0200
+@@ -21,7 +21,7 @@
+ #include <sys/file.h>
+ #include <sys/socket.h>
+ #include <sys/un.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ #include <sys/wait.h>
+ #include <sys/stat.h>
+ #include <signal.h>
+diff -Nru a/misc/rtacct.c b/misc/rtacct.c
+--- a/misc/rtacct.c	2013-08-13 12:03:27.950740814 +0200
++++ b/misc/rtacct.c	2013-08-13 12:04:27.160928835 +0200
+@@ -22,7 +22,7 @@
+ #include <sys/file.h>
+ #include <sys/socket.h>
+ #include <sys/un.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ #include <sys/wait.h>
+ #include <sys/stat.h>
+ #include <sys/mman.h>

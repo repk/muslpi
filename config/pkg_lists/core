@@ -20,7 +20,6 @@ PKGLIST="core/man		\
 	 core/flex		\
 	 core/iptables		\
 	 core/iproute2		\
-	 core/perl		\
 	 core/readline		\
 	 core/autoconf		\
 	 core/automake		\

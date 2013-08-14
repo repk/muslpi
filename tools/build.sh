@@ -220,7 +220,8 @@ copy_files() {
 }
 
 fix_temporary_libtool_files() {
-	for f in $(find . -name "*.la"); do
+	files=$(find . -name "*.la" -printf "%T@ %p\n" | sort -n | cut -d ' ' -f 2)
+	for f in ${files}; do
 		tmp=/tmp/$(basename ${f})_old
 		cp ${f} ${tmp}
 		sed "s#libdir='/usr/lib'#libdir='${PKG}/usr/lib'#g" ${tmp} > $f

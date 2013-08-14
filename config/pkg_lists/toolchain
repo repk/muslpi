@@ -8,4 +8,5 @@ PKGLIST="toolchain/linux-headers	\
 	 toolchain/gcc-static		\
 	 toolchain/musl			\
 	 toolchain/gcc			\
-	 toolchain/file"
+	 toolchain/file			\
+	 toolchain/groff"

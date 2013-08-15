@@ -1,29 +1,31 @@
+============
 muslpi-cross
 ============
 
 muslpi-cross is a cross lfs build system for raspberry pi (but can/will possibly
 be extended to a generic cross lfs build system).
 
-The resulting clfs will use the lightweight and posix-conformant musl libc, a
-bsd style init system.
+The resulting clfs will use the lightweight and posix-conformant musl libc, and
+a bsd style init system.
 
 This build system will first build a cross toolchain (toolchain/host packages)
-and then build cross compiled core package.
+and then build cross compiled core packages.
 
 
 == Instruction ==
 
 = First step =
-First to simplify use add tools directory to your PATH to run build scripts
-directly :
+First to simplify use of this build system, it is recommended to add tools
+directory to your PATH in order to run build scripts directly :
 
 	export PATH=${PWD}/tools:${PATH}
 or
 	setenv PATH ${PWD}/tools:${PATH}
 
 The next part will suppose that PATH env variable has been set accordingly if
-not you have to prefix calls of build.sh, install.sh and uninstall.sh with
+not you have to prefix calls to build.sh, install.sh and uninstall.sh with
 path to tools directory
+
 
 = Build a package =
 In order to build a package, go to the package directory and run build.sh,
@@ -32,27 +34,33 @@ this will build a tar.gz-based package
 As footprints have not been well tested on different environment you can use
 "build.sh -f" to not check package footprint.
 
+
 = Install a package =
 Run install.sh <pkg.tar.gz>
+
 
 = Uninstall a package =
 To uninstall a cross package use "uninstall.sh pkg" and to uninstall a host
 package use "uninstall.sh pkg host"
 
+
 = Auto build =
-Lazy people can use install_pkglist to automatically build a package list. You
-can find two usefull package list in config/pkg_lists directory. For example to
-make a complete install run these two commands :
+Lazy people can use install_pkglist.sh to automatically build a package list.
+You can find two usefull package lists in config/pkg_lists directory. For
+example to make a complete install run these two commands :
 
 install_pkglist.sh config/pkg_lists/toolchain
 install_pkglist.sh config/pkg_lists/core
 
 And go take a beer and 6 others because ths will take a long long time.
 
-You can use "install_pkglist.sh -f" if you want to not check package footprint.
+You can use "install_pkglist.sh -f" if you want to bypass package footprint
+checking.
+
 
 = configure =
 You can play with some build options by modifying files in config/
+
 
 = Result =
 Toolchain and clfs result will be placed in build directory. When done you can

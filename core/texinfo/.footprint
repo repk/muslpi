@@ -13,14 +13,6 @@ lrwxrwxrwx usr/bin/makeinfo
 drwxr-xr-x usr/lib/
 -rw-r--r-- usr/lib/charset.alias
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/info.info
--rw-r--r-- usr/share/info/info-stnd.info
--rw-r--r-- usr/share/info/texinfo
--rw-r--r-- usr/share/info/texinfo-1
--rw-r--r-- usr/share/info/texinfo-2
--rw-r--r-- usr/share/info/texinfo-3
 drwxr-xr-x usr/share/locale/
 drwxr-xr-x usr/share/locale/cs/
 drwxr-xr-x usr/share/locale/cs/LC_MESSAGES/

@@ -11,8 +11,3 @@ lrwxrwxrwx lib/libgmpxx.so
 lrwxrwxrwx lib/libgmpxx.so.4
 -rwxr-xr-x lib/libgmpxx.so.4.2.5
 drwxr-xr-x share/
-drwxr-xr-x share/info/
--rw-r--r-- share/info/dir
--rw-r--r-- share/info/gmp.info
--rw-r--r-- share/info/gmp.info-1
--rw-r--r-- share/info/gmp.info-2

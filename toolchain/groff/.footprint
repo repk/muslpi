@@ -718,12 +718,6 @@ drwxr-xr-x share/groff/site-font/
 drwxr-xr-x share/groff/site-tmac/
 -rw-r--r-- share/groff/site-tmac/man.local
 -rw-r--r-- share/groff/site-tmac/mdoc.local
-drwxr-xr-x share/info/
--rw-r--r-- share/info/dir
--rw-r--r-- share/info/groff.info
--rw-r--r-- share/info/groff.info-1
--rw-r--r-- share/info/groff.info-2
--rw-r--r-- share/info/groff.info-3
 drwxr-xr-x share/man/
 drwxr-xr-x share/man/man1/
 -rw-r--r-- share/man/man1/addftinfo.1

@@ -125,12 +125,6 @@ drwxr-xr-x usr/share/automake-1.14/Automake/
 drwxr-xr-x usr/share/doc/
 drwxr-xr-x usr/share/doc/automake/
 -rw-r--r-- usr/share/doc/automake/amhello-1.0.tar.gz
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/automake-history.info
--rw-r--r-- usr/share/info/automake.info
--rw-r--r-- usr/share/info/automake.info-1
--rw-r--r-- usr/share/info/automake.info-2
--rw-r--r-- usr/share/info/dir
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/man1/
 -rw-r--r-- usr/share/man/man1/aclocal.1

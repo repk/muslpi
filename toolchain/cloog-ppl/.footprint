@@ -22,6 +22,3 @@ lrwxrwxrwx lib/libcloog.so
 lrwxrwxrwx lib/libcloog.so.0
 -rwxr-xr-x lib/libcloog.so.0.0.0
 drwxr-xr-x share/
-drwxr-xr-x share/info/
--rw-r--r-- share/info/cloog.info
--rw-r--r-- share/info/dir

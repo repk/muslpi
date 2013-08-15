@@ -58,15 +58,6 @@ lrwxrwxrwx usr/lib/libbfd.so
 -rw-r--r-- usr/lib/libopcodes.a
 lrwxrwxrwx usr/lib/libopcodes.so
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/as.info
--rw-r--r-- usr/share/info/bfd.info
--rw-r--r-- usr/share/info/binutils.info
--rw-r--r-- usr/share/info/configure.info
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/gprof.info
--rw-r--r-- usr/share/info/ld.info
--rw-r--r-- usr/share/info/standards.info
 drwxr-xr-x usr/share/locale/
 drwxr-xr-x usr/share/locale/bg/
 drwxr-xr-x usr/share/locale/bg/LC_MESSAGES/

@@ -17,8 +17,3 @@ lrwxrwxrwx usr/lib/libmp.so
 lrwxrwxrwx usr/lib/libmp.so.3
 -rwxr-xr-x usr/lib/libmp.so.3.1.25
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/gmp.info
--rw-r--r-- usr/share/info/gmp.info-1
--rw-r--r-- usr/share/info/gmp.info-2

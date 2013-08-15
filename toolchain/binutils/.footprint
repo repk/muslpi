@@ -57,15 +57,6 @@ drwxr-xr-x bin/
 drwxr-xr-x lib/
 -rw-r--r-- lib/libiberty.a
 drwxr-xr-x share/
-drwxr-xr-x share/info/
--rw-r--r-- share/info/as.info
--rw-r--r-- share/info/bfd.info
--rw-r--r-- share/info/binutils.info
--rw-r--r-- share/info/configure.info
--rw-r--r-- share/info/dir
--rw-r--r-- share/info/gprof.info
--rw-r--r-- share/info/ld.info
--rw-r--r-- share/info/standards.info
 drwxr-xr-x share/man/
 drwxr-xr-x share/man/man1/
 -rw-r--r-- share/man/man1/arm-repkhardfp-linux-musleabi-addr2line.1

@@ -4,9 +4,6 @@ drwxr-xr-x usr/
 drwxr-xr-x usr/lib/
 -rw-r--r-- usr/lib/charset.alias
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/sed.info
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/man1/
 -rw-r--r-- usr/share/man/man1/sed.1

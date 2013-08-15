@@ -240,7 +240,17 @@ prepare_src() {
 
 makepkg() {
 	cd ${PKG}
+
+	# Remove libtool files
 	find . -name "*.la" -delete
+	# Remove GNU info files
+	if [ -d share/info ]; then
+		rm -rf share/info
+	fi
+	if [ -d usr/share/info ]; then
+		rm -rf usr/share/info
+	fi
+
 	tar -cjf ${PKG_TAR} *
 	if [ $? -ne 0 ]; then
 		error "Failed to make package"

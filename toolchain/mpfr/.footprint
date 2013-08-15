@@ -22,6 +22,3 @@ drwxr-xr-x share/doc/mpfr/examples/
 -rw-r--r-- share/doc/mpfr/FAQ.html
 -rw-r--r-- share/doc/mpfr/NEWS
 -rw-r--r-- share/doc/mpfr/TODO
-drwxr-xr-x share/info/
--rw-r--r-- share/info/dir
--rw-r--r-- share/info/mpfr.info

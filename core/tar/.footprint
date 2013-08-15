@@ -6,11 +6,6 @@ drwxr-xr-x usr/lib/
 drwxr-xr-x usr/sbin/
 -rwxr-xr-x usr/sbin/rmt
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/tar.info
--rw-r--r-- usr/share/info/tar.info-1
--rw-r--r-- usr/share/info/tar.info-2
 drwxr-xr-x usr/share/locale/
 drwxr-xr-x usr/share/locale/bg/
 drwxr-xr-x usr/share/locale/bg/LC_MESSAGES/

@@ -973,11 +973,6 @@ drwxr-xr-x usr/share/gcc-4.7.2/python/libstdcxx/
 drwxr-xr-x usr/share/gcc-4.7.2/python/libstdcxx/v6/
 -rw-r--r-- usr/share/gcc-4.7.2/python/libstdcxx/v6/__init__.py
 -rw-r--r-- usr/share/gcc-4.7.2/python/libstdcxx/v6/printers.py
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/libgomp.info
--rw-r--r-- usr/share/info/libitm.info
--rw-r--r-- usr/share/info/libquadmath.info
 drwxr-xr-x usr/share/locale/
 drwxr-xr-x usr/share/locale/be/
 drwxr-xr-x usr/share/locale/be/LC_MESSAGES/

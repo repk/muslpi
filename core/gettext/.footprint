@@ -1833,10 +1833,6 @@ drwxr-xr-x usr/share/gettext/styles/
 -rw-r--r-- usr/share/gettext/styles/po-emacs-xterm256.css
 -rw-r--r-- usr/share/gettext/styles/po-emacs-xterm.css
 -rw-r--r-- usr/share/gettext/styles/po-vim.css
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/autosprintf.info
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/gettext.info
 drwxr-xr-x usr/share/locale/
 drwxr-xr-x usr/share/locale/be/
 drwxr-xr-x usr/share/locale/be/LC_MESSAGES/

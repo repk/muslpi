@@ -22,11 +22,6 @@ drwxr-xr-x usr/share/aclocal/
 -rw-r--r-- usr/share/aclocal/ltoptions.m4
 -rw-r--r-- usr/share/aclocal/ltsugar.m4
 -rw-r--r-- usr/share/aclocal/ltversion.m4
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/libtool.info
--rw-r--r-- usr/share/info/libtool.info-1
--rw-r--r-- usr/share/info/libtool.info-2
 drwxr-xr-x usr/share/libtool/
 drwxr-xr-x usr/share/libtool/config/
 -rwxr-xr-x usr/share/libtool/config/compile

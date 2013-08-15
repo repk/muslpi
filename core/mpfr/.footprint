@@ -23,6 +23,3 @@ drwxr-xr-x usr/share/doc/mpfr/examples/
 -rw-r--r-- usr/share/doc/mpfr/FAQ.html
 -rw-r--r-- usr/share/doc/mpfr/NEWS
 -rw-r--r-- usr/share/doc/mpfr/TODO
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/mpfr.info

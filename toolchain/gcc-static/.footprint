@@ -224,7 +224,6 @@ drwxr-xr-x lib/gcc/arm-repkhardfp-linux-musleabi/4.7.2/plugin/include/objc/
 -rw-r--r-- lib/gcc/arm-repkhardfp-linux-musleabi/4.7.2/plugin/include/vecprim.h
 -rw-r--r-- lib/gcc/arm-repkhardfp-linux-musleabi/4.7.2/plugin/include/version.h
 drwxr-xr-x share/
-drwxr-xr-x share/info/
 drwxr-xr-x share/man/
 drwxr-xr-x share/man/man1/
 -rw-r--r-- share/man/man1/arm-repkhardfp-linux-musleabi-cpp.1

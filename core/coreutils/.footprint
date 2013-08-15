@@ -110,9 +110,6 @@ drwxr-xr-x usr/libexec/coreutils/
 -rwxr-xr-x usr/libexec/coreutils/libstdbuf.so
 -rwxr-xr-x usr/sbin
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/coreutils.info
--rw-r--r-- usr/share/info/dir
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/man1/
 -rw-r--r-- usr/share/man/man1/base64.1

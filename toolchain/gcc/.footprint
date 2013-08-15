@@ -1945,11 +1945,6 @@ drwxr-xr-x share/gcc-4.7.2/python/libstdcxx/
 drwxr-xr-x share/gcc-4.7.2/python/libstdcxx/v6/
 -rw-r--r-- share/gcc-4.7.2/python/libstdcxx/v6/__init__.py
 -rw-r--r-- share/gcc-4.7.2/python/libstdcxx/v6/printers.py
-drwxr-xr-x share/info/
--rw-r--r-- share/info/dir
--rw-r--r-- share/info/libgomp.info
--rw-r--r-- share/info/libitm.info
--rw-r--r-- share/info/libquadmath.info
 drwxr-xr-x share/man/
 drwxr-xr-x share/man/man1/
 -rw-r--r-- share/man/man1/arm-repkhardfp-linux-musleabi-cpp.1

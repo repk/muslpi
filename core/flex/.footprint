@@ -20,11 +20,6 @@ drwxr-xr-x usr/share/doc/flex/
 -rw-r--r-- usr/share/doc/flex/README
 -rw-r--r-- usr/share/doc/flex/README.cvs
 -rw-r--r-- usr/share/doc/flex/TODO
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/flex.info
--rw-r--r-- usr/share/info/flex.info-1
--rw-r--r-- usr/share/info/flex.info-2
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/man1/
 -rw-r--r-- usr/share/man/man1/flex.1

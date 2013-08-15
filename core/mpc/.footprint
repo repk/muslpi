@@ -7,6 +7,3 @@ lrwxrwxrwx usr/lib/libmpc.so
 lrwxrwxrwx usr/lib/libmpc.so.3
 -rwxr-xr-x usr/lib/libmpc.so.3.0.0
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/info/
--rw-r--r-- usr/share/info/dir
--rw-r--r-- usr/share/info/mpc.info

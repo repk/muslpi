@@ -26,7 +26,7 @@ get_args() {
 		usage
 	fi
 	PKG_NAME=$1
-	if [ ${#} -eq 2 ] && [ $2 == "host" ]; then
+	if [ ${#} -eq 2 ] && [ $2 = "host" ]; then
 		REMOVE_HOST=1
 	fi
 }

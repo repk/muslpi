@@ -25,7 +25,7 @@ usage() {
 get_args() {
 	if [ ${#} -eq 1 ]; then
 		PKG_LIST_FILE=${1}
-	elif [ ${#} -eq 2 ] && [ ${1} == "-f" ]; then
+	elif [ ${#} -eq 2 ] && [ ${1} = "-f" ]; then
 		PKG_BUILD_OPT="-f"
 		PKG_LIST_FILE=${2}
 	else

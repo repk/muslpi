@@ -57,6 +57,9 @@ And go take a beer and 6 others because ths will take a long long time.
 You can use "install_pkglist.sh -f" if you want to bypass package footprint
 checking.
 
+= Stripping =
+If you want to strip your clfs use strip.sh when clfs has been fully built
+
 
 = configure =
 You can play with some build options by modifying files in config/

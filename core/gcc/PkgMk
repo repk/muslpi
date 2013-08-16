@@ -22,7 +22,7 @@ pkgmain() {
 	mkdir build
 	cd build
 
-	 LDFLAGS="-Wl,-rpath-link,${TOOLCHAIN_DIR}/${CLFS_TARGET}/lib"	\
+	LDFLAGS="-Wl,-rpath-link,${TOOLCHAIN_DIR}/${CLFS_TARGET}/lib"	\
 	MAKEINFO=missing						\
 	../configure --prefix=/usr --libexecdir=/usr/lib		\
 		--build=${CLFS_HOST} --host=${CLFS_TARGET}		\

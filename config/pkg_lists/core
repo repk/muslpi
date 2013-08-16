@@ -1,4 +1,5 @@
 PKGLIST="core/fhs		\
+	 core/pass-files	\
 	 core/man		\
 	 core/gmp		\
 	 core/mpfr		\

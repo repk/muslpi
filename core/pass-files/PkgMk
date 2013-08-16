@@ -1,0 +1,23 @@
+# Description: Makes passwd and group files
+# URL:
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=pass-files
+VERSION=0.1
+
+
+DEPENDS=""
+SOURCES=""
+FILES="passwd group"
+
+
+pkgmain() {
+	mkdir ${NAME}-${VERSION}
+	cd ${NAME}-${VERSION}
+	copy_files
+
+	mkdir ${PKG}/etc
+	install -v -m755 passwd ${PKG}/etc/passwd
+	install -v -m755 group ${PKG}/etc/group
+}

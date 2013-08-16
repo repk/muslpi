@@ -1,4 +1,5 @@
-PKGLIST="core/man		\
+PKGLIST="core/fhs		\
+	 core/man		\
 	 core/gmp		\
 	 core/mpfr		\
 	 core/ppl		\

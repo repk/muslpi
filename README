@@ -52,7 +52,7 @@ example to make a complete install run these two commands :
 install_pkglist.sh config/pkg_lists/toolchain
 install_pkglist.sh config/pkg_lists/core
 
-And go take a beer and 6 others because ths will take a long long time.
+And go take a beer and 6 others because this will take a long long time.
 
 You can use "install_pkglist.sh -f" if you want to bypass package footprint
 checking.
@@ -68,4 +68,4 @@ You can play with some build options by modifying files in config/
 = Result =
 Toolchain and clfs result will be placed in build directory. When done you can
 dd the clfs dir in a well formatted disk, add a /etc/fstab file and boot up your
-raspberry pi. If you get lucky this possibly can boot sometime.
+raspberry pi. If you get lucky this possibly can boot sometimes.

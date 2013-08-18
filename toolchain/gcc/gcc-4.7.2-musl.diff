@@ -19,14 +19,26 @@ diff -Nru a/config.sub b/config.sub
  	      | -openstep* | -oskit* | -conix* | -pw32* | -nonstopux* \
 diff -Nru a/gcc/config/arm/linux-eabi.h b/gcc/config/arm/linux-eabi.h
 --- a/gcc/config/arm/linux-eabi.h	2011-11-02 16:03:19.000000000 +0100
-+++ b/gcc/config/arm/linux-eabi.h	2013-08-16 18:31:39.000000000 +0200
-@@ -64,6 +64,10 @@
++++ b/gcc/config/arm/linux-eabi.h	2013-08-18 20:58:24.000000000 +0200
+@@ -64,6 +64,22 @@
  #undef  GLIBC_DYNAMIC_LINKER
  #define GLIBC_DYNAMIC_LINKER "/lib/ld-linux.so.3"
  
 +/* musl has no "classic" (i.e. broken) mode */
 +#undef  MUSL_DYNAMIC_LINKER
-+#define MUSL_DYNAMIC_LINKER "%{mfloat-abi=hard:/lib/ld-musl-armhf.so.1;:/lib/ld-musl-arm.so.1}"
++
++#define MDL_FLOAT(PREFIX)						\
++	"%{mfloat-abi=hard:"PREFIX"hf.so.1;:"PREFIX".so.1}"
++
++#if TARGET_BIG_ENDIAN_DEFAULT
++#define MUSL_DYNAMIC_LINKER						\
++	"%{mlittle-endian:"MDL_FLOAT("/lib/ld-musl-arm")";:"		\
++			   MDL_FLOAT("/lib/ld-musl-armeb")"}"
++#else
++#define MUSL_DYNAMIC_LINKER						\
++	"%{mbig-endian:"MDL_FLOAT("/lib/ld-musl-armeb")";:"		\
++			MDL_FLOAT("/lib/ld-musl-arm")"}"
++#endif
 +
  /* At this point, bpabi.h will have clobbered LINK_SPEC.  We want to
     use the GNU/Linux version, not the generic BPABI version.  */

@@ -61,5 +61,5 @@ check_file() {
 
 compute_footprint() {
 	FILE=$1
-	tar -tvf ${FILE} | tr -s ' ' | cut -d' ' -f1,6 | sort -k 2 | sed "s/^h/-/g"
+	bsdtar -tvf ${FILE} | tr -s ' ' | cut -d' ' -f1,9 | sort -k 2 | sed "s/^h/-/g"
 }

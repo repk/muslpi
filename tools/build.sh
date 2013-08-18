@@ -251,7 +251,7 @@ makepkg() {
 		rm -rf usr/share/info
 	fi
 
-	tar -cjf ${PKG_TAR} *
+	bsdtar -cjf ${PKG_TAR} *
 	if [ $? -ne 0 ]; then
 		error "Failed to make package"
 	fi

@@ -1,0 +1,145 @@
+diff -Nru a/defs.h b/defs.h
+--- a/defs.h	2013-05-14 16:10:42.000000000 +0200
++++ b/defs.h	2013-08-20 19:19:55.425167168 +0200
+@@ -222,11 +222,6 @@
+ # define PTRACE_EVENT_EXIT	6
+ #endif
+ 
+-#if !defined(__GLIBC__)
+-# define PTRACE_PEEKUSER PTRACE_PEEKUSR
+-# define PTRACE_POKEUSER PTRACE_POKEUSR
+-#endif
+-
+ #if USE_SEIZE
+ # undef PTRACE_SEIZE
+ # define PTRACE_SEIZE		0x4206
+diff -Nru a/ipc.c b/ipc.c
+--- a/ipc.c	2013-02-23 20:07:44.000000000 +0100
++++ b/ipc.c	2013-08-20 18:45:49.069108127 +0200
+@@ -44,6 +44,12 @@
+ #ifndef MSG_INFO
+ #define MSG_INFO 12
+ #endif
++#ifndef MSG_NOERROR
++#define MSG_NOERROR 010000
++#endif
++#ifndef MSG_EXCEPT
++#define MSG_EXCEPT 020000
++#endif
+ #ifndef SHM_STAT
+ #define SHM_STAT 13
+ #endif
+diff -Nru a/linux/arm/syscallent.h b/linux/arm/syscallent.h
+--- a/linux/arm/syscallent.h	2013-05-08 18:57:53.000000000 +0200
++++ b/linux/arm/syscallent.h	2013-08-20 19:29:24.911593610 +0200
+@@ -220,8 +220,13 @@
+ 	{ 0,	TP,	sys_vfork,		"vfork"		}, /* 190 */
+ 	{ 2,	0,	sys_getrlimit,		"getrlimit"	}, /* 191 */
+ 	{ 6,	TD|TM,	sys_mmap_pgoff,		"mmap2"		}, /* 192 */
++#ifdef _LFS64_LARGEFILE
+ 	{ 4,	TF,	sys_truncate64,		"truncate64"	}, /* 193 */
+ 	{ 4,	TD,	sys_ftruncate64,	"ftruncate64"	}, /* 194 */
++#else
++	{ 4,	TF,	printargs,		"truncate64"	}, /* 193 */
++	{ 4,	TD,	printargs,	"ftruncate64"	}, /* 194 */
++#endif
+ 	{ 2,	TF,	sys_stat64,		"stat64"	}, /* 195 */
+ 	{ 2,	TF,	sys_lstat64,		"lstat64"	}, /* 196 */
+ 	{ 2,	TD,	sys_fstat64,		"fstat64"	}, /* 197 */
+@@ -245,7 +250,11 @@
+ 	{ 1,	0,	sys_setgid,		"setgid32"	}, /* 214 */
+ 	{ 1,	NF,	sys_setfsuid,		"setfsuid32"	}, /* 215 */
+ 	{ 1,	NF,	sys_setfsgid,		"setfsgid32"	}, /* 216 */
++#ifdef _LFS64_LARGEFILE
+ 	{ 3,	TD,	sys_getdents64,		"getdents64"	}, /* 217 */
++#else
++	{ 3,	TD,	printargs,		"getdents64"	}, /* 217 */
++#endif
+ 	{ 2,	TF,	sys_pivotroot,		"pivot_root"	}, /* 218 */
+ 	{ 3,	TM,	sys_mincore,		"mincore"	}, /* 219 */
+ 	{ 3,	TM,	sys_madvise,		"madvise"	}, /* 220 */
+@@ -294,8 +303,13 @@
+ 	{ 2,	0,	sys_clock_gettime,	"clock_gettime"	}, /* 263 */
+ 	{ 2,	0,	sys_clock_getres,	"clock_getres"	}, /* 264 */
+ 	{ 4,	0,	sys_clock_nanosleep,	"clock_nanosleep"}, /* 265 */
++#ifdef _LFS64_LARGEFILE
+ 	{ 3,	TF,	sys_statfs64,		"statfs64"	}, /* 266 */
+ 	{ 3,	TD,	sys_fstatfs64,		"fstatfs64"	}, /* 267 */
++#else
++	{ 3,	TF,	printargs,		"statfs64"	}, /* 266 */
++	{ 3,	TD,	printargs,		"fstatfs64"	}, /* 267 */
++#endif
+ 	{ 3,	TS,	sys_tgkill,		"tgkill"	}, /* 268 */
+ 	{ 2,	TF,	sys_utimes,		"utimes"	}, /* 269 */
+ 	{ 6,	TD,	sys_fadvise64_64,	"fadvise64_64"	}, /* 270 */
+diff -Nru a/net.c b/net.c
+--- a/net.c	2013-05-18 00:20:02.000000000 +0200
++++ b/net.c	2013-08-20 18:56:19.125749876 +0200
+@@ -94,14 +94,6 @@
+ # define PF_UNSPEC AF_UNSPEC
+ #endif
+ 
+-/* Under Linux these are enums so we can't test for them with ifdef. */
+-#define IPPROTO_EGP IPPROTO_EGP
+-#define IPPROTO_PUP IPPROTO_PUP
+-#define IPPROTO_IDP IPPROTO_IDP
+-#define IPPROTO_IGMP IPPROTO_IGMP
+-#define IPPROTO_RAW IPPROTO_RAW
+-#define IPPROTO_MAX IPPROTO_MAX
+-
+ static const struct xlat domains[] = {
+ #ifdef PF_UNSPEC
+ 	{ PF_UNSPEC,	"PF_UNSPEC"	},
+diff -Nru a/process.c b/process.c
+--- a/process.c	2013-05-18 00:22:19.000000000 +0200
++++ b/process.c	2013-08-20 18:58:34.200460079 +0200
+@@ -93,6 +93,7 @@
+ #endif
+ 
+ #include <sched.h>
++#define __sched_priority sched_priority
+ #include <asm/posix_types.h>
+ #undef GETGROUPS_T
+ #define GETGROUPS_T __kernel_gid_t
+diff -Nru a/signal.c b/signal.c
+--- a/signal.c	2013-05-23 15:41:23.000000000 +0200
++++ b/signal.c	2013-08-20 19:10:42.802079078 +0200
+@@ -55,6 +55,7 @@
+ # undef ia64_fpreg
+ # undef pt_all_user_regs
+ #endif
++#include <asm/ptrace.h>
+ 
+ #ifdef IA64
+ # include <asm/ptrace_offsets.h>
+@@ -112,6 +113,7 @@
+ #  endif /* M68K */
+ # endif /* !I386 */
+ #endif /* !HAVE_ASM_SIGCONTEXT_H */
++#define sigcontext_struct sigcontext
+ 
+ #ifndef NSIG
+ # warning: NSIG is not defined, using 32
+diff -Nru a/syscall.c b/syscall.c
+--- a/syscall.c	2013-05-14 16:10:42.000000000 +0200
++++ b/syscall.c	2013-08-20 19:11:37.138169306 +0200
+@@ -52,6 +52,7 @@
+ # undef ia64_fpreg
+ # undef pt_all_user_regs
+ #endif
++# include <asm/ptrace.h>
+ 
+ #if defined(SPARC64)
+ # undef PTRACE_GETREGS
+diff -Nru a/time.c b/time.c
+--- a/time.c	2012-05-01 23:17:51.000000000 +0200
++++ b/time.c	2013-08-20 19:18:03.398919422 +0200
+@@ -774,7 +774,7 @@
+ 			/* _pad[0] is the _tid field which might not be
+ 			   present in the userlevel definition of the
+ 			   struct.  */
+-			tprintf("{%d}", sev._sigev_un._pad[0]);
++			tprintf("{%d}", sev.__pad[0]);
+ 		else if (sev.sigev_notify == SIGEV_THREAD)
+ 			tprintf("{%p, %p}", sev.sigev_notify_function,
+ 				sev.sigev_notify_attributes);

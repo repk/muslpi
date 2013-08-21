@@ -1,0 +1,14 @@
+diff -Nru a/crypto/ui/ui_openssl.c b/crypto/ui/ui_openssl.c
+--- a/crypto/ui/ui_openssl.c	2013-02-11 16:26:04.000000000 +0100
++++ b/crypto/ui/ui_openssl.c	2013-08-21 21:30:18.403700861 +0200
+@@ -220,6 +220,10 @@
+ #undef SGTTY
+ #endif
+ 
++#define TERMIOS
++#undef TERMIO
++#undef SGTTY
++
+ #ifdef TERMIOS
+ # include <termios.h>
+ # define TTY_STRUCT		struct termios

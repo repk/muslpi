@@ -1,0 +1,27 @@
+# Description: Toolkit implementing SSL v2/v3 and TLS protocols
+# URL: http://www.openssl.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=openssl
+VERSION=1.0.1e
+
+
+DEPENDS=""
+SOURCES="http://www.openssl.org/source/${NAME}-${VERSION}.tar.gz"
+PATCHES="openssl.patch"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	process_patches
+
+	cross=${CLFS_TARGET}-						\
+	./Configure linux-armv4 threads -D_REENTRANT			\
+		--prefix=${PKG}/usr --openssldir=${PKG}/etc/ssl shared no-asm
+
+	make
+
+	PATH=${TOOLCHAIN_DIR}/bin:${PATH}				\
+	make MANDIR=${CLFS_DIR}/usr/man MANSUFFIX=ssl install
+}

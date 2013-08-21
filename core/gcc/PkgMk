@@ -16,6 +16,10 @@ pkgmain() {
 	cd ${NAME}-${VERSION}
 	process_patches
 
+	cp libiberty/Makefile.in{,.orig}
+	sed 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in.orig > \
+		libiberty/Makefile.in
+
 	#Fix the gcc fix include shit
 	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 
@@ -30,7 +34,8 @@ pkgmain() {
 		--enable-threads=posix --enable-c99 --enable-long-long	\
 		--enable-clocale=gnu --enable-languages=c,c++		\
 		--disable-libstdcxx-pch					\
-		--with-build-sysroot=${CLFS_DIR} --disable-libmudflap	\
+		--disable-libmudflap					\
+		--with-build-sysroot=${CLFS_DIR}			\
 		--with-abi=${ABI} --with-arch=${ARCH}			\
 		--with-mode=${MODE} --with-float=${FLOAT}		\
 		--with-fpu=${FPU}

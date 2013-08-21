@@ -948,7 +948,6 @@ lrwxrwxrwx usr/lib/libgomp.so
 lrwxrwxrwx usr/lib/libgomp.so.1
 -rwxr-xr-x usr/lib/libgomp.so.1.0.0
 -rw-r--r-- usr/lib/libgomp.spec
--rw-r--r-- usr/lib/libiberty.a
 -rw-r--r-- usr/lib/libitm.a
 lrwxrwxrwx usr/lib/libitm.so
 lrwxrwxrwx usr/lib/libitm.so.1

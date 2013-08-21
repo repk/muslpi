@@ -1,0 +1,28 @@
+# Description: FREE version of the SSH connectivity tools
+# URL: http://www.openssh.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=openssh
+VERSION=6.2p2
+
+
+DEPENDS="openssl"
+SOURCES="http://ftp.fr.openbsd.org/pub/OpenBSD/OpenSSH/portable/${NAME}-${VERSION}.tar.gz"
+PATCHES="openssh.patch"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	process_patches
+	patch_unknown_target config.sub
+
+	unset LD
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET} --without-stackprotect	\
+		--disable-strip
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

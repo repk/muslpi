@@ -1,0 +1,24 @@
+# Description: Program debugger
+# URL: https://www.gnu.org/software/gdb/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=gdb
+VERSION=7.6
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/gdb/gdb-7.6.tar.gz"
+PATCHES="gdb-amd64-debugreg.patch gdb-arm-wrapper.patch gdb-linux_nat.patch gdb-threaddb.patch"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+    process_patches
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET} --enable-gdbserver=no
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

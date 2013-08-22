@@ -1,0 +1,27 @@
+# Description: terminal multiplexer
+# URL: http://tmux.sourceforge.net/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=tmux
+VERSION=1.8
+
+
+DEPENDS="libevent"
+SOURCES="http://downloads.sourceforge.net/project/${NAME}/${NAME}/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	chmod +w etc/config.sub
+	cp etc/config.sub config.old
+	sed "s/-linux-gnu\*/& | -${CLFS_TARGET_TOKEN}\*/" config.old > etc/config.sub
+	sed "s/[^-]linux-gnu\*/& | ${CLFS_TARGET_TOKEN}\*/" config.old > etc/config.sub
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

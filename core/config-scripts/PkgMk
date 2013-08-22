@@ -1,0 +1,23 @@
+# Description: Set of important file that may need user modifications
+# URL:
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=config-scripts
+VERSION=0.1
+
+
+DEPENDS=""
+SOURCES=""
+FILES="fstab shells"
+
+
+pkgmain() {
+	mkdir ${NAME}-${VERSION}
+	cd ${NAME}-${VERSION}
+	copy_files
+
+	mkdir ${PKG}/etc
+	install -v -m755 shells ${PKG}/etc/shells
+	install -v -m755 fstab ${PKG}/etc/fstab
+}

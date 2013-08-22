@@ -1,0 +1,17 @@
+#
+# /etc/fstab: static file system information
+#
+# <file system>        <dir>     <type>    <options>              <dump> <pass>
+
+devpts                 /dev/pts  devpts    defaults               0      0
+none                   /sys      sysfs     defaults               0      0
+none                   /proc     proc      defaults               0      0
+tmp                    /tmp      tmpfs     defaults               0      0
+shm                    /dev/shm  tmpfs     defaults               0      0
+
+/dev/sda1              /         ext2      defaults               0      1
+/dev/sda3              swap      swap      defaults               0      0
+/dev/sda2              /usr      ext2      defaults               0      2
+/dev/sda4              /home     ext2      defaults               0      2
+
+# End of file

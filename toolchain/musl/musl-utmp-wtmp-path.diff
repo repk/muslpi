@@ -1,0 +1,14 @@
+diff -Nru a/include/utmp.h b/include/utmp.h
+--- a/include/utmp.h	2013-07-29 09:20:33.000000000 +0200
++++ b/include/utmp.h	2013-08-22 11:03:56.447208807 +0200
+@@ -32,8 +32,8 @@
+ 
+ void updwtmp(const char *, const struct utmp *);
+ 
+-#define _PATH_UTMP "/dev/null/utmp"
+-#define _PATH_WTMP "/dev/null/wtmp"
++#define _PATH_UTMP "/var/run/utmp"
++#define _PATH_WTMP "/var/run/wtmp"
+ 
+ #define UTMP_FILE _PATH_UTMP
+ #define WTMP_FILE _PATH_WTMP

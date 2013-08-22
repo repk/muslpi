@@ -9,10 +9,13 @@ VERSION=0.9.12
 
 DEPENDS="gcc-static"
 SOURCES="http://www.musl-libc.org/releases/${NAME}-${VERSION}.tar.gz"
+PATCHES="musl-utmp-wtmp-path.diff"
 
 
 pkgmain() {
 	cd ${NAME}-${VERSION}
+	process_patches
+
 	./configure --prefix=${PKG}/usr	--syslibdir=${PKG}/lib		\
 		--target=${CLFS_TARGET}
 	make -j${NR_JOBS}

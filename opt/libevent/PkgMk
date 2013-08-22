@@ -1,0 +1,24 @@
+# Description: API to execute a callback function when a specific event occurs
+#              on a file descriptor or after a timeout has been reache
+# URL: http://libevent.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=libevent
+VERSION=2.0.21
+
+
+DEPENDS="libevent"
+SOURCES="https://github.com/downloads/libevent/libevent/${NAME}-${VERSION}-stable.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION-stable
+	patch_unknown_target config.sub
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

@@ -1,0 +1,22 @@
+# Description: Portable Foreign Function Interface Library
+# URL: http://sourceware.org/libffi/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=libffi
+VERSION=3.0.13
+
+
+DEPENDS=""
+SOURCES="ftp://sourceware.org/pub/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

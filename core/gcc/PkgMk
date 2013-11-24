@@ -46,4 +46,6 @@ pkgmain() {
 	mkdir ${PKG}/lib
 	ln -sfv ../usr/bin/cpp ${PKG}/lib/cpp
 	ln -sfv gcc ${PKG}/usr/bin/cc
+	mv ${PKG}/usr/lib/libgcc_s.so.1 ${PKG}/lib/
+	ln -sfv /lib/libgcc_s.so.1 ${PKG}/usr/lib/libgcc_s.so.1
 }

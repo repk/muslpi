@@ -10,18 +10,19 @@ VERSION=2.23.1
 DEPENDS=""
 SOURCES="https://www.kernel.org/pub/linux/utils/${NAME}/v2.23/${NAME}-${VERSION}.tar.gz"
 PATCHES="util-linux-musl.patch"
+FILES="config.cache"
 
 
 pkgmain() {
 	cd ${NAME}-${VERSION}
 	patch_unknown_target config/config.sub
 	process_patches
+	copy_files
 
 	CFLAGS="-D__GNU_LIBRARY__=5"					\
 	./configure --build=${CLFS_HOST}				\
 		--host=${CLFS_TARGET} --enable-partx --disable-wall	\
-		--disable-rpath	--enable-write --disable-libmount	\
-		--disable-makeinstall-chown
+		--disable-rpath	--enable-write --disable-makeinstall-chown --cache-file=config.cache
 
 	make -j${NR_JOBS}
 	fix_temporary_libtool_files

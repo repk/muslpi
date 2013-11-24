@@ -20,8 +20,7 @@ pkgmain() {
 	copy_files
 
 	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
-		--prefix=/usr --cache-file=config.cache --disable-vlock	\
-		--with-libintl-prefix=${CLFS_DIR}/usr
+		--prefix=/usr --cache-file=config.cache --disable-vlock
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install

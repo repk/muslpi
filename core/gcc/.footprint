@@ -1,5 +1,6 @@
 drwxr-xr-x lib/
 lrwxrwxrwx lib/cpp
+-rw-r--r-- lib/libgcc_s.so.1
 drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
 -rwxr-xr-x usr/bin/arm-repkhardfp-linux-musleabi-c++
@@ -942,7 +943,7 @@ drwxr-xr-x usr/lib/gcc/arm-repkhardfp-linux-musleabi/4.7.2/plugin/include/objc/
 -rw-r--r-- usr/lib/gcc/arm-repkhardfp-linux-musleabi/4.7.2/plugin/include/vecprim.h
 -rw-r--r-- usr/lib/gcc/arm-repkhardfp-linux-musleabi/4.7.2/plugin/include/version.h
 -rw-r--r-- usr/lib/libgcc_s.so
--rw-r--r-- usr/lib/libgcc_s.so.1
+lrwxrwxrwx usr/lib/libgcc_s.so.1
 -rw-r--r-- usr/lib/libgomp.a
 lrwxrwxrwx usr/lib/libgomp.so
 lrwxrwxrwx usr/lib/libgomp.so.1

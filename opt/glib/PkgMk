@@ -1,0 +1,32 @@
+# Description: software utility library from GTK+'s project
+# URL: https://developer.gnome.org/glib/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=glib
+VERSION=2.38.2
+
+
+DEPENDS=""
+SOURCES="http://ftp.gnome.org/pub/gnome/sources/glib/2.38/glib-2.38.2.tar.xz"
+PATCHES="glib.patch"
+FILES="config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	process_patches
+	copy_files
+
+	CFLAGS="-D_GNU_SOURCE -D_BSD_SOURCE"			\
+	PKG_CONFIG_SYSROOT_DIR=${CLFS_DIR}			\
+	PKG_CONFIG_LIBDIR=${CLFS_DIR}/usr/lib/pkgconfig/	\
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET} --prefix=/usr		\
+		--cache-file=config.cache
+
+	make -j${NR_JOBS}
+	fix_temporary_libtool_files
+	make DESTDIR=${PKG} install
+}

@@ -1,0 +1,11 @@
+diff -Nru glib-2.38.2-old/gio/gnetworkmonitornetlink.c glib-2.38.2/gio/gnetworkmonitornetlink.c
+--- a/gio/gnetworkmonitornetlink.c	2013-11-24 22:40:29.000000000 +0100
++++ b/gio/gnetworkmonitornetlink.c	2013-11-24 22:41:05.000000000 +0100
+@@ -22,6 +22,7 @@
+ 
+ #include <errno.h>
+ #include <unistd.h>
++#include <string.h>
+ 
+ #include "gnetworkmonitornetlink.h"
+ #include "gcredentials.h"

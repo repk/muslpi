@@ -10,11 +10,13 @@ VERSION=6.2p2
 DEPENDS="openssl"
 SOURCES="http://ftp.fr.openbsd.org/pub/OpenBSD/OpenSSH/portable/${NAME}-${VERSION}.tar.gz"
 PATCHES="openssh.patch"
+FILES="rc-sshd"
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
 	process_patches
+	copy_files
 	patch_unknown_target config.sub
 
 	unset LD
@@ -25,4 +27,7 @@ pkgmain() {
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install
+
+	mkdir -p -v ${PKG}/etc/rc.d
+	install -v -m755 rc-sshd ${PKG}/etc/rc.d/sshd
 }

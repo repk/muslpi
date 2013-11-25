@@ -19,6 +19,7 @@ pkgmain() {
 
 	mkdir ${PKG}/etc
 	install -v -m755 rc ${PKG}/etc/rc
+	mkdir -m755 ${PKG}/etc/rc.d
 	install -v -m755 rc.modules ${PKG}/etc/rc.modules
 	install -v -m755 rc.multi ${PKG}/etc/rc.multi
 	install -v -m755 rc.shutdown ${PKG}/etc/rc.shutdown

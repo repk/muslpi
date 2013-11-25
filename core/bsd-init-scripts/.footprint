@@ -1,6 +1,7 @@
 drwxr-xr-x etc/
 -rwxr-xr-x etc/rc
 -rw-r--r-- etc/rc.conf
+drwxr-xr-x etc/rc.d/
 -rwxr-xr-x etc/rc.modules
 -rwxr-xr-x etc/rc.multi
 -rwxr-xr-x etc/rc.shutdown

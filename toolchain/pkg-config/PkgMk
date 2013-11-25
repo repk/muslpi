@@ -1,0 +1,27 @@
+# Description: helper tool used when compiling libraries
+# URL: http://www.freedesktop.org/wiki/Software/pkg-config/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=pkg-config
+VERSION=0.28
+HOST_PKG=1
+
+
+DEPENDS=""
+SOURCES="http://pkgconfig.freedesktop.org/releases/${NAME}-${VERSION}.tar.gz"
+PATCHES="pkg-config-sysroot.patch"
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+    process_patches
+
+	PC_PATH="${CLFS_DIR}/usr/lib/pkgconfig:${CLFS_DIR}/usr/share/pkgconfig"
+
+	./configure --prefix=${PKG} --with-pc-sysroot=${CLFS_DIR}	\
+        --with-internal-glib --with-pc-path="${PC_PATH}"
+
+	make -j${NR_JOBS}
+	make install
+}

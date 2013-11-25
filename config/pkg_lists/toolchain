@@ -9,4 +9,5 @@ PKGLIST="toolchain/linux-headers	\
 	 toolchain/musl			\
 	 toolchain/gcc			\
 	 toolchain/file			\
-	 toolchain/groff"
+	 toolchain/groff		\
+	 toolchain/pkg-config"

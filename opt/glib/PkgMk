@@ -20,8 +20,6 @@ pkgmain() {
 	copy_files
 
 	CFLAGS="-D_GNU_SOURCE -D_BSD_SOURCE"			\
-	PKG_CONFIG_SYSROOT_DIR=${CLFS_DIR}			\
-	PKG_CONFIG_LIBDIR=${CLFS_DIR}/usr/lib/pkgconfig/	\
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
 		--host=${CLFS_TARGET} --prefix=/usr		\
 		--cache-file=config.cache

@@ -1,0 +1,133 @@
+diff -ru pkg-config-0.28/configure pkg-config-0.28-new/configure
+--- pkg-config-0.28/configure	2013-01-23 14:56:44.000000000 +0100
++++ pkg-config-0.28-new/configure	2013-11-25 19:33:36.090991490 +0100
+@@ -657,6 +657,7 @@
+ system_library_path
+ system_include_path
+ pc_path
++pc_sysroot
+ TESTS_SHELL
+ LN
+ AM_BACKSLASH
+@@ -784,6 +785,7 @@
+ enable_libtool_lock
+ enable_silent_rules
+ with_pc_path
++with_pc_sysroot
+ with_system_include_path
+ with_system_library_path
+ enable_indirect_deps
+@@ -1450,6 +1452,7 @@
+   --with-sysroot=DIR Search for dependent libraries within DIR
+                         (or the compiler's sysroot if not specified).
+   --with-pc-path          default search path for .pc files
++  --with-pc-sysroot       default sysroot path for .pc files
+   --with-system-include-path
+                           avoid -I flags from the given path
+   --with-system-library-path
+@@ -12179,6 +12182,16 @@
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $pc_path" >&5
+ $as_echo "$pc_path" >&6; }
+ 
++# Check whether --with-pc_sysroot was given.
++if test "${with_pc_sysroot+set}" = set; then :
++  withval=$with_pc_sysroot; pc_sysroot="$withval"
++else
++	pc_sysroot='/'
++fi
++
++{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $pc_sysroot" >&5
++$as_echo "$pc_sysroot" >&6; }
++
+ 
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for system include path to avoid -I flags" >&5
+ $as_echo_n "checking for system include path to avoid -I flags... " >&6; }
+diff -ru pkg-config-0.28/main.c pkg-config-0.28-new/main.c
+--- pkg-config-0.28/main.c	2013-01-22 14:11:53.000000000 +0100
++++ pkg-config-0.28-new/main.c	2013-11-25 19:58:12.009605007 +0100
+@@ -37,6 +37,7 @@
+ 
+ char *pcsysrootdir = NULL;
+ char *pkg_config_pc_path = NULL;
++char *pkg_config_sysroot = NULL;
+ 
+ static gboolean want_my_version = FALSE;
+ static gboolean want_version = FALSE;
+@@ -312,6 +313,16 @@
+ #endif
+ }
+ 
++static void
++init_sysroot (void)
++{
++#ifdef G_OS_WIN32
++  pkg_config_sysroot= "/";
++#else
++  pkg_config_sysroot = PKG_CONFIG_PC_SYSROOT;
++#endif
++}
++
+ static gboolean
+ process_package_args (const char *cmdline, GList **packages, FILE *log)
+ {
+@@ -521,16 +532,23 @@
+       add_search_dirs(pkg_config_pc_path, G_SEARCHPATH_SEPARATOR_S);
+     }
+ 
+-  pcsysrootdir = getenv ("PKG_CONFIG_SYSROOT_DIR");
+-  if (pcsysrootdir)
++  /* Get the built-in sysroot path */
++  init_sysroot ();
++  if (pkg_config_sysroot == NULL)
+     {
+-      define_global_variable ("pc_sysrootdir", pcsysrootdir);
+-    }
+-  else
+-    {
+-      define_global_variable ("pc_sysrootdir", "/");
++      /* Even when we override the built-in search path, we still use it later
++       * to add pc_sysroot to the virtual pkg-config package.
++       */
++      verbose_error ("Failed to get default sysroot path\n");
++      exit (1);
+     }
+ 
++  pcsysrootdir = getenv ("PKG_CONFIG_SYSROOT_DIR");
++  if (pcsysrootdir == NULL)
++      pcsysrootdir = pkg_config_sysroot;
++
++  define_global_variable ("pc_sysrootdir", pcsysrootdir);
++
+   pcbuilddir = getenv ("PKG_CONFIG_TOP_BUILD_DIR");
+   if (pcbuilddir)
+     {
+diff -ru pkg-config-0.28/Makefile.in pkg-config-0.28-new/Makefile.in
+--- pkg-config-0.28/Makefile.in	2013-01-23 20:07:43.000000000 +0100
++++ pkg-config-0.28-new/Makefile.in	2013-11-25 19:35:54.546769530 +0100
+@@ -321,6 +321,7 @@
+ mkdir_p = @mkdir_p@
+ oldincludedir = @oldincludedir@
+ pc_path = @pc_path@
++pc_sysroot = @pc_sysroot@
+ pdfdir = @pdfdir@
+ prefix = @prefix@
+ program_transform_name = @program_transform_name@
+@@ -346,6 +347,7 @@
+ DIST_SUBDIRS = $(SUBDIRS)
+ @NATIVE_WIN32_FALSE@AM_CPPFLAGS = \
+ @NATIVE_WIN32_FALSE@	-DPKG_CONFIG_PC_PATH="\"$(pc_path)\"" \
++@NATIVE_WIN32_FALSE@	-DPKG_CONFIG_PC_SYSROOT="\"$(pc_sysroot)\"" \
+ @NATIVE_WIN32_FALSE@	-DPKG_CONFIG_SYSTEM_INCLUDE_PATH="\"$(system_include_path)\"" \
+ @NATIVE_WIN32_FALSE@	-DPKG_CONFIG_SYSTEM_LIBRARY_PATH="\"$(system_library_path)\""
+ 
+diff -ru pkg-config-0.28/pkg.h pkg-config-0.28-new/pkg.h
+--- pkg-config-0.28/pkg.h	2013-01-22 14:11:59.000000000 +0100
++++ pkg-config-0.28-new/pkg.h	2013-11-25 19:21:28.933401461 +0100
+@@ -132,6 +132,7 @@
+  * directory is used. Otherwise, the build-time defined PKG_CONFIG_PC_PATH.
+  */
+ extern char *pkg_config_pc_path;
++extern char *pkg_config_sysroot;
+ 
+ #ifdef G_OS_WIN32
+ /* If TRUE, do not automatically define "prefix"  while

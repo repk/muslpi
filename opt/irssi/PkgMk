@@ -14,8 +14,6 @@ SOURCES="http://www.irssi.org/files/irssi-0.8.16-rc1.tar.gz"
 pkgmain() {
 	cd ${NAME}-$VERSION-rc1
 
-	PKG_CONFIG_SYSROOT_DIR=${CLFS_DIR}			\
-	PKG_CONFIG_LIBDIR=${CLFS_DIR}/usr/lib/pkgconfig/	\
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
 		--host=${CLFS_TARGET} --prefix=/usr
 

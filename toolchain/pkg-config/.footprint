@@ -1,0 +1,12 @@
+drwxr-xr-x bin/
+-rwxr-xr-x bin/pkg-config
+-rwxr-xr-x bin/x86_64-unknown-linux-gnu-pkg-config
+drwxr-xr-x share/
+drwxr-xr-x share/aclocal/
+-rw-r--r-- share/aclocal/pkg.m4
+drwxr-xr-x share/doc/
+drwxr-xr-x share/doc/pkg-config/
+-rw-r--r-- share/doc/pkg-config/pkg-config-guide.html
+drwxr-xr-x share/man/
+drwxr-xr-x share/man/man1/
+-rw-r--r-- share/man/man1/pkg-config.1

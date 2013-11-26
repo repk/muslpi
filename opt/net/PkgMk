@@ -1,0 +1,25 @@
+# Description: Set of important file that configure network for static ip
+# URL:
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=net
+VERSION=0.1
+
+
+DEPENDS=""
+SOURCES=""
+FILES="net resolv.conf.static"
+
+
+pkgmain() {
+	mkdir ${NAME}-${VERSION}
+	cd ${NAME}-${VERSION}
+	copy_files
+
+	mkdir ${PKG}/etc
+	mkdir ${PKG}/etc/rc.d
+	install -v -m744  resolv.conf.static ${PKG}/etc/.resolv.conf.static
+	install -v -m755  net ${PKG}/etc/rc.d/net
+}
+

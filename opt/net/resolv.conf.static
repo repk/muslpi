@@ -1,0 +1,3 @@
+#Generate by /etc/rc.d/net
+
+nameserver 192.168.1.254

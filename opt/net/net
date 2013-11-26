@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# /etc/rc.d/net: start/stop network
+#
+
+case $1 in
+start)
+	# loopback
+	/sbin/ip addr add 127.0.0.1/8 dev lo broadcast + scope host
+	/sbin/ip link set lo up
+
+	# eth0 confing (static ip)
+	/sbin/ip addr add 192.168.1.50/24 broadcast 192.168.1.255 dev eth0
+	/sbin/ip link set eth0 up
+
+	mv /etc/resolv.conf /etc/resolv.conf.old
+	cp /etc/.resolv.conf.static /etc/resolv.conf
+
+	/sbin/ip route add default via 192.168.1.254 dev eth0
+
+	;;
+stop)
+
+	mv /etc/resolv.conf.old /etc/resolv.conf
+	/sbin/ip route flush all
+
+	/sbin/ip link set lo down
+	/sbin/ip addr del 127.0.0.1/8 dev lo
+
+	/sbin/ip link set eth0 down
+	/sbin/ip addr del 192.168.1.50/24 dev eth0
+
+	;;
+restart)
+	$0 stop
+	$0 start
+	;;
+*)
+	echo "usage: $0 [start|stop|restart]"
+	;;
+esac
+
+# End of file

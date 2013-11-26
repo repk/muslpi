@@ -19,10 +19,11 @@ pkgmain() {
 	process_patches
 	copy_files
 
+	#disable man pages as it needs xsltproc to build
 	CFLAGS="-D_GNU_SOURCE -D_BSD_SOURCE"			\
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
 		--host=${CLFS_TARGET} --prefix=/usr		\
-		--cache-file=config.cache
+		--enable-man=no --cache-file=config.cache
 
 	make -j${NR_JOBS}
 	fix_temporary_libtool_files

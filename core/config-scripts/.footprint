@@ -1,3 +1,4 @@
 drwxr-xr-x etc/
--rwxr-xr-x etc/fstab
--rwxr-xr-x etc/shells
+-rwxr--r-- etc/fstab
+-rwxr--r-- etc/hosts
+-rwxr--r-- etc/shells

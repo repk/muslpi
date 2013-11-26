@@ -17,9 +17,12 @@ pkgmain() {
 	cd ${NAME}-$VERSION
 	patch_unknown_target config.sub
 	process_patches
+
+	#binutils put libbfd.so and libopcodes.so into weird noncanonical host
+	#directory, so I'm disabling shared here
 	AR=ar AS=as ./configure --prefix=${PKG} --host=${CLFS_HOST}	\
 		--target=${CLFS_TARGET} --with-sysroot=${CLFS_DIR}	\
-		--disable-nls --enable-shared --disable-multilib	\
+		--disable-nls --disable-shared --disable-multilib	\
 		--enable-interwork
 	make -j${NR_JOBS}
 	make install

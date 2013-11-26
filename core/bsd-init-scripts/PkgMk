@@ -26,4 +26,5 @@ pkgmain() {
 	install -v -m755 rc.single ${PKG}/etc/rc.single
 	install -v -m644 rc.conf ${PKG}/etc/rc.conf
 	install -v -m644 sysctl.conf ${PKG}/etc/sysctl.conf
+	ln -sv /proc/mounts ${PKG}/etc/mtab
 }

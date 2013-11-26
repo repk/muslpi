@@ -1,4 +1,5 @@
 drwxr-xr-x etc/
+lrwxrwxrwx etc/mtab
 -rwxr-xr-x etc/rc
 -rw-r--r-- etc/rc.conf
 drwxr-xr-x etc/rc.d/

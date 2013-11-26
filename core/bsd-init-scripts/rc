@@ -55,9 +55,9 @@ fi
 # Clean up misc files
 : > /var/run/utmp
 /bin/rm -rf /forcefsck /fastboot /etc/nologin /etc/shutdownpid
-(cd /var/run && /bin/find . -name "*.pid" -delete)
-(cd /var/lock && /bin/find . ! -type d -delete)
-(cd /tmp && /bin/find . ! -name . -delete)
+(cd /var/run && /usr/bin/find . -name "*.pid" -delete)
+(cd /var/lock && /usr/bin/find . ! -type d -delete)
+(cd /tmp && /usr/bin/find . ! -name . -delete)
 /bin/mkdir -m 777 /tmp/.ICE-unix
 
 # Set kernel variables

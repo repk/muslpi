@@ -22,7 +22,7 @@ if [ "$SYSLOG" -o "${SERVICES[*]}" ]; then
         for service in ${SERVICES[@]}; do
                 echo -n " $service"
                 /etc/rc.d/$service start &> /tmp/rc.$$ || echo -n "[ERROR]"
-                /usr/bin/logger -t $service -f /tmp/rc.$$
+                /bin/logger -t $service -f /tmp/rc.$$
                 /bin/rm -f /tmp/rc.$$
         done
         echo

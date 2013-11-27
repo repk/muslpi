@@ -27,9 +27,13 @@ pkgmain() {
 	make DESTDIR=${PKG} install
 
 	cp ${PKG}/etc/login.defs login.defs.orig
-	sed -e's@#MD5_CRYPT_ENAB.no@MD5_CRYPT_ENAB yes@'		\
+	sed -e 's@#MD5_CRYPT_ENAB.no@MD5_CRYPT_ENAB yes@'		\
 		-e 's@/var/spool/mail@/var/mail@' login.defs.orig >	\
 		${PKG}/etc/login.defs
+
+    #Chande default group tu users(id=100)
+	cp ${PKG}/etc/default/useradd useradd
+	sed 's@GROUP=1000@GROUP=100@' useradd > ${PKG}/etc/default/useradd
 
 	mv -v ${PKG}/usr/bin/passwd ${PKG}/bin
 }

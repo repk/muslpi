@@ -206,6 +206,7 @@ drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/utmp.h
 -rw-r--r-- usr/include/utmpx.h
 -rw-r--r-- usr/include/values.h
+-rw-r--r-- usr/include/wait.h
 -rw-r--r-- usr/include/wchar.h
 -rw-r--r-- usr/include/wctype.h
 -rw-r--r-- usr/include/wordexp.h

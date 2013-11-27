@@ -1691,6 +1691,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/video/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/video/..install.cmd
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/video/sisfb.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/video/uvesafb.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/wait.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/wchar.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/wctype.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/wordexp.h

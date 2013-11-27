@@ -22,6 +22,7 @@ drwxr-xr-x sbin/
 -rwxr-xr-x sbin/blkid
 -rwxr-xr-x sbin/blockdev
 -rwxr-xr-x sbin/cfdisk
+-rwxr-xr-x sbin/chcpu
 -rwxr-xr-x sbin/ctrlaltdel
 -rwxr-xr-x sbin/fdisk
 -rwxr-xr-x sbin/findfs
@@ -68,6 +69,7 @@ drwxr-xr-x usr/bin/
 lrwxrwxrwx usr/bin/linux32
 lrwxrwxrwx usr/bin/linux64
 -rwxr-xr-x usr/bin/look
+-rwxr-xr-x usr/bin/lscpu
 -rwxr-xr-x usr/bin/lslocks
 -rwxr-xr-x usr/bin/mcookie
 -rwxr-xr-x usr/bin/namei
@@ -83,6 +85,7 @@ lrwxrwxrwx usr/bin/linux64
 -rwxr-xr-x usr/bin/setsid
 -rwxr-xr-x usr/bin/setterm
 -rwxr-xr-x usr/bin/tailf
+-rwxr-xr-x usr/bin/taskset
 -rwxr-xr-x usr/bin/ul
 -rwxr-xr-x usr/bin/unshare
 -rwxr-xr-x usr/bin/utmpdump
@@ -126,6 +129,7 @@ drwxr-xr-x usr/share/bash-completion/completions/
 -rw-r--r-- usr/share/bash-completion/completions/blockdev
 -rw-r--r-- usr/share/bash-completion/completions/cal
 -rw-r--r-- usr/share/bash-completion/completions/cfdisk
+-rw-r--r-- usr/share/bash-completion/completions/chcpu
 -rw-r--r-- usr/share/bash-completion/completions/chrt
 -rw-r--r-- usr/share/bash-completion/completions/col
 -rw-r--r-- usr/share/bash-completion/completions/colcrt
@@ -158,6 +162,7 @@ drwxr-xr-x usr/share/bash-completion/completions/
 -rw-r--r-- usr/share/bash-completion/completions/look
 -rw-r--r-- usr/share/bash-completion/completions/losetup
 -rw-r--r-- usr/share/bash-completion/completions/lsblk
+-rw-r--r-- usr/share/bash-completion/completions/lscpu
 -rw-r--r-- usr/share/bash-completion/completions/lslocks
 -rw-r--r-- usr/share/bash-completion/completions/mcookie
 -rw-r--r-- usr/share/bash-completion/completions/mkfs
@@ -189,6 +194,7 @@ drwxr-xr-x usr/share/bash-completion/completions/
 -rw-r--r-- usr/share/bash-completion/completions/swaplabel
 -rw-r--r-- usr/share/bash-completion/completions/swapon
 -rw-r--r-- usr/share/bash-completion/completions/tailf
+-rw-r--r-- usr/share/bash-completion/completions/taskset
 -rw-r--r-- usr/share/bash-completion/completions/ul
 -rw-r--r-- usr/share/bash-completion/completions/unshare
 -rw-r--r-- usr/share/bash-completion/completions/utmpdump
@@ -222,6 +228,7 @@ drwxr-xr-x usr/share/man/man1/
 -rw-r--r-- usr/share/man/man1/kill.1
 -rw-r--r-- usr/share/man/man1/logger.1
 -rw-r--r-- usr/share/man/man1/look.1
+-rw-r--r-- usr/share/man/man1/lscpu.1
 -rw-r--r-- usr/share/man/man1/mcookie.1
 -rw-r--r-- usr/share/man/man1/more.1
 -rw-r--r-- usr/share/man/man1/mountpoint.1
@@ -237,6 +244,7 @@ drwxr-xr-x usr/share/man/man1/
 -rw-r--r-- usr/share/man/man1/setsid.1
 -rw-r--r-- usr/share/man/man1/setterm.1
 -rw-r--r-- usr/share/man/man1/tailf.1
+-rw-r--r-- usr/share/man/man1/taskset.1
 -rw-r--r-- usr/share/man/man1/ul.1
 -rw-r--r-- usr/share/man/man1/unshare.1
 -rw-r--r-- usr/share/man/man1/utmpdump.1
@@ -266,6 +274,7 @@ drwxr-xr-x usr/share/man/man8/
 -rw-r--r-- usr/share/man/man8/blkid.8
 -rw-r--r-- usr/share/man/man8/blockdev.8
 -rw-r--r-- usr/share/man/man8/cfdisk.8
+-rw-r--r-- usr/share/man/man8/chcpu.8
 -rw-r--r-- usr/share/man/man8/ctrlaltdel.8
 -rw-r--r-- usr/share/man/man8/cytune.8
 -rw-r--r-- usr/share/man/man8/delpart.8

@@ -4,7 +4,7 @@
 
 
 NAME=musl
-VERSION=0.9.12
+VERSION=0.9.14
 
 
 DEPENDS="gcc-static"

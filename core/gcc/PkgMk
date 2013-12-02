@@ -34,7 +34,7 @@ pkgmain() {
 		--enable-threads=posix --enable-c99 --enable-long-long	\
 		--enable-clocale=gnu --enable-languages=c,c++		\
 		--disable-libstdcxx-pch					\
-		--disable-libmudflap					\
+		--disable-libmudflap --disable-nls			\
 		--with-build-sysroot=${CLFS_DIR}			\
 		--with-abi=${ABI} --with-arch=${ARCH}			\
 		--with-mode=${MODE} --with-float=${FLOAT}		\

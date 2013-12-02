@@ -216,7 +216,7 @@ drwxr-xr-x usr/lib/
 -rw-r--r-- usr/lib/crtn.o
 -rw-r--r-- usr/lib/libc.a
 -rw-r--r-- usr/lib/libcrypt.a
-lrwxrwxrwx usr/lib/libc.so
+-rwxr-xr-x usr/lib/libc.so
 -rw-r--r-- usr/lib/libdl.a
 -rw-r--r-- usr/lib/libm.a
 -rw-r--r-- usr/lib/libpthread.a

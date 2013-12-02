@@ -28,5 +28,5 @@ pkgmain() {
 	ln -s /lib/libc.so ${FILE}
 	mkdir ${PKG}/usr/bin
 	ln -s /lib/libc.so ${PKG}/usr/bin/ldd
-	ln -s /lib/libc.so ${PKG}/usr/lib/libc.so
+	cp ${PKG}/lib/libc.so ${PKG}/usr/lib/libc.so
 }

@@ -74,8 +74,10 @@ drwxr-xr-x var/lib/urandom/
 drwxr-xr-x var/local/
 drwxr-xr-x var/lock/
 drwxr-xr-x var/log/
+-rw-r--r-- var/log/wtmp
 drwxr-xr-x var/mail/
 drwxr-xr-x var/opt/
 drwxr-xr-x var/run/
+-rw-r--r-- var/run/utmp
 drwxr-xr-x var/spool/
 drwxrwxrwt var/tmp/

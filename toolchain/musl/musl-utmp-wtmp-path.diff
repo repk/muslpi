@@ -8,7 +8,7 @@ diff -Nru a/include/utmp.h b/include/utmp.h
 -#define _PATH_UTMP "/dev/null/utmp"
 -#define _PATH_WTMP "/dev/null/wtmp"
 +#define _PATH_UTMP "/var/run/utmp"
-+#define _PATH_WTMP "/var/run/wtmp"
++#define _PATH_WTMP "/var/log/wtmp"
  
  #define UTMP_FILE _PATH_UTMP
  #define WTMP_FILE _PATH_WTMP

@@ -26,4 +26,8 @@ pkgmain() {
 	for dir in ${PKG}/usr{,/local}; do
 		ln -sfnv share/{man,doc,info} ${dir}
 	done
+	touch ${PKG}/var/run/utmp
+	touch ${PKG}/var/log/wtmp
+	chmod 644 ${PKG}/var/run/utmp
+	chmod 644 ${PKG}/var/log/wtmp
 }

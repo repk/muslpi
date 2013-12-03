@@ -1,0 +1,11 @@
+PKGLIST="opt/strace	\
+	 opt/gdb	\
+	 opt/openssl	\
+	 opt/openssh	\
+	 opt/libevent	\
+	 opt/tmux	\
+	 opt/libffi	\
+	 opt/glib	\
+	 opt/irssi	\
+	 opt/net"
+

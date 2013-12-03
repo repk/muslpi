@@ -22,8 +22,8 @@ pkgmain() {
 	unset LD
 
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
-		--host=${CLFS_TARGET} --without-stackprotect	\
-		--disable-strip
+		--host=${CLFS_TARGET} --sysconfdir=/etc/ssh	\
+		--without-stackprotect	--disable-strip
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install

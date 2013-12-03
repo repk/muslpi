@@ -1,6 +1,10 @@
 drwxr-xr-x etc/
 drwxr-xr-x etc/rc.d/
 -rwxr-xr-x etc/rc.d/sshd
+drwxr-xr-x etc/ssh/
+-rw-r--r-- etc/ssh/moduli
+-rw-r--r-- etc/ssh/ssh_config
+-rw-r--r-- etc/ssh/sshd_config
 drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
 -rwxr-xr-x usr/bin/scp
@@ -11,10 +15,6 @@ lrwxrwxrwx usr/bin/slogin
 -rwxr-xr-x usr/bin/ssh-agent
 -rwxr-xr-x usr/bin/ssh-keygen
 -rwxr-xr-x usr/bin/ssh-keyscan
-drwxr-xr-x usr/etc/
--rw-r--r-- usr/etc/moduli
--rw-r--r-- usr/etc/ssh_config
--rw-r--r-- usr/etc/sshd_config
 drwxr-xr-x usr/libexec/
 -rwxr-xr-x usr/libexec/sftp-server
 -rws--x--x usr/libexec/ssh-keysign

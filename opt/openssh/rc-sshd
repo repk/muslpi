@@ -5,17 +5,17 @@
 
 case $1 in
 start)
-	if [ ! -f /usr/etc/ssh_host_key ]; then
-		/usr/bin/ssh-keygen -t rsa1 -N "" -f /usr/etc/ssh_host_key > /dev/null
+	if [ ! -f /etc/ssh/ssh_host_key ]; then
+		/usr/bin/ssh-keygen -t rsa1 -N "" -f /etc/ssh/ssh_host_key > /dev/null
 	fi
-	if [ ! -f /usr/etc/ssh_host_rsa_key ]; then
-		/usr/bin/ssh-keygen -t rsa -N "" -f /usr/etc/ssh_host_rsa_key > /dev/null
+	if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then
+		/usr/bin/ssh-keygen -t rsa -N "" -f /etc/ssh/ssh_host_rsa_key > /dev/null
 	fi
-	if [ ! -f /usr/etc/ssh_host_dsa_key ]; then
-		/usr/bin/ssh-keygen -t dsa -N "" -f /usr/etc/ssh_host_dsa_key > /dev/null
+	if [ ! -f /etc/ssh/ssh_host_dsa_key ]; then
+		/usr/bin/ssh-keygen -t dsa -N "" -f /etc/ssh/ssh_host_dsa_key > /dev/null
 	fi
-	if [ ! -f /usr/etc/ssh_host_ecdsa_key ]; then
-		/usr/bin/ssh-keygen -t ecdsa -N "" -f /usr/etc/ssh_host_ecdsa_key > /dev/null
+	if [ ! -f /etc/ssh/ssh_host_ecdsa_key ]; then
+		/usr/bin/ssh-keygen -t ecdsa -N "" -f /etc/ssh/ssh_host_ecdsa_key > /dev/null
 	fi
 	/usr/sbin/sshd
 	;;

@@ -23,5 +23,5 @@ pkgmain() {
 	make
 
 	PATH=${TOOLCHAIN_DIR}/bin:${PATH}				\
-	make MANDIR=${CLFS_DIR}/usr/man MANSUFFIX=ssl install
+	make MANDIR=${PKG}/usr/man MANSUFFIX=ssl install
 }

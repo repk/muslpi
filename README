@@ -46,11 +46,12 @@ package use "uninstall.sh pkg host"
 
 = Auto build =
 Lazy people can use install_pkglist.sh to automatically build a package list.
-You can find two usefull package lists in config/pkg_lists directory. For
+You can find three usefull package lists in config/pkg_lists directory. For
 example to make a complete install run these two commands :
 
 install_pkglist.sh config/pkg_lists/toolchain
 install_pkglist.sh config/pkg_lists/core
+install_pkglist.sh config/pkg_lists/opt
 
 And go take a beer and 6 others because this will take a long long time.
 
@@ -67,5 +68,15 @@ You can play with some build options by modifying files in config/
 
 = Result =
 Toolchain and clfs result will be placed in build directory. When done you can
-dd the clfs dir in a well formatted disk, add a /etc/fstab file and boot up your
-raspberry pi. If you get lucky this possibly can boot sometimes.
+cp the clfs dir inside a well formatted disk and boot up your raspberry pi.
+If you get lucky this possibly can boot sometimes.
+
+= Send to target =
+As an alternative you can use the send2target script to send one package or a
+package list to a target (ie a mounted disk). For example the following can be
+used just after the clfs has been built in order to copy the result system in a
+mounted usb disk that your rapberry pi will boot up :
+
+mount /dev/sdd1 /mnt/
+mount /dev/sdd2 /mnt/usr/
+send2target.sh /mnt/ -p musl -l config/pkg_lists/core -l config/pkg_lists/opt

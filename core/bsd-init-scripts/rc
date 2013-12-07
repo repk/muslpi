@@ -33,11 +33,12 @@ if [ $? -gt 1 ]; then
         echo "*  file system is currently mounted read-only. To remount  *"
         echo "*  it read-write type: mount -n -o remount,rw /            *"
         echo "*  When you exit the maintainance shell the system will    *"
-        echo "*  reboot automatically.                                   *"
+        echo "*  reboot automatically. If not logged withing the next    *"
+        echo "*  30 seconds, the system will reboot automatically.       *"
         echo "*                                                          *"
         echo "************************************************************"
         echo
-        /sbin/sulogin -p
+        /sbin/sulogin -p -t 30
         echo "Automatic reboot in progress..."
         /bin/umount -a -r
         /bin/mount -o remount,ro /

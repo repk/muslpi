@@ -1,4 +1,4 @@
-PKGLIST="toolchain/linux-headers	\
+PKGLIST="kernels/${KERNEL}-headers	\
 	 toolchain/gmp			\
 	 toolchain/mpfr			\
 	 toolchain/ppl			\

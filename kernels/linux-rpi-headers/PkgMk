@@ -1,0 +1,22 @@
+# Description: Linux kernel for Rpi
+# URL: https://kernel.org
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=linux-rpi-headers
+VERSION=3.2.27
+
+
+DEPENDS=""
+SOURCES="https://github.com/raspberrypi/linux/archive/rpi-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd linux-rpi-$VERSION
+
+	make ARCH=arm mrproper
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- bcmrpi_cutdown_defconfig
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- headers_check
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}-			\
+		INSTALL_HDR_PATH=${PKG}/usr headers_install
+}

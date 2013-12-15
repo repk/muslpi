@@ -30,12 +30,12 @@ get_args() {
 
 	while [ ${#} -ge 1 ]; do
 		if [ "${1}" == "-l" ]; then
-			if [ ${#} -le 1]; then
+			if [ ${#} -le 1 ]; then
 				usage
 			fi
 			PKGLIST_FILE="${PKGLIST_FILE} ${2}"
 		elif [ "${1}" == "-p" ]; then
-			if [ ${#} -le 1]; then
+			if [ ${#} -le 1 ]; then
 				usage
 			fi
 			PKGS="${PKGS} ${2}"

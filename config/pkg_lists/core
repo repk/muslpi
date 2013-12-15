@@ -1,4 +1,5 @@
 PKGLIST="core/fhs		\
+	 kernels/${KERNEL}	\
 	 core/pass-files	\
 	 core/man		\
 	 core/gmp		\

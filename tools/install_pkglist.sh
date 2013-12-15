@@ -38,6 +38,9 @@ main() {
 	get_args "$@"
 	check_file ${PKG_LIST_FILE}
 
+	check_file ${PKGMK_COMMONCONF}
+	. ${PKGMK_COMMONCONF}
+
 	. ${PKG_LIST_FILE}
 	for pkg in ${PKGLIST}; do
 		OLD=${PWD}
@@ -62,6 +65,7 @@ main() {
 TOOLS_BASEDIR=$(dirname $(readlink -e $0))
 PKGMK_BASEDIR=$(dirname ${TOOLS_BASEDIR})
 
+PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKG_LIST_FILE=""
 PKG_BUILD_OPT=""
 

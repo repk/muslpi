@@ -1,0 +1,23 @@
+# Description: Linux kernel for Rpi
+# URL: https://kernel.org
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=linux-rpi
+VERSION=3.2.27
+
+
+DEPENDS=""
+SOURCES="https://github.com/raspberrypi/linux/archive/rpi-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd linux-rpi-$VERSION
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- bcmrpi_cutdown_defconfig
+	make -j${NR_JOBS} ARCH=arm CROSS_COMPILE=${CLFS_TARGET}-
+	make -j${NR_JOBS} ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- modules
+
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- INSTALL_MOD_PATH=${PKG} modules_install
+	mkdir -p ${PKG}/boot
+	cp arch/arm/boot/Image ${PKG}/boot/kernel.img
+}

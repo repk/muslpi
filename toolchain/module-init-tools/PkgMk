@@ -1,0 +1,23 @@
+# Description: Programs for handling kernel modules
+# URL: http://git.kernel.org/cgit/utils/kernel/module-init-tools/module-init-tools.git
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=module-init-tools
+VERSION=3.15
+HOST_PKG=1
+
+
+DEPENDS="zlib"
+SOURCES="https://www.kernel.org/pub/linux/utils/kernel/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	./configure --prefix=${PKG}
+
+	make -j${NR_JOBS} DOCBOOKTOMAN=""
+	make INSTALL=install install
+}
+

@@ -17,7 +17,8 @@ pkgmain() {
 	make -j${NR_JOBS} ARCH=arm CROSS_COMPILE=${CLFS_TARGET}-
 	make -j${NR_JOBS} ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- modules
 
-	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- INSTALL_MOD_PATH=${PKG} modules_install
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- INSTALL_MOD_PATH=${PKG} \
+		DEPMOD=${TOOLCHAIN_DIR}/sbin/depmod modules_install
 	mkdir -p ${PKG}/boot
 	cp arch/arm/boot/Image ${PKG}/boot/kernel.img
 }

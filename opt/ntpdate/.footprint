@@ -1,0 +1,4 @@
+drwxr-xr-x usr/
+drwxr-xr-x usr/bin/
+-rwxr-xr-x usr/bin/ntpdate
+drwxr-xr-x usr/sbin/

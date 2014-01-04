@@ -7,5 +7,6 @@ PKGLIST="opt/strace	\
 	 opt/libffi	\
 	 opt/glib	\
 	 opt/irssi	\
+	 opt/ntpdate	\
 	 opt/net"
 

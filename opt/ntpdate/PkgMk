@@ -1,0 +1,26 @@
+# Description: Utility to set time by way of NTP
+# URL: http://www.ntp.org/index.html
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=ntpdate
+VERSION=4.2.6p5
+
+
+DEPENDS=""
+SOURCES="http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2/ntp-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ntp-$VERSION
+
+	patch_unknown_target config.sub
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET}
+
+	cd ntpdate
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

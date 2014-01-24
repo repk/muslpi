@@ -1,0 +1,11 @@
+diff -ru a/src/getsdir.c b/src/getsdir.c
+--- a/src/getsdir.c	2011-02-14 11:07:00.000000000 +0100
++++ b/src/getsdir.c	2014-01-24 10:34:14.204641614 +0100
+@@ -30,6 +30,7 @@
+ #include <string.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
++#include <sys/param.h>
+ #include <errno.h>
+ 
+ #include "getsdir.h"

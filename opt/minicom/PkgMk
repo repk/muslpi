@@ -1,0 +1,25 @@
+# Description: menu driven communications program
+# URL: https://alioth.debian.org/projects/minicom/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=minicom
+VERSION=2.7
+
+
+DEPENDS=""
+SOURCES="https://alioth.debian.org/frs/download.php/file/3977/${NAME}-${VERSION}.tar.gz"
+PATCHES="minicom-include.patch"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	process_patches
+
+	CFLAGS="-D__GLIBC__"						\
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

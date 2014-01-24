@@ -20,5 +20,13 @@ pkgmain() {
 	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- INSTALL_MOD_PATH=${PKG} \
 		DEPMOD=${TOOLCHAIN_DIR}/sbin/depmod modules_install
 	mkdir -p ${PKG}/boot
+
+	rm ${PKG}/lib/modules/${VERSION}-cutdown/build
+	rm ${PKG}/lib/modules/${VERSION}-cutdown/source
+	ln -s ../../../usr/src/linux-rpi-${VERSION}			\
+		${PKG}/lib/modules/${VERSION}-cutdown/build
+	ln -s ../../../usr/src/linux-rpi-${VERSION}			\
+		${PKG}/lib/modules/${VERSION}-cutdown/source
+
 	cp arch/arm/boot/Image ${PKG}/boot/kernel.img
 }

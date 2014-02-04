@@ -1,0 +1,24 @@
+# Description: Multiprotocol file transfer library
+# URL: http://curl.haxx.se/libcurl/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=curl
+VERSION=7.35.0
+
+
+DEPENDS="openssl"
+SOURCES="http://curl.haxx.se/download/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	#patch_unknown_target ./config.sub
+
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

@@ -1,0 +1,27 @@
+# Description: irc fast light and extensible client
+# URL: http://weechat.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=weechat
+VERSION=0.4.2
+
+
+DEPENDS="gettext curses libgcrypt gnutls curl"
+SOURCES="http://${NAME}.org/files/src/${NAME}-${VERSION}.tar.gz"
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	mkdir build
+	cd build
+	cmake ..							\
+		-DCMAKE_INSTALL_PREFIX:PATH=/usr			\
+		-DCMAKE_C_COMPILER=${CLFS_TARGET}-gcc			\
+		-DCMAKE_FIND_ROOT_PATH=${CLFS_DIR}			\
+		-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER		\
+		-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY		\
+		-DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY		\
+		-DLIBINTL_LIBRARY="-lintl"
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

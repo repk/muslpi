@@ -1,0 +1,24 @@
+# Description: Cryptographic library
+# URL: http://www.lysator.liu.se/~nisse/nettle/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=libnettle
+VERSION=2.7
+
+
+DEPENDS=""
+SOURCES="http://www.lysator.liu.se/~nisse/archive/nettle-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd nettle-$VERSION
+
+	patch_unknown_target ./config.sub
+
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

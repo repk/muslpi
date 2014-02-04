@@ -1,0 +1,22 @@
+# Description: general purpose cryptographic library
+# URL: https://www.gnu.org/software/libgcrypt/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=libgcrypt
+VERSION=1.6.1
+
+
+DEPENDS="libgpg-error"
+SOURCES="ftp://ftp.gnupg.org/gcrypt/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

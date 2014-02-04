@@ -1,12 +1,18 @@
-PKGLIST="opt/strace	\
-	 opt/gdb	\
-	 opt/openssl	\
-	 opt/openssh	\
-	 opt/libevent	\
-	 opt/tmux	\
-	 opt/libffi	\
-	 opt/glib	\
-	 opt/irssi	\
-	 opt/ntpdate	\
+PKGLIST="opt/strace		\
+	 opt/gdb		\
+	 opt/openssl		\
+	 opt/openssh		\
+	 opt/libevent		\
+	 opt/tmux		\
+	 opt/libffi		\
+	 opt/glib		\
+	 opt/irssi		\
+	 opt/ntpdate		\
+	 opt/libgpg-error	\
+	 opt/libgcrypt		\
+	 opt/libnettle		\
+	 opt/gnutls		\
+	 opt/curl		\
+	 opt/weechat		\
 	 opt/net"
 

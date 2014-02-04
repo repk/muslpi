@@ -1,0 +1,23 @@
+# Description: Small library that defines common error values for all GnuPG
+# components
+# URL: http://www.gnupg.org/related_software/libgpg-error/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=libgpg-error
+VERSION=1.12
+
+
+DEPENDS=""
+SOURCES="ftp://ftp.gnupg.org/gcrypt/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

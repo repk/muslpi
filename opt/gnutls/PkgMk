@@ -1,0 +1,24 @@
+# Description: Secure communications library implementing the SSL, TLS and DTLS
+# protocols
+# URL: http://www.gnutls.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=gnutls
+VERSION=3.2.10
+
+
+DEPENDS="libnettle"
+SOURCES="ftp://ftp.gnutls.org/gcrypt/${NAME}/v3.2/${NAME}-${VERSION}.tar.xz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	fix_temporary_libtool_files
+	make DESTDIR=${PKG} install
+}

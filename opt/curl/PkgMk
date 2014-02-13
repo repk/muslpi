@@ -14,10 +14,9 @@ SOURCES="http://curl.haxx.se/download/${NAME}-${VERSION}.tar.gz"
 pkgmain() {
 	cd ${NAME}-$VERSION
 
-	#patch_unknown_target ./config.sub
-
 	./configure --prefix=/usr --build=${CLFS_HOST}			\
-		--host=${CLFS_TARGET}
+		--host=${CLFS_TARGET}					\
+		--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install

@@ -9,6 +9,7 @@ PKGLIST="opt/strace		\
 	 opt/irssi		\
 	 opt/ntpdate		\
 	 opt/libgpg-error	\
+	 opt/libgpg-error-host	\
 	 opt/libgcrypt		\
 	 opt/libnettle		\
 	 opt/gnutls		\

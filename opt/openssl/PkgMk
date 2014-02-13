@@ -18,10 +18,10 @@ pkgmain() {
 
 	cross=${CLFS_TARGET}-						\
 	./Configure linux-armv4 threads -D_REENTRANT			\
-		--prefix=${PKG}/usr --openssldir=${PKG}/etc/ssl shared no-asm
+		--prefix=/usr --openssldir=/etc/ssl shared no-asm
 
 	make
 
 	PATH=${TOOLCHAIN_DIR}/bin:${PATH}				\
-	make MANDIR=${PKG}/usr/man MANSUFFIX=ssl install
+	make INSTALL_PREFIX=${PKG} MANDIR=/usr/share/man MANSUFFIX=ssl install
 }

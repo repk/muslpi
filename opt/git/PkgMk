@@ -1,0 +1,19 @@
+# Description: Distributed version control system 
+# URL: http://git-scm.com/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=git
+VERSION=1.8.5.4
+
+
+DEPENDS="expat curl"
+SOURCES="https://git-core.googlecode.com/files/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	make -j${NR_JOBS} CC=${CC} CFLAGS="${CFLAGS} -DNO_SYS_POLL_H" LDFLAGS="-lintl" prefix=/usr gitexecdir=/usr/lib/git-core \
+		INSTALLSITEMAN3DIR=/usr/man/man3 DESTDIR=${PKG} install
+}

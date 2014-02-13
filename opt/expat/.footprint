@@ -1,0 +1,17 @@
+drwxr-xr-x usr/
+drwxr-xr-x usr/bin/
+-rwxr-xr-x usr/bin/xmlwf
+drwxr-xr-x usr/include/
+-rw-r--r-- usr/include/expat_external.h
+-rw-r--r-- usr/include/expat.h
+drwxr-xr-x usr/lib/
+-rw-r--r-- usr/lib/libexpat.a
+lrwxrwxrwx usr/lib/libexpat.so
+lrwxrwxrwx usr/lib/libexpat.so.1
+-rwxr-xr-x usr/lib/libexpat.so.1.6.0
+drwxr-xr-x usr/lib/pkgconfig/
+-rw-r--r-- usr/lib/pkgconfig/expat.pc
+drwxr-xr-x usr/share/
+drwxr-xr-x usr/share/man/
+drwxr-xr-x usr/share/man/man1/
+-rw-r--r-- usr/share/man/man1/xmlwf.1

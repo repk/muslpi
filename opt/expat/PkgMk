@@ -1,0 +1,24 @@
+# Description: XML parser library written in C
+# URL: http://expat.sourceforge.net/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=expat
+VERSION=2.1.0
+
+
+DEPENDS=""
+SOURCES="http://downloads.sourceforge.net/project/${NAME}/${NAME}/${VERSION}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	patch_unknown_target conftools/config.sub
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

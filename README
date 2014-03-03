@@ -1,9 +1,9 @@
-============
-muslpi-cross
-============
+======
+muslpi
+======
 
-muslpi-cross is a cross lfs build system for raspberry pi (but can/will possibly
-be extended to a generic cross lfs build system).
+muslpi is a cross lfs build system for raspberry pi (but can/will possibly be
+extended to a generic cross lfs build system).
 
 The resulting clfs will use the lightweight and posix-conformant musl libc, and
 a bsd style init system.

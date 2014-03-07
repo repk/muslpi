@@ -32,7 +32,7 @@ lrwxrwxrwx usr/lib/libgnutls-openssl.so.27
 -rwxr-xr-x usr/lib/libgnutls-openssl.so.27.0.2
 lrwxrwxrwx usr/lib/libgnutls.so
 lrwxrwxrwx usr/lib/libgnutls.so.28
--rwxr-xr-x usr/lib/libgnutls.so.28.30.0
+-rwxr-xr-x usr/lib/libgnutls.so.28.30.2
 -rw-r--r-- usr/lib/libgnutls-xssl.a
 lrwxrwxrwx usr/lib/libgnutls-xssl.so
 lrwxrwxrwx usr/lib/libgnutls-xssl.so.0

@@ -1,0 +1,28 @@
+# Description: Software documentation utilities
+# URL: http://primates.ximian.com/~flucifredi/man/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=man
+VERSION=1.6g
+
+
+DEPENDS=""
+SOURCES="http://distfiles.gentoo.org/distfiles/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	cp configure{,.orig}
+	sed -e "/PREPATH=/s@=.*@=\"${CLFS_DIR}/sbin:${CLFS_DIR}/bin:${CLFS_DIR}/usr/sbin:${CLFS_DIR}/usr/bin\"@g" -e "s@-is@&R@g" configure.orig > configure
+
+	CC="${CC} -DPOSIX" ./configure -confdir=/etc
+
+	cp conf_script{,.orig}
+	sed "s@${CLFS_DIR}@@" conf_script.orig > conf_script
+	gcc src/makemsg.c -o src/makemsg
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

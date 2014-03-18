@@ -1,9 +1,6 @@
 PKGLIST="core/fhs		\
 	 kernels/${KERNEL}	\
 	 core/pass-files	\
-	 core/libpipeline	\
-	 core/gdbm		\
-	 core/man-db		\
 	 core/gmp		\
 	 core/mpfr		\
 	 core/ppl		\
@@ -51,5 +48,6 @@ PKGLIST="core/fhs		\
 	 core/texinfo		\
 	 core/vim		\
 	 core/xz-utils		\
+	 core/man		\
 	 core/bsd-init-scripts	\
 	 core/config-scripts"

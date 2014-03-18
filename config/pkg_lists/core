@@ -1,7 +1,9 @@
 PKGLIST="core/fhs		\
 	 kernels/${KERNEL}	\
 	 core/pass-files	\
-	 core/man		\
+	 core/libpipeline	\
+	 core/gdbm		\
+	 core/man-db		\
 	 core/gmp		\
 	 core/mpfr		\
 	 core/ppl		\

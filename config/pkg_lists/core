@@ -49,5 +49,6 @@ PKGLIST="core/fhs		\
 	 core/vim		\
 	 core/xz-utils		\
 	 core/man		\
+	 core/man-pages		\
 	 core/bsd-init-scripts	\
 	 core/config-scripts"

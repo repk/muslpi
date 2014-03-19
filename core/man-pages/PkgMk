@@ -1,0 +1,19 @@
+# Description: More than 1,200 man pages
+# URL: https://www.kernel.org/pub/linux/docs/man-pages/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=man-pages
+VERSION=3.63
+
+
+DEPENDS="man"
+SOURCES="https://www.kernel.org/pub/linux/docs/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	make prefix=${PKG}/usr install
+}
+

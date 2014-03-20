@@ -1,0 +1,20 @@
+# Description: Coreutils man pages
+# URL: https://distfiles.gentoo.org/distfiles/coreutils-8.21-man.tar.xz
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=coreutils-man
+VERSION=8.21
+
+
+DEPENDS="coreutils"
+SOURCES="https://distfiles.gentoo.org/distfiles/coreutils-${VERSION}-man.tar.xz"
+
+
+pkgmain() {
+	cd coreutils-${VERSION}
+
+	install -dv -m 0755 ${PKG}/usr/share/man/
+	cp -R man ${PKG}/usr/share/man/man1
+}
+

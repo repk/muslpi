@@ -39,4 +39,7 @@ pkgmain() {
 	mv -v ${PKG}/usr/bin/{[,basename,head,install,nice} ${PKG}/bin
 	mv -v ${PKG}/usr/bin/{readlink,sleep,sync,test,touch} ${PKG}/bin
 	ln -sfv ../../bin/install ${PKG}/usr/bin
+
+	#Remove unecessary man pages
+	rm -rf ${PKG}/usr/share
 }

@@ -825,6 +825,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/bits/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/msg.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/posix.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/reg.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/sem.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/setjmp.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/shm.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/signal.h
@@ -1511,6 +1512,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/netinet/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/netinet/ether.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/netinet/icmp6.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/netinet/if_ether.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/netinet/igmp.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/netinet/in.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/netinet/in_systm.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/netinet/ip6.h
@@ -1593,6 +1595,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sys/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/errno.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/eventfd.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sysexits.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/fanotify.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/fcntl.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/file.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/fsuid.h
@@ -1613,6 +1616,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sys/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/prctl.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/procfs.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/ptrace.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/quota.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/reboot.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/reg.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/resource.h
@@ -1630,11 +1634,11 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sys/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/stropts.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/swap.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/syscall.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/sysctl.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/sysinfo.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/syslog.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/sysmacros.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/termios.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/timeb.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/time.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/timerfd.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/times.h

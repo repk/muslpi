@@ -34,18 +34,6 @@
  
  enum {
  	O_STRIP_OPTION = 0,
---- a/include/linux/netfilter/xt_osf.h	2012-10-18 10:50:00.000000000 +0200
-+++ b/include/linux/netfilter/xt_osf.h	2013-07-28 19:18:40.729981793 +0200
-@@ -21,6 +21,9 @@
- #define _XT_OSF_H
- 
- #include <linux/types.h>
-+#if !defined(__UCLIBC__)
-+#include <linux/tcp.h>
-+#endif
- 
- #define MAXGENRELEN		32
- 
 --- a/include/linux/netfilter_ipv4/ip_tables.h	2012-10-18 10:50:00.000000000 +0200
 +++ b/include/linux/netfilter_ipv4/ip_tables.h	2013-07-28 19:18:16.999981978 +0200
 @@ -16,6 +16,7 @@

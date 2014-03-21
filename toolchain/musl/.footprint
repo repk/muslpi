@@ -31,6 +31,7 @@ drwxr-xr-x usr/include/bits/
 -rw-r--r-- usr/include/bits/msg.h
 -rw-r--r-- usr/include/bits/posix.h
 -rw-r--r-- usr/include/bits/reg.h
+-rw-r--r-- usr/include/bits/sem.h
 -rw-r--r-- usr/include/bits/setjmp.h
 -rw-r--r-- usr/include/bits/shm.h
 -rw-r--r-- usr/include/bits/signal.h
@@ -88,6 +89,7 @@ drwxr-xr-x usr/include/netinet/
 -rw-r--r-- usr/include/netinet/ether.h
 -rw-r--r-- usr/include/netinet/icmp6.h
 -rw-r--r-- usr/include/netinet/if_ether.h
+-rw-r--r-- usr/include/netinet/igmp.h
 -rw-r--r-- usr/include/netinet/in.h
 -rw-r--r-- usr/include/netinet/in_systm.h
 -rw-r--r-- usr/include/netinet/ip6.h
@@ -138,6 +140,7 @@ drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/sys/errno.h
 -rw-r--r-- usr/include/sys/eventfd.h
 -rw-r--r-- usr/include/sysexits.h
+-rw-r--r-- usr/include/sys/fanotify.h
 -rw-r--r-- usr/include/sys/fcntl.h
 -rw-r--r-- usr/include/sys/file.h
 -rw-r--r-- usr/include/sys/fsuid.h
@@ -158,6 +161,7 @@ drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/sys/prctl.h
 -rw-r--r-- usr/include/sys/procfs.h
 -rw-r--r-- usr/include/sys/ptrace.h
+-rw-r--r-- usr/include/sys/quota.h
 -rw-r--r-- usr/include/sys/reboot.h
 -rw-r--r-- usr/include/sys/reg.h
 -rw-r--r-- usr/include/sys/resource.h
@@ -175,11 +179,11 @@ drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/sys/stropts.h
 -rw-r--r-- usr/include/sys/swap.h
 -rw-r--r-- usr/include/sys/syscall.h
--rw-r--r-- usr/include/sys/sysctl.h
 -rw-r--r-- usr/include/sys/sysinfo.h
 -rw-r--r-- usr/include/sys/syslog.h
 -rw-r--r-- usr/include/sys/sysmacros.h
 -rw-r--r-- usr/include/sys/termios.h
+-rw-r--r-- usr/include/sys/timeb.h
 -rw-r--r-- usr/include/sys/time.h
 -rw-r--r-- usr/include/sys/timerfd.h
 -rw-r--r-- usr/include/sys/times.h

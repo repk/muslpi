@@ -1,0 +1,2 @@
+shadow_cv_passwd_dir=${CLFS_DIR}/bin
+ac_cv_func_lckpwdf=no

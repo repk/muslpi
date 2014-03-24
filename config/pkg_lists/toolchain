@@ -11,4 +11,5 @@ PKGLIST="kernels/${KERNEL}-headers	\
 	 toolchain/module-init-tools	\
 	 toolchain/file			\
 	 toolchain/groff		\
+	 toolchain/shadow		\
 	 toolchain/pkg-config"

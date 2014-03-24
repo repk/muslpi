@@ -1,0 +1,34 @@
+# Description: Programs for handling passwords in a secure way
+# URL: http://www.linuxfromscratch.org/lfs/view/development/chapter06/shadow.html
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=shadow
+VERSION=4.1.4.2
+HOST_PKG=1
+
+
+DEPENDS=""
+SOURCES="http://ftp.cross-lfs.org/pub/clfs/conglomeration/${NAME}/${NAME}-${VERSION}.tar.bz2"
+PATCHES="shadow.patch"
+FILES="config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	process_patches
+	copy_files
+
+	./configure --prefix=${PKG} --sbindir=${PKG}			\
+		--sysroot=${CLFS_DIR} --disable-shared			\
+		--without-libpam --without-audit --without-selinux	\
+		--program-prefix=${CLFS_TARGET}- --without-nscd		\
+		--cache-file=config.cache
+
+	cp config.h{,.orig}
+	sed "/PASSWD_PROGRAM/s/passwd/${CLFS_TARGET}-&/" config.h.orig >config.h
+
+	make -j${NR_JOBS}
+	make install
+
+}

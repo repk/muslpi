@@ -4,13 +4,13 @@
 
 
 NAME=gcc
-VERSION=4.7.2
+VERSION=4.8.2
 HOST_PKG=1
 
 
 DEPENDS="gcc-static musl"
 SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
-PATCHES="gcc-4.7.2-musl.diff gcc-libiberty-path.patch"
+PATCHES="gcc-${VERSION}-musl.diff gcc-libiberty-path.patch"
 
 
 pkgmain() {

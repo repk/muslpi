@@ -251,6 +251,13 @@ makepkg() {
 		rm -rf usr/share/info
 	fi
 
+	if [ -d usr/man ]; then
+		if [ ! -d usr/share ]; then
+			mkdir usr/share
+		fi
+		mv usr/{,share/}man
+	fi
+
 	bsdtar -cjf ${PKG_TAR} *
 	if [ $? -ne 0 ]; then
 		error "Failed to make package"

@@ -17,5 +17,5 @@ pkgmain() {
 	make -j${NR_JOBS} CC=${CC} prefix=/usr NO_PERL=1 NO_PYTHON=1	\
 		CFLAGS="${CFLAGS} -DNO_SYS_POLL_H" LDFLAGS="-lintl"	\
 		gitexecdir=/usr/lib/git-core				\
-		INSTALLSITEMAN3DIR=/usr/man/man3 DESTDIR=${PKG} install
+		INSTALLSITEMAN3DIR=/usr/share/man/man3 DESTDIR=${PKG} install
 }

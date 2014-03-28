@@ -18,17 +18,12 @@ drwxr-xr-x sys/
 drwxrwxrwt tmp/
 drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
-lrwxrwxrwx usr/doc
 drwxr-xr-x usr/include/
-lrwxrwxrwx usr/info
 drwxr-xr-x usr/lib/
 drwxr-xr-x usr/local/
 drwxr-xr-x usr/local/bin/
-lrwxrwxrwx usr/local/doc
 drwxr-xr-x usr/local/include/
-lrwxrwxrwx usr/local/info
 drwxr-xr-x usr/local/lib/
-lrwxrwxrwx usr/local/man
 drwxr-xr-x usr/local/sbin/
 drwxr-xr-x usr/local/share/
 drwxr-xr-x usr/local/share/doc/
@@ -47,7 +42,6 @@ drwxr-xr-x usr/local/share/misc/
 drwxr-xr-x usr/local/share/terminfo/
 drwxr-xr-x usr/local/share/zoneinfo/
 drwxr-xr-x usr/local/src/
-lrwxrwxrwx usr/man
 drwxr-xr-x usr/sbin/
 drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/doc/

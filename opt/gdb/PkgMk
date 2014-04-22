@@ -14,7 +14,7 @@ PATCHES="gdb-amd64-debugreg.patch gdb-arm-wrapper.patch gdb-linux_nat.patch gdb-
 
 pkgmain() {
 	cd ${NAME}-$VERSION
-    process_patches
+	process_patches
 
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
 		--host=${CLFS_TARGET} --enable-gdbserver=no

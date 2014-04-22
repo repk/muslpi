@@ -1,0 +1,27 @@
+# Description: Chat network irc gateway
+# URL: http://www.bitlbee.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=bitlbee
+VERSION=3.2.1
+
+
+DEPENDS="libevent"
+SOURCES="http://get.bitlbee.org/src/bitlbee-3.2.1.tar.gz"
+PATCHES="bitlbee-convert-nick.patch"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	process_patches
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET}
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+	make DESTDIR=${PKG} install-etc
+	mkdir -pv ${PKG}/var/lib/bitlbee/
+	chmod -R 777 ${PKG}/var/lib/bitlbee/
+}

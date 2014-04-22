@@ -1,0 +1,15 @@
+diff -Nru bitlbee-3.2.1/nick.c bitlbee-3.2.1-new/nick.c
+--- bitlbee-3.2.1/nick.c	2013-11-27 23:54:54.000000000 +0100
++++ bitlbee-3.2.1-new/nick.c	2014-04-22 11:22:35.360338971 +0200
+@@ -206,9 +206,9 @@
+ 		   accents don't just get stripped. Note that it depends on
+ 		   LC_CTYPE being set to something other than C/POSIX. */
+ 		if( !( irc && irc->status & IRC_UTF8_NICKS ) )
+-			part = asc = g_convert_with_fallback( part, -1, "ASCII//TRANSLIT",
++			part = asc = g_convert_with_fallback( part, -1, "ASCII",
+ 			                                      "UTF-8", "", NULL, NULL, NULL );
+-		
++
+ 		if( chop && ( s = strchr( part, chop ) ) )
+ 			len = MIN( len, s - part );
+ 		

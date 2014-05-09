@@ -4,11 +4,11 @@
 
 
 NAME=util-linux
-VERSION=2.23.1
+VERSION=2.24.2
 
 
 DEPENDS=""
-SOURCES="https://www.kernel.org/pub/linux/utils/${NAME}/v2.23/${NAME}-${VERSION}.tar.gz"
+SOURCES="https://www.kernel.org/pub/linux/utils/${NAME}/v2.24/${NAME}-${VERSION}.tar.gz"
 PATCHES="util-linux-musl.patch"
 FILES="config.cache"
 

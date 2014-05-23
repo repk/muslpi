@@ -251,12 +251,26 @@ makepkg() {
 		rm -rf usr/share/info
 	fi
 
+	# Remove doc uneeded files
+	if [ -d share/doc ]; then
+		rm -rf share/doc
+	fi
+	if [ -d usr/share/doc ]; then
+		rm -rf usr/share/doc
+	fi
+
+	# Remove gtk-doc more uneeded files
+	if [ -d usr/share/gtk-doc ]; then
+		rm -rf usr/share/gtk-doc
+	fi
+
 	if [ -d usr/man ]; then
 		if [ ! -d usr/share ]; then
 			mkdir usr/share
 		fi
 		mv usr/{,share/}man
 	fi
+
 
 	bsdtar -cjf ${PKG_TAR} *
 	if [ $? -ne 0 ]; then

@@ -10,8 +10,6 @@ lrwxrwxrwx usr/bin/vimdiff
 -rwxr-xr-x usr/bin/vimtutor
 -rwxr-xr-x usr/bin/xxd
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/doc/
-lrwxrwxrwx usr/share/doc/vim-7.3
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/fr/
 drwxr-xr-x usr/share/man/fr.ISO8859-1/

@@ -4,9 +4,6 @@ drwxr-xr-x bin/
 drwxr-xr-x share/
 drwxr-xr-x share/aclocal/
 -rw-r--r-- share/aclocal/pkg.m4
-drwxr-xr-x share/doc/
-drwxr-xr-x share/doc/pkg-config/
--rw-r--r-- share/doc/pkg-config/pkg-config-guide.html
 drwxr-xr-x share/man/
 drwxr-xr-x share/man/man1/
 -rw-r--r-- share/man/man1/pkg-config.1

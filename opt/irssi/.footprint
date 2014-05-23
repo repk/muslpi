@@ -132,17 +132,6 @@ drwxr-xr-x usr/include/irssi/src/lib-config/
 -rw-r--r-- usr/include/irssi/src/lib-config/iconfig.h
 -rw-r--r-- usr/include/irssi/src/lib-config/module.h
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/doc/
-drwxr-xr-x usr/share/doc/irssi/
--rw-r--r-- usr/share/doc/irssi/design.txt
--rw-r--r-- usr/share/doc/irssi/faq.html
--rw-r--r-- usr/share/doc/irssi/faq.txt
--rw-r--r-- usr/share/doc/irssi/formats.txt
--rw-r--r-- usr/share/doc/irssi/manual.txt
--rw-r--r-- usr/share/doc/irssi/perl.txt
--rw-r--r-- usr/share/doc/irssi/signals.txt
--rw-r--r-- usr/share/doc/irssi/special_vars.txt
--rw-r--r-- usr/share/doc/irssi/startup-HOWTO.html
 drwxr-xr-x usr/share/irssi/
 drwxr-xr-x usr/share/irssi/help/
 -rw-r--r-- usr/share/irssi/help/accept

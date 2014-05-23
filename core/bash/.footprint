@@ -4,10 +4,6 @@ drwxr-xr-x bin/
 lrwxrwxrwx bin/sh
 drwxr-xr-x usr/
 drwxr-xr-x usr/share/
-drwxr-xr-x usr/share/doc/
-drwxr-xr-x usr/share/doc/bash-4.0/
--rw-r--r-- usr/share/doc/bash-4.0/bash.html
--rw-r--r-- usr/share/doc/bash-4.0/bashref.html
 drwxr-xr-x usr/share/locale/
 drwxr-xr-x usr/share/locale/af/
 drwxr-xr-x usr/share/locale/af/LC_MESSAGES/

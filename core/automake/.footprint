@@ -122,9 +122,6 @@ drwxr-xr-x usr/share/automake-1.14/Automake/
 -rwxr-xr-x usr/share/automake-1.14/test-driver
 -rw-r--r-- usr/share/automake-1.14/texinfo.tex
 -rwxr-xr-x usr/share/automake-1.14/ylwrap
-drwxr-xr-x usr/share/doc/
-drwxr-xr-x usr/share/doc/automake/
--rw-r--r-- usr/share/doc/automake/amhello-1.0.tar.gz
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/man1/
 -rw-r--r-- usr/share/man/man1/aclocal.1

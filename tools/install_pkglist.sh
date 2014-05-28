@@ -33,6 +33,20 @@ get_args() {
 	fi
 }
 
+# This could go into utils.sh
+get_pkg_tar() {
+	PKGMK=$1
+	HOST_PKG="" # Reset variable
+
+	. ${PKGMK}
+	if [ -z "${HOST_PKG}" ]; then
+		PKG_TAR="$NAME-$VERSION-cross-pkg.tar.bz2"
+	else
+		PKG_TAR="$NAME-$VERSION-host-pkg.tar.bz2"
+	fi
+
+}
+
 main() {
 	load_utils
 	get_args "$@"
@@ -46,16 +60,18 @@ main() {
 		OLD=${PWD}
 		check_dir ${PKGMK_BASEDIR}/${pkg}
 		cd ${PKGMK_BASEDIR}/${pkg}
+
 		${TOOLS_BASEDIR}/build.sh ${PKG_BUILD_OPT}
 		if [ $? -ne 0 ]; then
 			error "Fail to build package"
 		fi
-		if [ -f *-host-pkg.tar.bz2 ]; then
-			${TOOLS_BASEDIR}/install.sh *-host-pkg.tar.bz2
-		elif [ -f *-cross-pkg.tar.bz2 ]; then
-			${TOOLS_BASEDIR}/install.sh *-cross-pkg.tar.bz2
+
+		get_pkg_tar "${PKGMK_BASEDIR}/${pkg}/PkgMk" # Get package tar name
+
+		if [ -f ${PKG_TAR} ]; then
+			${TOOLS_BASEDIR}/install.sh ${PKG_TAR}
 		else
-			error "No package has been succesfully built"
+			error "${PKG_TAR} has not been succesfully built"
 		fi
 		cd ${OLD}
 	done;
@@ -68,6 +84,7 @@ PKGMK_BASEDIR=$(dirname ${TOOLS_BASEDIR})
 PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKG_LIST_FILE=""
 PKG_BUILD_OPT=""
+PKG_TAR=""
 
 #Debug
 DBGLVL=2

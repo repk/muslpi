@@ -2,6 +2,7 @@ PKGLIST="opt/strace		\
 	 opt/gdb		\
 	 opt/openssl		\
 	 opt/openssh		\
+	 opt/stunnel		\
 	 opt/libevent		\
 	 opt/tmux		\
 	 opt/libffi		\

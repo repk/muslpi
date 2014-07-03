@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# /etc/rc.d/stunnel: start/stop stunnel daemon
+#
+
+case $1 in
+start)
+	/usr/bin/stunnel
+	;;
+stop)
+	killall -q /usr/bin/stunnel
+	;;
+restart)
+	$0 stop
+	sleep 2
+	$0 start
+	;;
+*)
+	echo "usage: $0 [start|stop|restart]"
+	;;
+esac
+
+# End of file

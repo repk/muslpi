@@ -31,6 +31,7 @@ drwxr-xr-x usr/include/bits/
 -rw-r--r-- usr/include/bits/msg.h
 -rw-r--r-- usr/include/bits/posix.h
 -rw-r--r-- usr/include/bits/reg.h
+-rw-r--r-- usr/include/bits/resource.h
 -rw-r--r-- usr/include/bits/sem.h
 -rw-r--r-- usr/include/bits/setjmp.h
 -rw-r--r-- usr/include/bits/shm.h
@@ -58,6 +59,7 @@ drwxr-xr-x usr/include/bits/
 -rw-r--r-- usr/include/features.h
 -rw-r--r-- usr/include/fenv.h
 -rw-r--r-- usr/include/float.h
+-rw-r--r-- usr/include/fmtmsg.h
 -rw-r--r-- usr/include/fnmatch.h
 -rw-r--r-- usr/include/ftw.h
 -rw-r--r-- usr/include/getopt.h
@@ -133,6 +135,7 @@ drwxr-xr-x usr/include/scsi/
 -rw-r--r-- usr/include/stropts.h
 drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/sys/acct.h
+-rw-r--r-- usr/include/sys/auxv.h
 -rw-r--r-- usr/include/sys/cachectl.h
 -rw-r--r-- usr/include/syscall.h
 -rw-r--r-- usr/include/sys/dir.h

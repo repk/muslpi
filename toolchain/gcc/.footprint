@@ -837,6 +837,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/bits/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/msg.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/posix.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/reg.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/resource.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/sem.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/setjmp.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/bits/shm.h
@@ -881,6 +882,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/drm/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/features.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/fenv.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/float.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/fmtmsg.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/fnmatch.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/ftw.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/getopt.h
@@ -1600,6 +1602,7 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sound/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/stropts.h
 drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sys/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/acct.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/auxv.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/cachectl.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/syscall.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sys/dir.h

@@ -12,12 +12,13 @@ drwxr-xr-x usr/lib/weechat/
 drwxr-xr-x usr/lib/weechat/plugins/
 -rwxr-xr-x usr/lib/weechat/plugins/alias.so
 -rwxr-xr-x usr/lib/weechat/plugins/charset.so
+-rwxr-xr-x usr/lib/weechat/plugins/exec.so
 -rwxr-xr-x usr/lib/weechat/plugins/fifo.so
 -rwxr-xr-x usr/lib/weechat/plugins/irc.so
 -rwxr-xr-x usr/lib/weechat/plugins/logger.so
 -rwxr-xr-x usr/lib/weechat/plugins/relay.so
--rwxr-xr-x usr/lib/weechat/plugins/rmodifier.so
 -rwxr-xr-x usr/lib/weechat/plugins/script.so
+-rwxr-xr-x usr/lib/weechat/plugins/trigger.so
 -rwxr-xr-x usr/lib/weechat/plugins/xfer.so
 drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/icons/

@@ -17,10 +17,11 @@ pkgmain() {
 	patch_unknown_target config/config.sub
 	process_patches
 
+	CFLAGS="-D_GNU_SOURCE"						\
 	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
 		--prefix=/usr --with-root-prefix="" --enable-elf-shlibs	\
 		--disable-libblkid --disable-libuuid --disable-fsck	\
-		--disable-uuid
+		--disable-uuidd
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install

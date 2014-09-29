@@ -15,7 +15,7 @@ FILES="config.cache"
 
 pkgmain() {
 	cd ${NAME}-${VERSION}
-	NRPATCHES=25
+	NRPATCHES=27
 
 	patch_unknown_target support/config.sub
 	process_patches

@@ -96,15 +96,23 @@ cross_main() {
 	dbg 2 "Installing package name: ${_PKG_NAME} version: ${_PKG_VERSION}"
 
 	# Write lock to installed package's footprint
-	(
-		flock -x 200
-		if [ -f ${_FOOTPRINT} ]; then
-			echo "Package already installed skipping..."
-			exit 0
-		fi
-		install_pkg ${CLFS_DIR}
-		install_footprint ${CROSS_INSTALLDB} ${_PKG_NAME} ${_PKG_VERSION}
-	) 200>${_FLOCK}
+	# mkdir should be ok here for portability sake. Or use flock maybe
+	mkdir ${_FLOCK} 2> /dev/null
+	while [ $? -ne 0 ]; do
+		sleep 1
+		mkdir ${_FLOCK} 2> /dev/null
+	done
+
+	if [ -f ${_FOOTPRINT} ]; then
+		echo "Package already installed skipping..."
+		rmdir ${_FLOCK}
+		exit 0
+	fi
+
+	install_pkg ${CLFS_DIR}
+	install_footprint ${CROSS_INSTALLDB} ${_PKG_NAME} ${_PKG_VERSION}
+
+	rmdir ${_FLOCK}
 }
 
 host_main() {
@@ -117,15 +125,23 @@ host_main() {
 	dbg 2 "Installing package name: ${_PKG_NAME} version: ${_PKG_VERSION}"
 
 	# Write lock to installed package's footprint
-	(
-		flock -x 200
-		if [ -f ${_FOOTPRINT} ]; then
-			echo "Package already installed skipping..."
-			exit 0
-		fi
-		install_pkg ${TOOLCHAIN_DIR}
-		install_footprint ${HOST_INSTALLDB} ${_PKG_NAME} ${_PKG_VERSION}
-	) 200>${_FLOCK}
+	# mkdir should be ok here for portability sake. Or use flock maybe
+	mkdir ${_FLOCK} 2> /dev/null
+	while [ $? -ne 0 ]; do
+		sleep 1
+		mkdir ${_FLOCK} 2> /dev/null
+	done
+
+	if [ -f ${_FOOTPRINT} ]; then
+		echo "Package already installed skipping..."
+		rmdir ${_FLOCK}
+		exit 0
+	fi
+
+	install_pkg ${TOOLCHAIN_DIR}
+	install_footprint ${HOST_INSTALLDB} ${_PKG_NAME} ${_PKG_VERSION}
+
+	rmdir ${_FLOCK}
 }
 
 main() {

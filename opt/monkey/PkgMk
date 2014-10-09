@@ -1,0 +1,23 @@
+# Description: lightweight web server
+# URL: http://monkey-project.com/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+NAME=monkey
+VERSION=1.5.3
+
+
+DEPENDS=""
+SOURCES="http://monkey-project.com/releases/1.5/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	./configure --prefix=/usr --build=${CLFS_HOST}		\
+		--host=${CLFS_TARGET} --musl-mode --malloc-libc	\
+		--no-backtrace --pidfile=/usr/logs/monkey.pid
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}
+

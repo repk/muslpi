@@ -205,7 +205,9 @@ drwxr-xr-x usr/include/sys/
 -rw-r--r-- usr/include/tar.h
 -rw-r--r-- usr/include/termios.h
 -rw-r--r-- usr/include/tgmath.h
+-rw-r--r-- usr/include/threads.h
 -rw-r--r-- usr/include/time.h
+-rw-r--r-- usr/include/uchar.h
 -rw-r--r-- usr/include/ucontext.h
 -rw-r--r-- usr/include/ulimit.h
 -rw-r--r-- usr/include/unistd.h

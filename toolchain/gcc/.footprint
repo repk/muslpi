@@ -1672,7 +1672,9 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sys/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/tar.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/termios.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/tgmath.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/threads.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/time.h
+-rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/uchar.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/ucontext.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/ulimit.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/unistd.h

@@ -1,0 +1,116 @@
+diff -ur a/src/cmd/dist/a.h b/src/cmd/dist/a.h
+--- a/src/cmd/dist/a.h	2014-11-19 17:15:47.901883618 +0100
++++ b/src/cmd/dist/a.h	2014-11-19 17:44:42.771791774 +0100
+@@ -87,6 +87,7 @@
+ void	init(void);
+ void	cmdbanner(int, char**);
+ void	cmdbootstrap(int, char**);
++void	cmdtarget(int, char**);
+ void	cmdclean(int, char**);
+ void	cmdenv(int, char**);
+ void	cmdinstall(int, char**);
+diff -ur a/src/cmd/dist/build.c b/src/cmd/dist/build.c
+--- a/src/cmd/dist/build.c	2014-11-19 17:15:47.901883618 +0100
++++ b/src/cmd/dist/build.c	2014-11-19 17:37:08.666639396 +0100
+@@ -1360,6 +1360,21 @@
+ 	"cmd/go",
+ };
+ 
++// tbuildorder records the order of target builds for the 'go bootstrap' command.
++static char *tbuildorder[] = {
++	"lib9",
++	"libbio",
++	"liblink",
++
++	"misc/pprof",
++	"cmd/cc",  // must be before c
++	"cmd/gc",  // must be before g
++	"cmd/%sl",  // must be before a, c, g
++	"cmd/%sa",
++	"cmd/%sc",
++	"cmd/%sg",
++};
++
+ // cleantab records the directories to clean in 'go clean'.
+ // It is bigger than the buildorder because we clean all the
+ // compilers but build only the $GOARCH ones.
+@@ -1626,6 +1636,50 @@
+ 	bfree(&b);
+ }
+ 
++// The target command runs a build from scratch,
++// stopping at having installed the go_bootstrap command.
++void
++cmdtarget(int argc, char **argv)
++{
++	int i;
++	Buf b;
++
++	binit(&b);
++
++	ARGBEGIN{
++	case 'a':
++		rebuildall = 1;
++		break;
++	case 's':
++		sflag++;
++		break;
++	case 'v':
++		vflag++;
++		break;
++	default:
++		usage();
++	}ARGEND
++
++	if(argc > 0)
++		usage();
++
++	if(rebuildall)
++		clean();
++	goversion = findgoversion();
++	setup();
++
++	xsetenv("GOROOT", goroot);
++	xsetenv("GOROOT_FINAL", goroot_final);
++	xsetenv("GOARCH", goarch);
++	xsetenv("GOOS", goos);
++
++	for(i=0; i<nelem(tbuildorder); i++) {
++		install(bprintf(&b, tbuildorder[i], gochar));
++	}
++
++	bfree(&b);
++}
++
+ static char*
+ defaulttarg(void)
+ {
+diff -ur a/src/cmd/dist/main.c b/src/cmd/dist/main.c
+--- a/src/cmd/dist/main.c	2014-11-19 17:15:47.901883618 +0100
++++ b/src/cmd/dist/main.c	2014-11-19 17:33:40.621449563 +0100
+@@ -14,6 +14,7 @@
+ 	void (*f)(int, char**);
+ } cmdtab[] = {
+ 	{"banner", cmdbanner},
++	{"target", cmdtarget},
+ 	{"bootstrap", cmdbootstrap},
+ 	{"clean", cmdclean},
+ 	{"env", cmdenv},
+diff -ru a/src/make.bash b/src/make.bash
+--- a/src/make.bash	2014-11-19 17:15:47.916883918 +0100
++++ b/src/make.bash	2014-11-19 17:17:24.877830372 +0100
+@@ -149,6 +149,14 @@
+ 	exit 0
+ fi
+ 
++echo "# Building compilers and Go bootstrap tool for target, $GOOS/$GOARCH."
++buildall="-a"
++if [ "$1" = "--no-clean" ]; then
++	buildall=""
++	shift
++fi
++GOHOSTARCH=${GOARCH} CC=${CC_FOR_TARGET} CFLAGS=${CFLAGS_FOR_TARGET} ./cmd/dist/dist target $buildall $GO_DISTFLAGS -v # builds go_bootstrap
++
+ echo "# Building compilers and Go bootstrap tool for host, $GOHOSTOS/$GOHOSTARCH."
+ buildall="-a"
+ if [ "$1" = "--no-clean" ]; then

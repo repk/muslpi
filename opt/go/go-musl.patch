@@ -1,0 +1,54 @@
+diff -ur a/include/libc.h b/include/libc.h
+--- a/include/libc.h  2014-11-19 17:15:47.807881732 +0100
++++ b/include/libc.h   2014-11-19 17:23:04.553653927 +0100
+@@ -102,6 +102,7 @@
+ #define atoll		p9atoll
+ #define getenv		p9getenv
+ #define	getwd		p9getwd
++#undef	longjmp
+ #define	longjmp		p9longjmp
+ #undef  setjmp
+ #define setjmp		p9setjmp
+diff -ur a/src/pkg/os/user/lookup_unix.go b/src/pkg/os/user/lookup_unix.go
+--- a/src/pkg/os/user/lookup_unix.go	2014-11-19 17:15:47.848882554 +0100
++++ b/src/pkg/os/user/lookup_unix.go	2014-11-19 18:21:23.265017603 +0100
+@@ -9,7 +9,6 @@
+ 
+ import (
+ 	"fmt"
+-	"runtime"
+ 	"strconv"
+ 	"strings"
+ 	"syscall"
+@@ -50,17 +50,20 @@
+ 	var result *C.struct_passwd
+ 
+ 	var bufSize C.long
+-	if runtime.GOOS == "dragonfly" || runtime.GOOS == "freebsd" {
+-		// DragonFly and FreeBSD do not have _SC_GETPW_R_SIZE_MAX
+-		// and just return -1.  So just use the same
+-		// size that Linux returns.
+-		bufSize = 1024
+-	} else {
+-		bufSize = C.sysconf(C._SC_GETPW_R_SIZE_MAX)
+-		if bufSize <= 0 || bufSize > 1<<20 {
+-			return nil, fmt.Errorf("user: unreasonable _SC_GETPW_R_SIZE_MAX of %d", bufSize)
+-		}
+-	}
++
++        bufSize = C.sysconf(C._SC_GETPW_R_SIZE_MAX)
++
++        // _SC_GETPW_R_SIZE_MAX is not mandatory. On certain libc such as
++        // freebsd, dragonfly or musl this just returns -1. 1024 should be OK
++
++        if bufSize == -1 {
++                bufSize = 1024
++        }
++
++        if bufSize <= 0 || bufSize > 1<<20 {
++                return nil, fmt.Errorf("user: unreasonable _SC_GETPW_R_SIZE_MAX of %d", bufSize)
++        }
++
+ 	buf := C.malloc(C.size_t(bufSize))
+ 	defer C.free(buf)
+ 	var rv C.int

@@ -18,5 +18,6 @@ PKGLIST="opt/strace		\
 	 opt/weechat		\
 	 opt/expat		\
 	 opt/git		\
+	 opt/go			\
 	 opt/net"
 

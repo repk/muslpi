@@ -1,0 +1,46 @@
+# Description: The GO programming language
+# URL: https://golang.org
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+NAME=go
+VERSION=1.3.3
+
+DEPENDS=""
+SOURCES="http://storage.googleapis.com/golang/${NAME}${VERSION}.src.tar.gz"
+PATCHES="go.patch go-musl.patch"
+
+pkgmain() {
+	cd ${NAME}
+	process_patches
+
+	export GOROOT_FINAL=/usr/lib/go
+	export GOARCH=${MODE}
+	export CC_FOR_TARGET=${CC}
+	export CFLAGS_FOR_TARGET=${CFLAGS}
+	#export GOHOSTARCH=${MODE}
+
+	unset CC
+	unset CXX
+	unset CFLAGS
+	unset LDFLAGS
+
+	cd src
+	./make.bash
+
+	install -d -m 755 ${PKG}/usr
+	install -d -m 755 ${PKG}/usr/bin
+	install -d -m 755 ${PKG}/usr/lib
+	install -d -m 755 ${PKG}/usr/lib/go
+	install -d -m 755 ${PKG}/usr/lib/go/pkg
+	install -d -m 755 ${PKG}/usr/lib/go/pkg/tool
+	install -d -m 755 ${PKG}/usr/lib/go/src
+
+	cd ..
+	cp -R bin/linux_${GOARCH}/* ${PKG}/usr/bin/
+	cp -R pkg/linux_${GOARCH} ${PKG}/usr/lib/go/pkg/
+	cp -R pkg/tool/linux_${GOARCH} ${PKG}/usr/lib/go/pkg/tool/
+	cp -R src/pkg ${PKG}/usr/lib/go/src
+	cp -R src/cmd ${PKG}/usr/lib/go/src
+
+	find ${PKG}/usr/lib/go/src -name "testdata" | sort -u | xargs rm -rf
+}

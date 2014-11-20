@@ -9,7 +9,7 @@ HOST_PKG=1
 
 
 DEPENDS=""
-SOURCES="http://ftp.cross-lfs.org/pub/clfs/conglomeration/${NAME}/${NAME}-${VERSION}.tar.bz2"
+SOURCES="http://pkg-shadow.alioth.debian.org/releases/${NAME}-${VERSION}.tar.bz2"
 PATCHES="shadow.patch"
 FILES="config.cache"
 

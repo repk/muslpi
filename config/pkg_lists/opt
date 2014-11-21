@@ -6,6 +6,7 @@ PKGLIST="opt/strace		\
 	 opt/libevent		\
 	 opt/tmux		\
 	 opt/libffi		\
+	 opt/glib-host		\
 	 opt/glib		\
 	 opt/irssi		\
 	 opt/ntpdate		\

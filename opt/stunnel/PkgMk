@@ -4,7 +4,7 @@
 
 
 NAME=stunnel
-VERSION=5.02
+VERSION=5.07
 
 
 DEPENDS="openssl"

@@ -17,7 +17,7 @@ pkgmain() {
 	patch_unknown_target ./config.sub
 
 	./configure --prefix=/usr --build=${CLFS_HOST}			\
-		--host=${CLFS_TARGET}
+		--host=${CLFS_TARGET} --disable-documentation
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install

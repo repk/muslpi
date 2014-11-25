@@ -67,4 +67,3 @@ lrwxrwxrwx usr/lib/libnettle.so.4
 drwxr-xr-x usr/lib/pkgconfig/
 -rw-r--r-- usr/lib/pkgconfig/hogweed.pc
 -rw-r--r-- usr/lib/pkgconfig/nettle.pc
-drwxr-xr-x usr/share/

@@ -8,7 +8,7 @@ VERSION=2.4.2
 
 
 DEPENDS=""
-SOURCES="http://ftp.igh.cnrs.fr/pub/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+SOURCES="http://mirror.keystealth.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
 
 
 pkgmain() {

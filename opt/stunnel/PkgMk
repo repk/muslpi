@@ -4,11 +4,11 @@
 
 
 NAME=stunnel
-VERSION=5.10
+VERSION=5.14
 
 
 DEPENDS="openssl"
-SOURCES="http://www.usenix.org.uk/mirrors/${NAME}/${NAME}-${VERSION}.tar.gz"
+SOURCES="http://ftp.nluug.nl/pub/networking/${NAME}/archive/5.x/${NAME}-${VERSION}.tar.gz"
 FILES="rc-stunnel"
 
 

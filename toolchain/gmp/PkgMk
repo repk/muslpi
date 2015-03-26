@@ -9,7 +9,7 @@ HOST_PKG=1
 
 
 DEPENDS=""
-SOURCES="ftp://ftp.gmplib.org/pub/gmp-5.0.5/gmp-5.0.5.tar.bz2"
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.bz2"
 
 
 pkgmain() {

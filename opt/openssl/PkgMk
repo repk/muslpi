@@ -9,7 +9,7 @@ VERSION=1.0.1g
 
 DEPENDS=""
 SOURCES="http://www.openssl.org/source/${NAME}-${VERSION}.tar.gz"
-PATCHES="openssl.patch"
+PATCHES="openssl.patch openssl-perl.patch"
 
 
 pkgmain() {

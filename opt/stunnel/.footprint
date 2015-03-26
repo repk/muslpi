@@ -14,7 +14,6 @@ drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/man8/
 -rw-r--r-- usr/share/man/man8/stunnel.8
--rw-r--r-- usr/share/man/man8/stunnel.fr.8
 -rw-r--r-- usr/share/man/man8/stunnel.pl.8
 drwxr-xr-x usr/var/
 drwxr-xr-x usr/var/lib/

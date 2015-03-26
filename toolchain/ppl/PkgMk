@@ -14,7 +14,13 @@ SOURCES="ftp://gcc.gnu.org/pub/gcc/infrastructure/${NAME}-${VERSION}.tar.gz"
 
 pkgmain() {
 	cd ${NAME}-$VERSION
-	./configure --prefix=${PKG} --enable-shared --enable-interfaces="c,cxx" --disable-optimization --with-gmp-prefix=${TOOLCHAIN_DIR}
+
+	CXXFLAGS="-I${TOOLCHAIN_DIR}/include " \
+	CXXFLAGS+=" -Wl,-L${TOOLCHAIN_DIR}/lib " \
+	./configure --prefix=${PKG} --enable-shared \
+		--enable-interfaces="c,cxx" --disable-optimization \
+		--with-gmp-prefix=${TOOLCHAIN_DIR}
+
 	make -j${NR_JOBS}
 	make install
 }

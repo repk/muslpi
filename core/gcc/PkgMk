@@ -9,7 +9,7 @@ VERSION=4.8.2
 
 DEPENDS="mpfr gmp mpc ppl cloog-ppl"
 SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
-PATCHES="gcc-${VERSION}-musl.diff"
+PATCHES="gcc-sdt.patch gcc-${VERSION}-musl.diff"
 
 
 pkgmain() {

@@ -8,7 +8,7 @@ VERSION=5.0.5
 
 
 DEPENDS=""
-SOURCES="ftp://ftp.gmplib.org/pub/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.bz2"
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.bz2"
 
 
 pkgmain() {

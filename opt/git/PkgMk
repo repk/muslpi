@@ -9,10 +9,13 @@ VERSION=1.8.5.4
 
 DEPENDS="expat curl"
 SOURCES="https://git-core.googlecode.com/files/${NAME}-${VERSION}.tar.gz"
+PATCHES="git-cross-curl.patch"
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
+
+	process_patches
 
 	make -j${NR_JOBS} CC=${CC} prefix=/usr NO_PERL=1 NO_PYTHON=1	\
 		CFLAGS="${CFLAGS} -DNO_SYS_POLL_H" LDFLAGS="-lintl"	\

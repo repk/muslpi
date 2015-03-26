@@ -1,0 +1,17 @@
+diff -rup a/Makefile b/Makefile
+--- a/Makefile	2015-03-26 12:04:36.203745458 +0100
++++ b/Makefile	2015-03-26 12:05:56.582970304 +0100
+@@ -1131,11 +1131,8 @@ else
+ 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
+ 	PROGRAM_OBJS += http-fetch.o
+ 	PROGRAMS += $(REMOTE_CURL_NAMES)
+-	curl_check := $(shell (echo 070908; curl-config --vernum) 2>/dev/null | sort -r | sed -ne 2p)
+-	ifeq "$(curl_check)" "070908"
+-		ifndef NO_EXPAT
+-			PROGRAM_OBJS += http-push.o
+-		endif
++	ifndef NO_EXPAT
++		PROGRAM_OBJS += http-push.o
+ 	endif
+ 	ifndef NO_EXPAT
+ 		ifdef EXPATDIR

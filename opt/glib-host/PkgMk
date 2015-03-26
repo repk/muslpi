@@ -20,7 +20,8 @@ pkgmain() {
 
 	#disable man pages as it needs xsltproc to build
 	CFLAGS="-D_GNU_SOURCE -D_BSD_SOURCE"			\
-	./configure --prefix=/ --enable-man=no
+	LDFLAGS="-L${TOOLCHAIN_DIR}/lib"			\
+	./configure --prefix=/ --enable-man=no --disable-systemtap
 
 	make -j${NR_JOBS}
 	fix_temporary_libtool_files

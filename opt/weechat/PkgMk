@@ -18,7 +18,10 @@ pkgmain() {
 
 	./autogen.sh
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
-		--host=${CLFS_TARGET} --prefix=/usr
+		--host=${CLFS_TARGET} --prefix=/usr		\
+		--disable-aspell --disable-perl --disable-ruby	\
+		--disable-lua --disable-python --disable-tcl	\
+		--disable-guile
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install

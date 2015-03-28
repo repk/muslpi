@@ -9,15 +9,17 @@ VERSION=0.18.3
 HOST_PKG=1
 
 SOURCES="http://ftp.gnu.org/pub/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
-
+PATCHES="gettext-autopoint-reloc.patch gettext-autopoint-intl.patch"
 
 pkgmain() {
 	cd ${NAME}-${VERSION}
 
-	./configure --prefix=${PKG}					\
+	process_patches
+
+	./configure --prefix=/					\
 		--disable-java --without-emacs	--disable-rpath
 
 	make -j${NR_JOBS}
-	make install
+	make DESTDIR=${PKG} install
 }
 

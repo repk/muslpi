@@ -1,0 +1,12 @@
+diff -rup gettext-0.18.3-old/gettext-tools/misc/autopoint.in gettext-0.18.3/gettext-tools/misc/autopoint.in
+--- gettext-0.18.3-old/gettext-tools/misc/autopoint.in	2015-03-28 14:04:34.363276511 +0100
++++ gettext-0.18.3/gettext-tools/misc/autopoint.in	2015-03-28 14:05:12.993383304 +0100
+@@ -362,7 +362,7 @@ if test -z "$m4dir" && test -f Makefile.
+ fi
+ 
+ # Check whether to omit the intl/ directory.
+-omitintl=no
++omitintl=
+ xargs=`func_trace AM_GNU_GETTEXT`
+ for arg in $xargs; do
+   if test 'external' = "$arg"; then

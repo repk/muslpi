@@ -1,0 +1,20 @@
+diff -rup a/gettext-tools/misc/autopoint.in b/gettext-tools/misc/autopoint.in
+--- a/gettext-tools/misc/autopoint.in	2015-03-28 11:37:18.520465368 +0100
++++ b/gettext-tools/misc/autopoint.in	2015-03-28 11:40:11.906931635 +0100
+@@ -21,6 +21,7 @@
+ # further information how to use it consult the GNU gettext manual.
+ 
+ progname=$0
++progdir=$(dirname $progname)
+ package=@PACKAGE@
+ version=@VERSION@
+ 
+@@ -28,7 +29,7 @@ version=@VERSION@
+ # - gettext_dir     directory where the sources are stored.
+ prefix="@prefix@"
+ datarootdir="@datarootdir@"
+-gettext_dir="@datadir@/gettext"
++gettext_dir="${progdir}/../share/gettext"
+ 
+ # func_tmpdir
+ # creates a temporary directory.

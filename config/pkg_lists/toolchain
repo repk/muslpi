@@ -13,4 +13,7 @@ PKGLIST="kernels/${KERNEL}-headers	\
 	 toolchain/groff		\
 	 toolchain/shadow		\
 	 toolchain/gettext		\
+	 toolchain/autoconf		\
+	 toolchain/automake		\
+	 toolchain/libtool		\
 	 toolchain/pkg-config"

@@ -1,0 +1,24 @@
+# Description: Generic library support script
+# URL: http://www.gnu.org/software/libtool/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=libtool
+VERSION=2.4.2
+
+HOST_PKG=1
+
+DEPENDS=""
+SOURCES="http://mirror.keystealth.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="libtool-reloc.patch"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	process_patches
+
+	./configure --prefix=/
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

@@ -1,0 +1,26 @@
+# Description: An extensible package of M4 macros that produce shell scripts to
+#		automatically configure software source code packages
+# URL: http://www.gnu.org/software/autoconf/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=autoconf
+VERSION=2.69
+
+HOST_PKG=1
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="autoconf-reloc.patch"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	process_patches
+	./configure --prefix=/
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}
+

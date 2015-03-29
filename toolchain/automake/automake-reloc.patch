@@ -1,0 +1,68 @@
+diff -rup a/bin/aclocal.in b/bin/aclocal.in
+--- a/bin/aclocal.in	2013-06-20 10:44:16.000000000 +0200
++++ b/bin/aclocal.in	2015-03-29 16:22:01.844521580 +0200
+@@ -24,10 +24,12 @@ eval 'case $# in 0) exec @PERL@ -S "$0";
+ 
+ # Written by Tom Tromey <tromey@redhat.com>, and
+ # Alexandre Duret-Lutz <adl@gnu.org>.
++use File::Basename;
+ 
+ BEGIN
+ {
+-  @Aclocal::perl_libdirs = ('@datadir@/@PACKAGE@-@APIVERSION@')
++  my $progdir = dirname("$0") . "/..";
++  @Aclocal::perl_libdirs = ($progdir . '@datadir@/@PACKAGE@-@APIVERSION@')
+     unless @Aclocal::perl_libdirs;
+   unshift @INC, @Aclocal::perl_libdirs;
+ }
+@@ -69,8 +71,9 @@ $perl_threads = 0;
+ # ACLOCAL_PATH environment variable, and reset with the '--system-acdir'
+ # option.
+ my @user_includes = ();
+-my @automake_includes = ("@datadir@/aclocal-$APIVERSION");
+-my @system_includes = ('@datadir@/aclocal');
++my $progdir = dirname("$0") . "/..";
++my @automake_includes = ($progdir . "@datadir@/aclocal-$APIVERSION");
++my @system_includes = ($progdir . '@datadir@/aclocal');
+ 
+ # Whether we should copy M4 file in $user_includes[0].
+ my $install = 0;
+diff -rup a/bin/automake.in b/bin/automake.in
+--- a/bin/automake.in	2013-06-20 10:44:16.000000000 +0200
++++ b/bin/automake.in	2015-03-29 16:22:01.845521582 +0200
+@@ -28,10 +28,12 @@ eval 'case $# in 0) exec @PERL@ -S "$0";
+ package Automake;
+ 
+ use strict;
++use File::Basename;
+ 
+ BEGIN
+ {
+-  @Automake::perl_libdirs = ('@datadir@/@PACKAGE@-@APIVERSION@')
++  my $progdir = dirname("$0") . "/..";
++  @Automake::perl_libdirs = ($progdir . '@datadir@/@PACKAGE@-@APIVERSION@')
+     unless @Automake::perl_libdirs;
+   unshift @INC, @Automake::perl_libdirs;
+ 
+Only in b: config.log
+diff -rup a/lib/Automake/Config.in b/lib/Automake/Config.in
+--- a/lib/Automake/Config.in	2013-06-19 11:29:50.000000000 +0200
++++ b/lib/Automake/Config.in	2015-03-29 16:27:01.118341011 +0200
+@@ -20,6 +20,7 @@ use strict;
+ 
+ use 5.006;
+ require Exporter;
++use File::Basename;
+ 
+ our @ISA = qw (Exporter);
+ our @EXPORT = qw ($APIVERSION $PACKAGE $PACKAGE_BUGREPORT $VERSION
+@@ -32,7 +33,8 @@ our $PACKAGE = '@PACKAGE@';
+ our $PACKAGE_BUGREPORT = '@PACKAGE_BUGREPORT@';
+ our $VERSION = '@VERSION@';
+ our $RELEASE_YEAR = '@RELEASE_YEAR@';
+-our $libdir = '@datadir@/@PACKAGE@-@APIVERSION@';
++our $progdir = dirname("$0") . "/..";
++our $libdir = $progdir . '@datadir@/@PACKAGE@-@APIVERSION@';
+ 
+ our $perl_threads = 0;
+ # We need at least this version for CLONE support.

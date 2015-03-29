@@ -1,0 +1,25 @@
+# Description: Tool for automatically generating Makefile.in
+# URL: http://www.gnu.org/software/automake/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=automake
+VERSION=1.14
+
+HOST_PKG=1
+
+DEPENDS=""
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="automake-reloc.patch"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	process_patches
+	./configure --prefix=/
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}
+

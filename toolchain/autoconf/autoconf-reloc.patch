@@ -1,0 +1,205 @@
+diff -rup a/bin/autoconf.as b/bin/autoconf.as
+--- a/bin/autoconf.as	2012-01-21 14:46:38.000000000 +0100
++++ b/bin/autoconf.as	2015-03-29 16:43:08.759925213 +0200
+@@ -84,7 +84,8 @@ exit_missing_arg='
+ # restore font-lock: '
+ 
+ # Variables.
+-: ${AUTOM4TE='@bindir@/@autom4te-name@'}
++progdir="$(dirname $0)/.."
++: ${AUTOM4TE=$progdir'@bindir@/@autom4te-name@'}
+ autom4te_options=
+ outfile=
+ verbose=false
+diff -rup a/bin/autoheader.in b/bin/autoheader.in
+--- a/bin/autoheader.in	2012-04-25 04:37:26.000000000 +0200
++++ b/bin/autoheader.in	2015-03-29 16:41:43.256699640 +0200
+@@ -25,10 +25,12 @@ eval 'case $# in 0) exec @PERL@ -S "$0";
+ 
+ # Written by Roland McGrath.
+ # Rewritten in Perl by Akim Demaille.
++use File::Basename;
+ 
+ BEGIN
+ {
+-  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '@pkgdatadir@';
++  my $progdir = dirname("$0") . "/..";
++  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || $progdir . '@pkgdatadir@';
+   unshift @INC, "$pkgdatadir";
+ 
+   # Override SHELL.  On DJGPP SHELL may not be set to a shell
+@@ -130,13 +132,15 @@ mktmpdir ('ah');
+ switch_warning 'obsolete';
+ parse_args;
+ 
++my $progdir = dirname("$0") . "/..";
++
+ # Preach.
+ my $config_h_top = find_file ("config.h.top?",
+-			      reverse (@prepend_include), @include);
++			      reverse (@prepend_include), reverse (map { $progdir . $_ } @prepend_include), @include);
+ my $config_h_bot = find_file ("config.h.bot?",
+-			      reverse (@prepend_include), @include);
++			      reverse (@prepend_include), reverse (map { $progdir . $_ } @prepend_include), @include);
+ my $acconfig_h = find_file ("acconfig.h?",
+-			    reverse (@prepend_include), @include);
++			    reverse (@prepend_include), reverse (map { $progdir . $_ } @prepend_include), @include);
+ if ($config_h_top || $config_h_bot || $acconfig_h)
+   {
+     my $msg = << "END";
+diff -rup a/bin/autom4te.in b/bin/autom4te.in
+--- a/bin/autom4te.in	2012-04-25 04:37:26.000000000 +0200
++++ b/bin/autom4te.in	2015-03-29 16:41:43.256699640 +0200
+@@ -20,11 +20,12 @@ eval 'case $# in 0) exec @PERL@ -S "$0";
+ 
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-
++use File::Basename;
+ 
+ BEGIN
+ {
+-  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '@pkgdatadir@';
++  my $progdir = dirname("$0") . "/..";
++  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || $progdir . '@pkgdatadir@';
+   unshift @INC, $pkgdatadir;
+ 
+   # Override SHELL.  On DJGPP SHELL may not be set to a shell
+@@ -44,7 +45,8 @@ use File::Basename;
+ use strict;
+ 
+ # Data directory.
+-my $pkgdatadir = $ENV{'AC_MACRODIR'} || '@pkgdatadir@';
++my $progdir = dirname("$0") . "/..";
++my $pkgdatadir = $ENV{'AC_MACRODIR'} || $progdir . '@pkgdatadir@';
+ 
+ # $LANGUAGE{LANGUAGE} -- Automatic options for LANGUAGE.
+ my %language;
+@@ -390,7 +392,7 @@ Try `$me --help' for more information."
+   # a pain since it introduces a useless difference in the path which
+   # invalidates the cache.  And strip `.' which is implicit and always
+   # first.
+-  @include = grep { !/^\.$/ } uniq (reverse(@prepend_include), @include);
++  @include = grep { !/^\.$/ } uniq (reverse (@prepend_include), reverse(map { $progdir . $_ } @prepend_include), @include);
+ 
+   # Convert @trace to %trace, and work around the M4 builtins tracing
+   # problem.
+diff -rup a/bin/autoreconf.in b/bin/autoreconf.in
+--- a/bin/autoreconf.in	2012-04-25 00:00:28.000000000 +0200
++++ b/bin/autoreconf.in	2015-03-29 16:41:43.256699640 +0200
+@@ -23,10 +23,12 @@ eval 'case $# in 0) exec @PERL@ -S "$0";
+ 
+ # Written by David J. MacKenzie.
+ # Extended and rewritten in Perl by Akim Demaille.
++use File::Basename;
+ 
+ BEGIN
+ {
+-  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '@pkgdatadir@';
++  my $progdir = dirname("$0") . "/..";
++  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || $progdir . '@pkgdatadir@';
+   unshift @INC, $pkgdatadir;
+ 
+   # Override SHELL.  On DJGPP SHELL may not be set to a shell
+@@ -106,9 +108,10 @@ Written by David J. MacKenzie and Akim D
+ ";
+ 
+ # Lib files.
+-my $autoconf   = $ENV{'AUTOCONF'}   || '@bindir@/@autoconf-name@';
+-my $autoheader = $ENV{'AUTOHEADER'} || '@bindir@/@autoheader-name@';
+-my $autom4te   = $ENV{'AUTOM4TE'}   || '@bindir@/@autom4te-name@';
++my $progdir = dirname("$0") . "/..";
++my $autoconf   = $ENV{'AUTOCONF'}   || $progdir . '@bindir@/@autoconf-name@';
++my $autoheader = $ENV{'AUTOHEADER'} || $progdir . '@bindir@/@autoheader-name@';
++my $autom4te   = $ENV{'AUTOM4TE'}   || $progdir . '@bindir@/@autom4te-name@';
+ my $automake   = $ENV{'AUTOMAKE'}   || 'automake';
+ my $aclocal    = $ENV{'ACLOCAL'}    || 'aclocal';
+ my $libtoolize = $ENV{'LIBTOOLIZE'} || 'libtoolize';
+diff -rup a/bin/autoscan.in b/bin/autoscan.in
+--- a/bin/autoscan.in	2012-04-25 04:37:26.000000000 +0200
++++ b/bin/autoscan.in	2015-03-29 16:41:43.256699640 +0200
+@@ -19,13 +19,15 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ # Written by David MacKenzie <djm@gnu.ai.mit.edu>.
++use File::Basename;
+ 
+ eval 'case $# in 0) exec @PERL@ -S "$0";; *) exec @PERL@ -S "$0" "$@";; esac'
+     if 0;
+ 
+ BEGIN
+ {
+-  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '@pkgdatadir@';
++  my $progdir = dirname("$0") . "/..";
++  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || $progdir . '@pkgdatadir@';
+   unshift @INC, $pkgdatadir;
+ 
+   # Override SHELL.  On DJGPP SHELL may not be set to a shell
+@@ -94,7 +96,8 @@ my $log;
+ my $autom4te = $ENV{'AUTOM4TE'} || '@bindir@/@autom4te-name@';
+ my $autoconf = "$autom4te --language=autoconf";
+ my @prepend_include;
+-my @include = ('@pkgdatadir@');
++my $progdir = dirname("$0") . "/..";
++my @include = ($progdir . '@pkgdatadir@');
+ 
+ # $help
+ # -----
+@@ -167,8 +170,9 @@ sub init_tables ()
+   # If more than that is required for a common portability problem,
+   # a new Autoconf macro should probably be written for that case,
+   # instead of duplicating the code in lots of configure.ac files.
++  my $progdir = dirname("$0") . "/..";
+   my $file = find_file ("autoscan/autoscan.list",
+-			reverse (@prepend_include), @include);
++			reverse (map { $progdir . $_ } @prepend_include), @include);
+   my $table = new Autom4te::XFile "< " . open_quote ($file);
+   my $tables_are_consistent = 1;
+ 
+diff -rup a/bin/autoupdate.in b/bin/autoupdate.in
+--- a/bin/autoupdate.in	2012-04-25 04:37:26.000000000 +0200
++++ b/bin/autoupdate.in	2015-03-29 16:41:43.256699640 +0200
+@@ -20,13 +20,15 @@
+ 
+ # Originally written by David MacKenzie <djm@gnu.ai.mit.edu>.
+ # Rewritten by Akim Demaille <akim@freefriends.org>.
++use File::Basename;
+ 
+ eval 'case $# in 0) exec @PERL@ -S "$0";; *) exec @PERL@ -S "$0" "$@";; esac'
+     if 0;
+ 
+ BEGIN
+ {
+-  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '@pkgdatadir@';
++  my $progdir = dirname("$0") . "/..";
++  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || $progdir . '@pkgdatadir@';
+   unshift @INC, $pkgdatadir;
+ 
+   # Override SHELL.  On DJGPP SHELL may not be set to a shell
+@@ -50,7 +52,8 @@ my $autom4te = $ENV{'AUTOM4TE'} || '@bin
+ my $autoconf = "$autom4te --language=autoconf";
+ # We need to find m4sugar.
+ my @prepend_include;
+-my @include = ('@pkgdatadir@');
++my $progdir = dirname("$0") . "/..";
++my @include = ($progdir . '@pkgdatadir@');
+ my $force = 0;
+ # m4.
+ my $m4 = $ENV{"M4"} || '@M4@';
+diff -rup a/bin/ifnames.in b/bin/ifnames.in
+--- a/bin/ifnames.in	2012-04-25 04:37:26.000000000 +0200
++++ b/bin/ifnames.in	2015-03-29 16:41:43.256699640 +0200
+@@ -28,10 +28,12 @@ eval 'case $# in 0) exec @PERL@ -S "$0";
+ 
+ # Written by David MacKenzie <djm@gnu.ai.mit.edu>
+ # and Paul Eggert <eggert@twinsun.com>.
++use File::Basename;
+ 
+ BEGIN
+ {
+-  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || '@pkgdatadir@';
++  my $progdir = dirname("$0") . "/..";
++  my $pkgdatadir = $ENV{'autom4te_perllibdir'} || $progdir . '@pkgdatadir@';
+   unshift @INC, $pkgdatadir;
+ 
+   # Override SHELL.  On DJGPP SHELL may not be set to a shell

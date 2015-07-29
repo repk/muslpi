@@ -4,7 +4,7 @@
 
 
 NAME=gcc
-VERSION=4.8.2
+VERSION=5.2.0
 
 
 DEPENDS="mpfr gmp mpc ppl cloog-ppl"
@@ -34,6 +34,7 @@ pkgmain() {
 		--enable-threads=posix --enable-c99 --enable-long-long	\
 		--enable-clocale=gnu --enable-languages=c,c++		\
 		--disable-libstdcxx-pch					\
+		--disable-libsanitizer					\
 		--disable-libmudflap --disable-nls			\
 		--with-build-sysroot=${CLFS_DIR}			\
 		--with-abi=${ABI} --with-arch=${ARCH}			\

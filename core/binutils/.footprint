@@ -21,6 +21,7 @@ drwxr-xr-x usr/include/
 -rw-r--r-- usr/include/bfd.h
 -rw-r--r-- usr/include/bfdlink.h
 -rw-r--r-- usr/include/dis-asm.h
+-rw-r--r-- usr/include/plugin-api.h
 -rw-r--r-- usr/include/symcat.h
 drwxr-xr-x usr/lib/
 drwxr-xr-x usr/lib/ldscripts/
@@ -50,11 +51,10 @@ drwxr-xr-x usr/lib/ldscripts/
 -rw-r--r-- usr/lib/ldscripts/armelf_linux_eabi.xsw
 -rw-r--r-- usr/lib/ldscripts/armelf_linux_eabi.xu
 -rw-r--r-- usr/lib/ldscripts/armelf_linux_eabi.xw
--rwxr-xr-x usr/lib/libbfd-2.23.2.so
+-rwxr-xr-x usr/lib/libbfd-2.25.1.so
 -rw-r--r-- usr/lib/libbfd.a
 lrwxrwxrwx usr/lib/libbfd.so
--rw-r--r-- usr/lib/libiberty.a
--rwxr-xr-x usr/lib/libopcodes-2.23.2.so
+-rwxr-xr-x usr/lib/libopcodes-2.25.1.so
 -rw-r--r-- usr/lib/libopcodes.a
 lrwxrwxrwx usr/lib/libopcodes.so
 drwxr-xr-x usr/share/
@@ -107,6 +107,12 @@ drwxr-xr-x usr/share/locale/ga/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/ga/LC_MESSAGES/gprof.mo
 -rw-r--r-- usr/share/locale/ga/LC_MESSAGES/ld.mo
 -rw-r--r-- usr/share/locale/ga/LC_MESSAGES/opcodes.mo
+drwxr-xr-x usr/share/locale/hr/
+drwxr-xr-x usr/share/locale/hr/LC_MESSAGES/
+-rw-r--r-- usr/share/locale/hr/LC_MESSAGES/binutils.mo
+drwxr-xr-x usr/share/locale/hu/
+drwxr-xr-x usr/share/locale/hu/LC_MESSAGES/
+-rw-r--r-- usr/share/locale/hu/LC_MESSAGES/gprof.mo
 drwxr-xr-x usr/share/locale/id/
 drwxr-xr-x usr/share/locale/id/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/id/LC_MESSAGES/bfd.mo
@@ -162,6 +168,7 @@ drwxr-xr-x usr/share/locale/sk/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/sk/LC_MESSAGES/binutils.mo
 drwxr-xr-x usr/share/locale/sr/
 drwxr-xr-x usr/share/locale/sr/LC_MESSAGES/
+-rw-r--r-- usr/share/locale/sr/LC_MESSAGES/binutils.mo
 -rw-r--r-- usr/share/locale/sr/LC_MESSAGES/gprof.mo
 drwxr-xr-x usr/share/locale/sv/
 drwxr-xr-x usr/share/locale/sv/LC_MESSAGES/
@@ -182,6 +189,7 @@ drwxr-xr-x usr/share/locale/uk/
 drwxr-xr-x usr/share/locale/uk/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/uk/LC_MESSAGES/bfd.mo
 -rw-r--r-- usr/share/locale/uk/LC_MESSAGES/binutils.mo
+-rw-r--r-- usr/share/locale/uk/LC_MESSAGES/gas.mo
 -rw-r--r-- usr/share/locale/uk/LC_MESSAGES/gprof.mo
 -rw-r--r-- usr/share/locale/uk/LC_MESSAGES/ld.mo
 -rw-r--r-- usr/share/locale/uk/LC_MESSAGES/opcodes.mo

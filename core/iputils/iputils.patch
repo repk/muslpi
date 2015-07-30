@@ -260,4 +260,15 @@ diff -Nru a/tracepath.c b/tracepath.c
 +		fprintf(stderr, "gethostbyname %s", hstrerror(h_errno));
  		exit(1);
  	}
- 
+
+diff -rup a/tracepath.c b/tracepath.c
+--- a/tracepath.c   2015-07-28 18:41:32.226775405 +0200
++++ b/tracepath.c       2015-07-28 18:41:53.568854803 +0200
+@@ -12,6 +12,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <unistd.h>
++#include <time.h>
+ #include <sys/socket.h>
+ #include <linux/types.h>
+ #include <linux/errqueue.h>

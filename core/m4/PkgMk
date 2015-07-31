@@ -9,7 +9,7 @@ VERSION=1.4.16
 
 DEPENDS=""
 SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
-PATCHES="m4.patch"
+PATCHES="m4.patch m4-gets.patch"
 FILES="config.cache"
 
 

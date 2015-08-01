@@ -1,0 +1,12 @@
+diff -rup a/ncurses/base/MKlib_gen.sh b/ncurses/base/MKlib_gen.sh
+--- a/ncurses/base/MKlib_gen.sh	2015-07-28 17:03:12.363916422 +0200
++++ b/ncurses/base/MKlib_gen.sh	2015-07-28 17:04:39.885215761 +0200
+@@ -62,7 +62,7 @@ if test "${LC_MESSAGES+set}" = set; then
+ if test "${LC_CTYPE+set}"    = set; then LC_CTYPE=C;    export LC_CTYPE;    fi
+ if test "${LC_COLLATE+set}"  = set; then LC_COLLATE=C;  export LC_COLLATE;  fi
+ 
+-preprocessor="$1 -DNCURSES_INTERNALS -I../include"
++preprocessor="$1 -P -DNCURSES_INTERNALS -I../include"
+ AWK="$2"
+ USE="$3"
+ 

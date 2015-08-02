@@ -9,6 +9,7 @@ VERSION=0.11
 
 DEPENDS="gmp"
 SOURCES="ftp://gcc.gnu.org/pub/gcc/infrastructure/${NAME}-${VERSION}.tar.gz"
+PATCHES="ppl-ptrdiff.diff"
 
 
 pkgmain() {
@@ -16,7 +17,7 @@ pkgmain() {
 
 	patch_unknown_target config.sub
 	patch_unknown_target Watchdog/config.sub
-
+	process_patches
 
 	CPPFLAGS=-fexceptions					\
 	CXXFLAGS="-I${TOOLCHAIN_DIR}/include " \

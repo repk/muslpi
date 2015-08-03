@@ -10,11 +10,13 @@ VERSION=1.26
 DEPENDS=""
 SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
 FILES="config.cache"
+PATCHES="tar-gets.patch"
 
 
 pkgmain() {
 	cd ${NAME}-${VERSION}
 	patch_unknown_target build-aux/config.sub
+    process_patches
 	copy_files
 
 	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\

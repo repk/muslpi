@@ -4,12 +4,12 @@
 
 
 NAME=gdb
-VERSION=7.6
+VERSION=7.8.2
 
 
 DEPENDS=""
-SOURCES="http://ftp.gnu.org/gnu/gdb/gdb-7.6.tar.gz"
-PATCHES="gdb-amd64-debugreg.patch gdb-arm-wrapper.patch gdb-linux_nat.patch gdb-threaddb.patch"
+SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="gdb-linux_nat.patch"
 
 
 pkgmain() {

@@ -1,0 +1,12 @@
+diff -rup glib-2.44.1-old/configure glib-2.44.1/configure
+--- glib-2.44.1-old/configure	2015-07-28 23:09:58.324120868 +0200
++++ glib-2.44.1/configure	2015-07-28 23:10:16.473180564 +0200
+@@ -28913,7 +28913,7 @@ if test "x$enable_compile_warnings" = xy
+    -Wall -Wstrict-prototypes -Werror=declaration-after-statement \
+    -Werror=missing-prototypes -Werror=implicit-function-declaration \
+    -Werror=pointer-arith -Werror=init-self -Werror=format-security \
+-   -Werror=format=2 -Werror=missing-include-dirs; do
++   -Werror=format=2; do
+ 
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking if $CC supports flag $flag in envvar CFLAGS" >&5
+ $as_echo_n "checking if $CC supports flag $flag in envvar CFLAGS... " >&6; }

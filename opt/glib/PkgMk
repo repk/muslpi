@@ -4,12 +4,12 @@
 
 
 NAME=glib
-VERSION=2.38.2
+VERSION=2.44.1
 
 
 DEPENDS=""
-SOURCES="http://ftp.gnome.org/pub/gnome/sources/glib/2.38/glib-2.38.2.tar.xz"
-PATCHES="glib.patch"
+SOURCES="http://ftp.gnome.org/pub/gnome/sources/${NAME}/2.44/${NAME}-${VERSION}.tar.xz"
+PATCHES="glib-missing-include-dirs.patch"
 FILES="config.cache"
 
 

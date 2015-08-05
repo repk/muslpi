@@ -1,5 +1,6 @@
 drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
+-rwxr-xr-x usr/bin/gapplication
 -rwxr-xr-x usr/bin/gdbus
 -rwxr-xr-x usr/bin/gdbus-codegen
 -rwxr-xr-x usr/bin/gio-querymodules
@@ -92,6 +93,7 @@ drwxr-xr-x usr/include/glib-2.0/gio/
 -rw-r--r-- usr/include/glib-2.0/gio/ginetsocketaddress.h
 -rw-r--r-- usr/include/glib-2.0/gio/ginitable.h
 -rw-r--r-- usr/include/glib-2.0/gio/ginputstream.h
+-rw-r--r-- usr/include/glib-2.0/gio/gio-autocleanups.h
 -rw-r--r-- usr/include/glib-2.0/gio/gioenums.h
 -rw-r--r-- usr/include/glib-2.0/gio/gioenumtypes.h
 -rw-r--r-- usr/include/glib-2.0/gio/gioerror.h
@@ -100,6 +102,8 @@ drwxr-xr-x usr/include/glib-2.0/gio/
 -rw-r--r-- usr/include/glib-2.0/gio/gioscheduler.h
 -rw-r--r-- usr/include/glib-2.0/gio/giostream.h
 -rw-r--r-- usr/include/glib-2.0/gio/giotypes.h
+-rw-r--r-- usr/include/glib-2.0/gio/glistmodel.h
+-rw-r--r-- usr/include/glib-2.0/gio/gliststore.h
 -rw-r--r-- usr/include/glib-2.0/gio/gloadableicon.h
 -rw-r--r-- usr/include/glib-2.0/gio/gmemoryinputstream.h
 -rw-r--r-- usr/include/glib-2.0/gio/gmemoryoutputstream.h
@@ -113,6 +117,7 @@ drwxr-xr-x usr/include/glib-2.0/gio/
 -rw-r--r-- usr/include/glib-2.0/gio/gnetworking.h
 -rw-r--r-- usr/include/glib-2.0/gio/gnetworkmonitor.h
 -rw-r--r-- usr/include/glib-2.0/gio/gnetworkservice.h
+-rw-r--r-- usr/include/glib-2.0/gio/gnotification.h
 -rw-r--r-- usr/include/glib-2.0/gio/goutputstream.h
 -rw-r--r-- usr/include/glib-2.0/gio/gpermission.h
 -rw-r--r-- usr/include/glib-2.0/gio/gpollableinputstream.h
@@ -133,6 +138,7 @@ drwxr-xr-x usr/include/glib-2.0/gio/
 -rw-r--r-- usr/include/glib-2.0/gio/gsimpleactiongroup.h
 -rw-r--r-- usr/include/glib-2.0/gio/gsimpleaction.h
 -rw-r--r-- usr/include/glib-2.0/gio/gsimpleasyncresult.h
+-rw-r--r-- usr/include/glib-2.0/gio/gsimpleiostream.h
 -rw-r--r-- usr/include/glib-2.0/gio/gsimplepermission.h
 -rw-r--r-- usr/include/glib-2.0/gio/gsimpleproxyresolver.h
 -rw-r--r-- usr/include/glib-2.0/gio/gsocketaddressenumerator.h
@@ -145,6 +151,8 @@ drwxr-xr-x usr/include/glib-2.0/gio/
 -rw-r--r-- usr/include/glib-2.0/gio/gsocketlistener.h
 -rw-r--r-- usr/include/glib-2.0/gio/gsocketservice.h
 -rw-r--r-- usr/include/glib-2.0/gio/gsrvtarget.h
+-rw-r--r-- usr/include/glib-2.0/gio/gsubprocess.h
+-rw-r--r-- usr/include/glib-2.0/gio/gsubprocesslauncher.h
 -rw-r--r-- usr/include/glib-2.0/gio/gtask.h
 -rw-r--r-- usr/include/glib-2.0/gio/gtcpconnection.h
 -rw-r--r-- usr/include/glib-2.0/gio/gtcpwrapperconnection.h
@@ -201,6 +209,7 @@ drwxr-xr-x usr/include/glib-2.0/glib/deprecated/
 -rw-r--r-- usr/include/glib-2.0/glib/gi18n-lib.h
 -rw-r--r-- usr/include/glib-2.0/glib/giochannel.h
 -rw-r--r-- usr/include/glib-2.0/glib/gkeyfile.h
+-rw-r--r-- usr/include/glib-2.0/glib/glib-autocleanups.h
 -rw-r--r-- usr/include/glib-2.0/glib/glist.h
 -rw-r--r-- usr/include/glib-2.0/glib/gmacros.h
 -rw-r--r-- usr/include/glib-2.0/glib/gmain.h
@@ -256,6 +265,7 @@ drwxr-xr-x usr/include/glib-2.0/gobject/
 -rw-r--r-- usr/include/glib-2.0/gobject/genums.h
 -rw-r--r-- usr/include/glib-2.0/gobject/glib-types.h
 -rw-r--r-- usr/include/glib-2.0/gobject/gmarshal.h
+-rw-r--r-- usr/include/glib-2.0/gobject/gobject-autocleanups.h
 -rw-r--r-- usr/include/glib-2.0/gobject/gobject.h
 -rw-r--r-- usr/include/glib-2.0/gobject/gobjectnotifyqueue.c
 -rw-r--r-- usr/include/glib-2.0/gobject/gparam.h
@@ -278,19 +288,19 @@ drwxr-xr-x usr/lib/glib-2.0/include/
 -rw-r--r-- usr/lib/glib-2.0/include/glibconfig.h
 lrwxrwxrwx usr/lib/libgio-2.0.so
 lrwxrwxrwx usr/lib/libgio-2.0.so.0
--rwxr-xr-x usr/lib/libgio-2.0.so.0.3800.2
+-rwxr-xr-x usr/lib/libgio-2.0.so.0.4400.1
 lrwxrwxrwx usr/lib/libglib-2.0.so
 lrwxrwxrwx usr/lib/libglib-2.0.so.0
--rwxr-xr-x usr/lib/libglib-2.0.so.0.3800.2
+-rwxr-xr-x usr/lib/libglib-2.0.so.0.4400.1
 lrwxrwxrwx usr/lib/libgmodule-2.0.so
 lrwxrwxrwx usr/lib/libgmodule-2.0.so.0
--rwxr-xr-x usr/lib/libgmodule-2.0.so.0.3800.2
+-rwxr-xr-x usr/lib/libgmodule-2.0.so.0.4400.1
 lrwxrwxrwx usr/lib/libgobject-2.0.so
 lrwxrwxrwx usr/lib/libgobject-2.0.so.0
--rwxr-xr-x usr/lib/libgobject-2.0.so.0.3800.2
+-rwxr-xr-x usr/lib/libgobject-2.0.so.0.4400.1
 lrwxrwxrwx usr/lib/libgthread-2.0.so
 lrwxrwxrwx usr/lib/libgthread-2.0.so.0
--rwxr-xr-x usr/lib/libgthread-2.0.so.0.3800.2
+-rwxr-xr-x usr/lib/libgthread-2.0.so.0.4400.1
 drwxr-xr-x usr/lib/pkgconfig/
 -rw-r--r-- usr/lib/pkgconfig/gio-2.0.pc
 -rw-r--r-- usr/lib/pkgconfig/gio-unix-2.0.pc
@@ -307,13 +317,14 @@ drwxr-xr-x usr/share/aclocal/
 -rw-r--r-- usr/share/aclocal/gsettings.m4
 drwxr-xr-x usr/share/bash-completion/
 drwxr-xr-x usr/share/bash-completion/completions/
+-rw-r--r-- usr/share/bash-completion/completions/gapplication
 -rw-r--r-- usr/share/bash-completion/completions/gdbus
 -rw-r--r-- usr/share/bash-completion/completions/gresource
 -rw-r--r-- usr/share/bash-completion/completions/gsettings
 drwxr-xr-x usr/share/gdb/
 drwxr-xr-x usr/share/gdb/auto-load/
--rwxr-xr-x usr/share/gdb/auto-load/libglib-2.0.so.0.3800.2-gdb.py
--rwxr-xr-x usr/share/gdb/auto-load/libgobject-2.0.so.0.3800.2-gdb.py
+-rwxr-xr-x usr/share/gdb/auto-load/libglib-2.0.so.0.4400.1-gdb.py
+-rwxr-xr-x usr/share/gdb/auto-load/libgobject-2.0.so.0.4400.1-gdb.py
 drwxr-xr-x usr/share/glib-2.0/
 drwxr-xr-x usr/share/glib-2.0/codegen/
 -rw-r--r-- usr/share/glib-2.0/codegen/codegen_docbook.py

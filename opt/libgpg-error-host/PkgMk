@@ -11,10 +11,13 @@ HOST_PKG=1
 
 DEPENDS=""
 SOURCES="ftp://ftp.gnupg.org/gcrypt/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="libgpg-error-gcc-5.x.patch"
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
+
+	process_patches
 
 	./configure --prefix=${PKG}
 

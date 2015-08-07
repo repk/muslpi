@@ -10,10 +10,13 @@ VERSION=1.12
 
 DEPENDS=""
 SOURCES="ftp://ftp.gnupg.org/gcrypt/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="libgpg-error-gcc-5.x.patch"
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
+
+	process_patches
 
 	./configure --prefix=/usr --build=${CLFS_HOST}			\
 		--host=${CLFS_TARGET}

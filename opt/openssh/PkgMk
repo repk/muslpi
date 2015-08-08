@@ -4,19 +4,19 @@
 
 
 NAME=openssh
-VERSION=6.2p2
+VERSION=6.9p1
 
 
 DEPENDS="openssl"
 SOURCES="http://ftp.fr.openbsd.org/pub/OpenBSD/OpenSSH/portable/${NAME}-${VERSION}.tar.gz"
-PATCHES="openssh.patch"
+PATCHES="openssh-conf.patch"
 FILES="rc-sshd"
 
 
 pkgmain() {
-	cd ${NAME}-$VERSION
-	process_patches
+	cd ${NAME}-${VERSION}
 	copy_files
+	process_patches
 	patch_unknown_target config.sub
 
 	unset LD

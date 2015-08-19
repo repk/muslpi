@@ -4,13 +4,13 @@
 
 
 NAME=binutils
-VERSION=2.23.2
+VERSION=2.25.1
 HOST_PKG=1
 
 
 DEPENDS=""
 SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
-PATCHES="binutils-skip-whitespace.patch binutils-libiberty-path.patch"
+PATCHES="binutils-libiberty-path.patch"
 
 
 pkgmain() {

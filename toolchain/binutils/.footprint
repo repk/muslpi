@@ -54,8 +54,6 @@ drwxr-xr-x bin/
 -rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-size
 -rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-strings
 -rwxr-xr-x bin/arm-repkhardfp-linux-musleabi-strip
-drwxr-xr-x lib/
--rw-r--r-- lib/libiberty.a
 drwxr-xr-x share/
 drwxr-xr-x share/man/
 drwxr-xr-x share/man/man1/

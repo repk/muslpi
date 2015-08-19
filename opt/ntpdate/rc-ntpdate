@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# /etc/rc.d/ntpdate: start/stop ntp synchronization
+#
+
+case $1 in
+start)
+	/usr/bin/ntpdate fr.pool.ntp.org
+	;;
+stop)
+	;;
+restart)
+	$0 stop
+	sleep 2
+	$0 start
+	;;
+*)
+	echo "usage: $0 [start|stop|restart]"
+	;;
+esac
+
+# End of file

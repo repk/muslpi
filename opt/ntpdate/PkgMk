@@ -9,11 +9,13 @@ VERSION=4.2.6p5
 
 DEPENDS=""
 SOURCES="http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2/ntp-${VERSION}.tar.gz"
+FILES="rc-ntpdate"
 
 
 pkgmain() {
 	cd ntp-$VERSION
 
+	copy_files
 	patch_unknown_target config.sub
 
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
@@ -23,4 +25,7 @@ pkgmain() {
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install
+
+	cd ..
+	install -v -D -m755 rc-ntpdate ${PKG}/etc/rc.d/ntpdate
 }

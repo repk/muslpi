@@ -5,5 +5,5 @@ drwxr-xr-x lib/
 -rw-r--r-- lib/libmpfr.a
 lrwxrwxrwx lib/libmpfr.so
 lrwxrwxrwx lib/libmpfr.so.4
--rwxr-xr-x lib/libmpfr.so.4.1.2
+-rwxr-xr-x lib/libmpfr.so.4.1.3
 drwxr-xr-x share/

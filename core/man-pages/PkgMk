@@ -4,7 +4,7 @@
 
 
 NAME=man-pages
-VERSION=3.63
+VERSION=4.01
 
 
 DEPENDS="man"

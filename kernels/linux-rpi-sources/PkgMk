@@ -4,7 +4,7 @@
 
 
 NAME=linux-rpi-sources
-VERSION=3.2.27
+VERSION=4.0.y
 
 
 DEPENDS=""
@@ -12,6 +12,6 @@ SOURCES="https://github.com/raspberrypi/linux/archive/rpi-${VERSION}.tar.gz"
 
 
 pkgmain() {
-    install -dv ${PKG}/usr/src/linux-rpi-3.2.27
-	cp -R linux-rpi-$VERSION/* ${PKG}/usr/src/linux-rpi-3.2.27/
+    install -dv ${PKG}/usr/src/linux-rpi-4.0.9
+	cp -R linux-rpi-$VERSION/* ${PKG}/usr/src/linux-rpi-4.0.9/
 }

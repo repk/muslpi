@@ -2,6 +2,8 @@ drwxr-xr-x bin/
 -rwxr-xr-x bin/bash
 -r-xr-xr-x bin/bashbug
 lrwxrwxrwx bin/sh
+drwxr-xr-x etc/
+-rw-r--r-- etc/profile
 drwxr-xr-x usr/
 drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/locale/

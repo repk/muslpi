@@ -10,7 +10,7 @@ VERSION=4.3
 DEPENDS="readline"
 SOURCES="ftp://ftp.cwru.edu/pub/${NAME}/${NAME}-${VERSION}.tar.gz"
 PATCHES="bash.patch"
-FILES="config.cache"
+FILES="config.cache profile"
 
 
 pkgmain() {
@@ -33,5 +33,6 @@ pkgmain() {
 
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} htmldir=/usr/share/doc/bash-4.0  install
+	install -D -m644  profile ${PKG}/etc/profile
 	ln -sfv bash ${PKG}/bin/sh
 }

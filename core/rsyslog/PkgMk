@@ -1,0 +1,34 @@
+# Description: Program to logging system messages
+# URL: http://www.rsyslog.com/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=rsyslog
+VERSION=7.6.1
+
+
+DEPENDS="libestr liblogging json-c"
+SOURCES="http://www.rsyslog.com/files/download/${NAME}/${NAME}-${VERSION}.tar.gz"
+PATCHES="rsyslog-fcntl.patch"
+FILES="rsyslog.conf rc-rsyslogd config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	patch_unknown_target ./config.sub
+	copy_files
+	process_patches
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --disable-generate-man-pages		\
+		--disable-systemd --enable-cached-man-pages		\
+		--disable-generate-man-pages --disable-libgcrypt	\
+		--cache-file=config.cache
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+	install -v -m 0644 -D rsyslog.conf ${PKG}/etc/rsyslog.conf
+	mkdir -p ${PKG}/etc/rsyslog.d
+	mkdir -p -v ${PKG}/etc/rc.d
+	install -v -m755 -D rc-rsyslogd ${PKG}/etc/rc.d/rsyslogd
+}

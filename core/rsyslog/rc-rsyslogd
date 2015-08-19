@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# /etc/rc.d/rsyslogd: start/stop rsyslog daemon
+#
+
+start() {
+	echo -n "Starting rsyslog daemon: "
+	/usr/sbin/rsyslogd -i /var/run/rsyslogd.pid
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+stop() {
+	echo -n "Stopping rsyslog daemon: "
+	if [ -f /var/run/rsyslogd.pid ]; then
+		kill $(< /var/run/rsyslogd.pid)
+		rm -f /var/run/rsyslogd.pid
+	else
+		killall -q /usr/sbin/rsyslogd
+	fi
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+restart() {
+	stop
+	sleep 1
+	start
+}
+
+case "$1" in
+start)
+	start
+	;;
+stop)
+	stop
+	;;
+restart)
+	restart
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?

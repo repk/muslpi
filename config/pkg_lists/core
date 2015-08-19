@@ -51,5 +51,9 @@ PKGLIST="core/fhs		\
 	 core/xz-utils		\
 	 core/man		\
 	 core/man-pages		\
+	 core/libestr		\
+	 core/liblogging	\
+	 core/json-c		\
+	 core/rsyslog		\
 	 core/bsd-init-scripts	\
 	 core/config-scripts"

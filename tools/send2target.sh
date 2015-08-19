@@ -97,6 +97,9 @@ main() {
 	check_file ${PKGMK_HOSTCONF}
 
 	. ${PKGMK_COMMONCONF}
+	PKGMK_TARGETCONF="${PKGMK_BASEDIR}/config/${CONFTARGET}/target.conf"
+	check_file ${PKGMK_TARGETCONF}
+	. ${PKGMK_TARGETCONF}
 	. ${PKGMK_CROSSCONF}
 	. ${PKGMK_HOSTCONF}
 

@@ -15,8 +15,8 @@ SOURCES="ftp://gcc.gnu.org/pub/gcc/infrastructure/${NAME}-${VERSION}.tar.gz"
 pkgmain() {
 	cd ${NAME}-$VERSION
 
-	CXXFLAGS="-I${TOOLCHAIN_DIR}/include " \
-	CXXFLAGS+=" -Wl,-L${TOOLCHAIN_DIR}/lib " \
+	CPPFLAGS=" -Wl,-L${TOOLCHAIN_DIR}/lib " \
+	CPPFLAGS+="-I${TOOLCHAIN_DIR}/include " \
 	./configure --prefix=${PKG} --enable-shared \
 		--enable-interfaces="c,cxx" --disable-optimization \
 		--with-gmp-prefix=${TOOLCHAIN_DIR}

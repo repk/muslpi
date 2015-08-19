@@ -53,7 +53,12 @@ main() {
 	check_file ${PKG_LIST_FILE}
 
 	check_file ${PKGMK_COMMONCONF}
+
 	. ${PKGMK_COMMONCONF}
+	PKGMK_TARGETCONF="${PKGMK_BASEDIR}/config/${CONFTARGET}/target.conf"
+
+	check_file ${PKGMK_TARGETCONF}
+	. ${PKGMK_TARGETCONF}
 
 	. ${PKG_LIST_FILE}
 	for pkg in ${PKGLIST}; do

@@ -19,6 +19,23 @@ pkgmain() {
 	mkdir build
 	cd build
 
+	GCC_CONF=""
+	if [ -n "${ABI}" ]; then
+		GCC_CONF="${GCC_CONF} --with-abi=${ABI}"
+	fi
+	if [ -n "${ARCH}" ]; then
+		GCC_CONF="${GCC_CONF} --with-arch=${ARCH}"
+	fi
+	if [ -n "${MODE}" ]; then
+		GCC_CONF="${GCC_CONF} --with-mode=${MODE}"
+	fi
+	if [ -n "${FLOAT}" ]; then
+		GCC_CONF="${GCC_CONF} --with-float=${FLOAT}"
+	fi
+	if [ -n "${FPU}" ]; then
+		GCC_CONF="${GCC_CONF} --with-fpu=${FPU}"
+	fi
+
 	MAKEINFO=missing						\
 	../configure --prefix=${PKG}  --build=${CLFS_HOST}		\
 		--host=${CLFS_HOST} --target=${CLFS_TARGET}		\
@@ -31,9 +48,8 @@ pkgmain() {
 		--with-cloog=${TOOLCHAIN_DIR}				\
 		--with-mpc=${TOOLCHAIN_DIR}				\
 		--disable-shared --disable-threads --enable-languages=c	\
-		--with-abi=${ABI} --with-arch=${ARCH}			\
-		--with-mode=${MODE} --with-float=${FLOAT}		\
-		--with-fpu=${FPU}
+		${GCC_CONF}
+
 	make -j${NR_JOBS} all-gcc all-target-libgcc
 	make -j${NR_JOBS} install-gcc install-target-libgcc
 }

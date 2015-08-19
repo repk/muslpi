@@ -57,6 +57,11 @@ prepare_cross_install() {
 	check_file ${PKGMK_CROSSCONF}
 
 	. ${PKGMK_COMMONCONF}
+
+	PKGMK_TARGETCONF="${PKGMK_BASEDIR}/config/${CONFTARGET}/target.conf"
+	check_file ${PKGMK_TARGETCONF}
+	. ${PKGMK_TARGETCONF}
+
 	. ${PKGMK_CROSSCONF}
 
 	if [ ! -d ${CLFS_DIR} ]; then
@@ -74,6 +79,11 @@ prepare_host_install() {
 	check_file ${PKGMK_HOSTCONF}
 
 	. ${PKGMK_COMMONCONF}
+
+	PKGMK_TARGETCONF="${PKGMK_BASEDIR}/config/${CONFTARGET}/target.conf"
+	check_file ${PKGMK_TARGETCONF}
+	. ${PKGMK_TARGETCONF}
+
 	. ${PKGMK_HOSTCONF}
 
 	if [ ! -d ${TOOLCHAIN_DIR} ]; then
@@ -172,7 +182,6 @@ PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
 PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"
 PKG_ROOT=${PWD}
-PKG_FOOTPRINT="${PKG_ROOT}/.footprint"
 PKG_FILE=""
 DBGLVL=2
 

@@ -26,6 +26,23 @@ pkgmain() {
 	mkdir build
 	cd build
 
+	GCC_CONF=""
+	if [ -n "${ABI}" ]; then
+		GCC_CONF="${GCC_CONF} --with-abi=${ABI}"
+	fi
+	if [ -n "${ARCH}" ]; then
+		GCC_CONF="${GCC_CONF} --with-arch=${ARCH}"
+	fi
+	if [ -n "${MODE}" ]; then
+		GCC_CONF="${GCC_CONF} --with-mode=${MODE}"
+	fi
+	if [ -n "${FLOAT}" ]; then
+		GCC_CONF="${GCC_CONF} --with-float=${FLOAT}"
+	fi
+	if [ -n "${FPU}" ]; then
+		GCC_CONF="${GCC_CONF} --with-fpu=${FPU}"
+	fi
+
 	LDFLAGS="-Wl,-rpath-link,${TOOLCHAIN_DIR}/${CLFS_TARGET}/lib"	\
 	MAKEINFO=missing						\
 	../configure --prefix=/usr --libexecdir=/usr/lib		\
@@ -37,9 +54,7 @@ pkgmain() {
 		--disable-libsanitizer					\
 		--disable-libmudflap --disable-nls			\
 		--with-build-sysroot=${CLFS_DIR}			\
-		--with-abi=${ABI} --with-arch=${ARCH}			\
-		--with-mode=${MODE} --with-float=${FLOAT}		\
-		--with-fpu=${FPU}
+		${GCC_CONF}
 
 	make -j${NR_JOBS}
 	fix_temporary_libtool_files

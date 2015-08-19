@@ -74,7 +74,13 @@ read_pkgmk() {
 
 prepare_env() {
 	check_file ${PKGMK_COMMONCONF}
+
 	. ${PKGMK_COMMONCONF}
+	PKGMK_TARGETCONF="${PKGMK_BASEDIR}/config/${CONFTARGET}/target.conf"
+
+	check_file ${PKGMK_TARGETCONF}
+	. ${PKGMK_TARGETCONF}
+
 	if [ -z "${HOST_PKG}" ]; then
 		check_file ${PKGMK_CROSSCONF}
 		. ${PKGMK_CROSSCONF}
@@ -83,6 +89,7 @@ prepare_env() {
 		. ${PKGMK_HOSTCONF}
 	fi
 
+	PKG_FOOTPRINT=".footprint."${CONFTARGET}
 }
 
 add_source() {
@@ -310,6 +317,12 @@ main() {
 	get_args "${@}"
 	dbg 1 "Package build started"
 
+	#Read the PkgMk file
+	read_pkgmk
+
+	#Prepare env
+	prepare_env
+
 	#Check files
 	check_file ${PKG_MKFILE}
 	check_md5file
@@ -317,12 +330,6 @@ main() {
 
 	#Prepare directories needed to build package
 	prepare_work
-
-	#Read the PkgMk file
-	read_pkgmk
-
-	#Prepare env
-	prepare_env
 
 	#Fetch sources
 	fetch_src
@@ -354,7 +361,7 @@ PKGMK_COMMONCONF="${PKGMK_BASEDIR}/config/common.conf"
 PKGMK_CROSSCONF="${PKGMK_BASEDIR}/config/cross.conf"
 PKGMK_HOSTCONF="${PKGMK_BASEDIR}/config/toolchain.conf"
 PKG_MKFILE="${PWD}/PkgMk"
-PKG_FOOTPRINT=".footprint"
+PKG_FOOTPRINT=""
 PKG_MD5=".md5"
 PKG_PATCHES=".patches"
 PKG_TAR=""

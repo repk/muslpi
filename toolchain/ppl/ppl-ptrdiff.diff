@@ -1,0 +1,48 @@
+diff -rup a/src/Constraint_System.defs.hh b/src/Constraint_System.defs.hh
+--- a/src/Constraint_System.defs.hh	2015-07-28 08:06:47.000000000 +0200
++++ b/src/Constraint_System.defs.hh	2015-07-28 08:08:17.000000000 +0200
+@@ -203,7 +203,7 @@ public:
+   class const_iterator
+     : public std::iterator<std::forward_iterator_tag,
+ 			   Constraint,
+-			   ptrdiff_t,
++			   std::ptrdiff_t,
+ 			   const Constraint*,
+ 			   const Constraint&> {
+   public:
+diff -rup a/src/Generator_System.defs.hh b/src/Generator_System.defs.hh
+--- a/src/Generator_System.defs.hh	2015-07-28 08:06:47.000000000 +0200
++++ b/src/Generator_System.defs.hh	2015-07-28 08:07:43.000000000 +0200
+@@ -249,7 +249,7 @@ public:
+   class const_iterator
+     : public std::iterator<std::forward_iterator_tag,
+ 			   Generator,
+-			   ptrdiff_t,
++			   std::ptrdiff_t,
+ 			   const Generator*,
+ 			   const Generator&> {
+   public:
+diff -rup a/src/Grid_Generator_System.defs.hh b/src/Grid_Generator_System.defs.hh
+--- a/src/Grid_Generator_System.defs.hh	2015-07-28 08:06:47.000000000 +0200
++++ b/src/Grid_Generator_System.defs.hh	2015-07-28 08:08:00.000000000 +0200
+@@ -266,7 +266,7 @@ public:
+   class const_iterator
+     : public std::iterator<std::forward_iterator_tag,
+ 			   Grid_Generator,
+-			   ptrdiff_t,
++			   std::ptrdiff_t,
+ 			   const Grid_Generator*,
+ 			   const Grid_Generator&>,
+       private Generator_System::const_iterator {
+diff -rup a/src/Congruence_System.defs.hh b/src/Congruence_System.defs.hh
+--- a/src/Congruence_System.defs.hh	2015-07-28 08:56:10.000000000 +0200
++++ b/src/Congruence_System.defs.hh	2015-07-28 08:56:47.000000000 +0200
+@@ -234,7 +234,7 @@ public:
+   class const_iterator
+     : public std::iterator<std::forward_iterator_tag,
+ 			   Congruence,
+-			   ptrdiff_t,
++			   std::ptrdiff_t,
+ 			   const Congruence*,
+ 			   const Congruence&> {
+   public:

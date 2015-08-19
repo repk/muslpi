@@ -10,13 +10,14 @@ HOST_PKG=1
 
 DEPENDS="gmp"
 SOURCES="ftp://gcc.gnu.org/pub/gcc/infrastructure/${NAME}-${VERSION}.tar.gz"
+PATCHES="ppl-lib64-workaround.diff ppl-ptrdiff.diff"
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
 
-	CPPFLAGS=" -Wl,-L${TOOLCHAIN_DIR}/lib " \
-	CPPFLAGS+="-I${TOOLCHAIN_DIR}/include " \
+	process_patches
+
 	./configure --prefix=${PKG} --enable-shared \
 		--enable-interfaces="c,cxx" --disable-optimization \
 		--with-gmp-prefix=${TOOLCHAIN_DIR}

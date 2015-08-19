@@ -1,0 +1,24 @@
+diff -rup a/configure b/configure
+--- a/configure	2015-08-19 16:54:05.229012987 +0200
++++ b/configure	2015-08-19 16:54:41.623152502 +0200
+@@ -9998,20 +9998,6 @@ $as_echo "$gl_cv_solaris_64bit" >&6; }
+       searchpath=`(LC_ALL=C $CC -print-search-dirs) 2>/dev/null | sed -n -e 's,^libraries: ,,p' | sed -e 's,^=,,'`
+       if test -n "$searchpath"; then
+         acl_save_IFS="${IFS= 	}"; IFS=":"
+-        for searchdir in $searchpath; do
+-          if test -d "$searchdir"; then
+-            case "$searchdir" in
+-              */lib64/ | */lib64 ) acl_libdirstem=lib64 ;;
+-              */../ | */.. )
+-                # Better ignore directories of this form. They are misleading.
+-                ;;
+-              *) searchdir=`cd "$searchdir" && pwd`
+-                 case "$searchdir" in
+-                   */lib64 ) acl_libdirstem=lib64 ;;
+-                 esac ;;
+-            esac
+-          fi
+-        done
+         IFS="$acl_save_IFS"
+       fi
+       ;;

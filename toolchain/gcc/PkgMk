@@ -4,7 +4,7 @@
 
 
 NAME=gcc
-VERSION=4.8.2
+VERSION=5.2.0
 HOST_PKG=1
 
 
@@ -29,6 +29,7 @@ pkgmain() {
 		--disable-multilib --disable-libmudflap			\
 		--with-sysroot=${CLFS_DIR} --disable-nls		\
 		--enable-languages=c,c++ --enable-threads=posix		\
+		--disable-libsanitizer					\
 		--with-mpfr=${TOOLCHAIN_DIR}				\
 		--with-gmp=${TOOLCHAIN_DIR}				\
 		--with-mpc=${TOOLCHAIN_DIR}				\
@@ -39,5 +40,11 @@ pkgmain() {
 
 	make -j${NR_JOBS} AS_FOR_TARGET="${CLFS_TARGET}-as" LD_FOR_TARGET="${CLFS_TARGET}-ld"
 	make install
+
+    if [ -d ${PKG}/lib64 ]; then
+        mv ${PKG}/lib64/* ${PKG}/lib/
+        rm -rf ${PKG}/lib64
+    fi
+
 	${TOOLS_BASEDIR}/uninstall.sh gcc-static host
 }

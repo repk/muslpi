@@ -1,0 +1,23 @@
+# Description: Some essentials for string handling
+# URL: http://libestr.adiscon.com/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=libestr
+VERSION=0.1.10
+
+
+DEPENDS=""
+SOURCES="http://libestr.adiscon.com/files/download/${NAME}-${VERSION}.tar.gz"
+FILES="config.cache"
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	copy_files
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --cache-file=config.cache
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

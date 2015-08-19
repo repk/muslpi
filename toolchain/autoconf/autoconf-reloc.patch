@@ -28,6 +28,16 @@ diff -rup a/bin/autoheader.in b/bin/autoheader.in
    unshift @INC, "$pkgdatadir";
  
    # Override SHELL.  On DJGPP SHELL may not be set to a shell
+@@ -50,7 +52,8 @@ use strict;
+ use vars qw ($config_h %verbatim %symbol);
+
+ # Lib files.
+-my $autom4te = $ENV{'AUTOM4TE'} || '@bindir@/@autom4te-name@';
++my $progdir = dirname("$0") . "/..";
++my $autom4te = $ENV{'AUTOM4TE'} || $progdir . '@bindir@/@autom4te-name@';
+ local $config_h;
+ my $config_h_in;
+ my @prepend_include;
 @@ -130,13 +132,15 @@ mktmpdir ('ah');
  switch_warning 'obsolete';
  parse_args;

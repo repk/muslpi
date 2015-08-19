@@ -29,6 +29,7 @@ drwxr-xr-x usr/include/bits/
 -rw-r--r-- usr/include/bits/limits.h
 -rw-r--r-- usr/include/bits/mman.h
 -rw-r--r-- usr/include/bits/msg.h
+-rw-r--r-- usr/include/bits/poll.h
 -rw-r--r-- usr/include/bits/posix.h
 -rw-r--r-- usr/include/bits/reg.h
 -rw-r--r-- usr/include/bits/resource.h
@@ -233,4 +234,5 @@ drwxr-xr-x usr/lib/
 -rw-r--r-- usr/lib/librt.a
 -rw-r--r-- usr/lib/libutil.a
 -rw-r--r-- usr/lib/libxnet.a
+-rw-r--r-- usr/lib/rcrt1.o
 -rw-r--r-- usr/lib/Scrt1.o

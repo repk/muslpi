@@ -42,6 +42,7 @@ pkgmain() {
 		--with-fpu=${FPU}
 
 	make -j${NR_JOBS}
+	fix_temporary_libtool_files
 	make DESTDIR=${PKG} install
 
 	mkdir ${PKG}/lib

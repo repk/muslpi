@@ -1,0 +1,27 @@
+# Description: A JSON implementation in C
+# URL: https://github.com/json-c/json-c/wiki
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=json-c
+VERSION=0.12
+
+
+DEPENDS=""
+SOURCES="https://s3.amazonaws.com/json-c_releases/releases/${NAME}-${VERSION}.tar.gz"
+FILES="config.cache"
+PATCHES="json-c-unused-var.patch"
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	patch_unknown_target config.sub
+	copy_files
+	process_patches
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --cache-file=config.cache
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

@@ -9,7 +9,7 @@ VERSION=1.1.10
 
 DEPENDS="gcc-static"
 SOURCES="http://www.musl-libc.org/releases/${NAME}-${VERSION}.tar.gz"
-PATCHES="musl-utmp-wtmp-path.diff"
+PATCHES="musl-uselocal.diff musl-utmp-wtmp-path.diff"
 
 
 pkgmain() {

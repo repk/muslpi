@@ -1,0 +1,22 @@
+# Description: logging libraryr
+# URL: http://www.liblogging.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=liblogging
+VERSION=1.0.5
+
+
+DEPENDS=""
+SOURCES="http://download.rsyslog.com/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --disable-journal
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

@@ -20,5 +20,6 @@ PKGLIST="opt/strace		\
 	 opt/expat		\
 	 opt/git		\
 	 opt/go			\
+	 opt/nginx		\
 	 opt/net"
 

@@ -1,0 +1,61 @@
+# Description: HTTP and reverse proxy server
+# URL: http://nginx.org/en/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=nginx
+VERSION=1.9.1
+
+
+DEPENDS="openssl"
+SOURCES="http://${NAME}.org/download/${NAME}-${VERSION}.tar.gz"
+PATCHES="nginx-cross.patch"
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+	process_patches
+
+	NGINX_INT_SIZE=`${CC} -dM -E - < /dev/null |			\
+		grep "#define __SIZEOF_INT__" | cut -d ' ' -f 3`
+	NGINX_LONG_SIZE=`${CC} -dM -E - < /dev/null |			\
+		grep "#define __SIZEOF_LONG__" | cut -d ' ' -f 3`
+	NGINX_LONG_LONG_SIZE=`${CC} -dM -E - < /dev/null |		\
+		grep "#define __SIZEOF_LONG_LONG__" | cut -d ' ' -f 3`
+	NGINX_PTR_SIZE=`${CC} -dM -E - < /dev/null |			\
+		grep "#define __SIZEOF_POINTER__" | cut -d ' ' -f 3`
+	NGINX_SIG_ATOMIC_TYPE=`${CC} -dM -E - < /dev/null |		\
+		grep "#define __SIG_ATOMIC_TYPE__" | cut -d ' ' -f 3`
+	NGINX_SIZE_T_SIZE=`${CC} -dM -E - < /dev/null |			\
+		grep "#define __SIZEOF_SIZE_T__" | cut -d ' ' -f 3`
+
+	case "$NGINX_SIG_ATOMIC_TYPE" in
+	"int")
+		NGINX_SIG_ATOMIC_SIZE=${NGINX_INT_SIZE}
+		;;
+	"long")
+		NGINX_SIG_ATOMIC_SIZE=${NGINX_LONG_SIZE}
+		;;
+	"long long")
+		NGINX_SIG_ATOMIC_SIZE=${NGINX_LONG_LONG_SIZE}
+		;;
+	esac
+
+	CC=gcc CPP=gcc CFLAGS="" LDFLAGS=""				\
+	./configure --prefix=/usr --without-pcre			\
+		--without-http_rewrite_module				\
+		--with-int=${NGINX_INT_SIZE}				\
+		--with-long=${NGINX_LONG_SIZE}				\
+		--with-long-long=${NGINX_LONG_LONG_SIZE}		\
+		--with-ptr-size=${NGINX_PTR_SIZE}			\
+		--with-sig-atomic-t=${NGINX_SIG_ATOMIC_SIZE}		\
+		--with-size-t=${NGINX_SIZE_T_SIZE}			\
+		--with-off-t=${NGINX_SIZE_T_SIZE}			\
+		--with-time-t=${NGINX_SIZE_T_SIZE}
+
+	sed -i "s/CC =.*/CC=${CC}/g" objs/Makefile
+	sed -i "s/CPP =.*/CPP=${CPP}/g" objs/Makefile
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}
+

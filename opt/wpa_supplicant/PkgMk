@@ -1,0 +1,29 @@
+# Description: WEP, WPA and WPA2 supplicant
+# URL: http://w1.fi/wpa_supplicant/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=wpa_supplicant
+VERSION=2.4
+
+
+DEPENDS="ncurses"
+SOURCES="http://w1.fi/releases/${NAME}-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd ${NAME}-$VERSION/wpa_supplicant
+
+	cp defconfig .config
+	sed -i "s/CONFIG_DRIVER_NL80211=y/#CONFIG_DRIVER_NL80211=y/g" .config
+
+	make -j${NR_JOBS}
+
+	mkdir -p ${PKG}/usr/sbin
+	mkdir -p ${PKG}/usr/share/man/man5/
+	mkdir -p ${PKG}/usr/share/man/man8/
+	install -v -m644 wpa_cli ${PKG}/usr/sbin/
+	install -v -m644 wpa_supplicant ${PKG}/usr/sbin/
+	install -v -m644 doc/docbook/wpa_supplicant.conf.5 ${PKG}/usr/share/man/man5/
+	install -v -m644 doc/docbook/wpa_{cli,passphrase,supplicant}.8 ${PKG}/usr/share/man/man8/
+}

@@ -1,0 +1,30 @@
+# Description: Linux kernel for imagination ci20
+# URL: https://kernel.org
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=linux-ci20
+VERSION=3.18
+
+
+DEPENDS=""
+SOURCES="https://github.com/MIPS/CI20_linux/archive/ci20-v${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd CI20_linux-ci20-v${VERSION}
+
+	make ARCH=mips mrproper
+	make ARCH=mips CROSS_COMPILE=${CLFS_TARGET}- ci20_defconfig
+
+	make -j${NR_JOBS} ARCH=mips CROSS_COMPILE=${CLFS_TARGET}- uImage
+	make -j${NR_JOBS} ARCH=mips CROSS_COMPILE=${CLFS_TARGET}- modules
+
+	make ARCH=mips CROSS_COMPILE=${CLFS_TARGET}-			\
+		INSTALL_MOD_PATH=${PKG}					\
+		DEPMOD=${TOOLCHAIN_DIR}/sbin/depmod modules_install
+
+	mkdir -p ${PKG}/boot
+	cp arch/mips/boot/uImage ${PKG}/boot/uImage
+}
+

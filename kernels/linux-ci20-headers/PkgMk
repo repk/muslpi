@@ -1,0 +1,22 @@
+# Description: Linux kernel for imagination ci20
+# URL: https://kernel.org
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=linux-ci20-headers
+VERSION=3.18
+
+
+DEPENDS=""
+SOURCES="https://github.com/MIPS/CI20_linux/archive/CI20_linux-ci20-v${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd CI20_linux-ci20-v${VERSION}
+
+	make ARCH=mips mrproper
+	make ARCH=mips CROSS_COMPILE=${CLFS_TARGET}- ci20_defconfig
+	make ARCH=mips CROSS_COMPILE=${CLFS_TARGET}- headers_check
+	make ARCH=mips CROSS_COMPILE=${CLFS_TARGET}-			\
+		INSTALL_HDR_PATH=${PKG}/usr headers_install
+}

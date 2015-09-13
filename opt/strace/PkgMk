@@ -9,13 +9,13 @@ VERSION=4.10
 
 DEPENDS=""
 SOURCES="http://downloads.sourceforge.net/project/${NAME}/${NAME}/${VERSION}/${NAME}-${VERSION}.tar.xz"
-PATCHES="strace.patch"
+PATCHES="strace.patch strace-sgidefs.patch"
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
-    process_patches
-    copy_files
+	process_patches
+	copy_files
 
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
 		--host=${CLFS_TARGET}

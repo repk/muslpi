@@ -16,4 +16,5 @@ PKGLIST="kernels/${KERNEL}-headers	\
 	 toolchain/autoconf		\
 	 toolchain/automake		\
 	 toolchain/libtool		\
+	 toolchain/u-boot-tools		\
 	 toolchain/pkg-config"

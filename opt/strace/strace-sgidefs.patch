@@ -1,0 +1,30 @@
+diff -rup a/configure b/configure
+--- a/configure	2015-08-12 00:58:52.000000000 +0200
++++ b/configure	2015-08-12 00:59:22.000000000 +0200
+@@ -5872,7 +5872,7 @@ if ${ac_cv_mips_abi+:} false; then :
+ else
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-#include <sgidefs.h>
++#include <asm/sgidefs.h>
+ int
+ main ()
+ {
+@@ -5886,7 +5886,7 @@ if ac_fn_c_try_compile "$LINENO"; then :
+ else
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-#include <sgidefs.h>
++#include <asm/sgidefs.h>
+ int
+ main ()
+ {
+@@ -5900,7 +5900,7 @@ if ac_fn_c_try_compile "$LINENO"; then :
+ else
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-#include <sgidefs.h>
++#include <asm/sgidefs.h>
+ int
+ main ()
+ {

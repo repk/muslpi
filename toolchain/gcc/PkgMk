@@ -36,6 +36,9 @@ pkgmain() {
 	if [ -n "${FLOAT}" ]; then
 		GCC_CONF="${GCC_CONF} --with-float=${FLOAT}"
 	fi
+	if [ -n "${HARDFLOAT}" ]; then
+		GCC_CONF="${GCC_CONF} --with-float=hard"
+	fi
 	if [ -n "${FPU}" ]; then
 		GCC_CONF="${GCC_CONF} --with-fpu=${FPU}"
 	fi

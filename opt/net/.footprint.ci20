@@ -1,0 +1,4 @@
+drwxr-xr-x etc/
+drwxr-xr-x etc/rc.d/
+-rwxr-xr-x etc/rc.d/net
+-rwxr--r-- etc/.resolv.conf.static

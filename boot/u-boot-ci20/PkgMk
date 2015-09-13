@@ -1,0 +1,25 @@
+# Description: Boot loader commonly used in embedded device
+# URL: http://www.denx.de/wiki/U-Boot
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=u-boot-ci20
+VERSION=2013.10
+
+
+DEPENDS=""
+SOURCES="https://github.com/MIPS/CI20_u-boot/archive/ci20-v${VERSION}.tar.gz"
+PATCHES="u-boot-compiler-gcc5.patch u-boot-extern-inline.patch u-boot-show_boot_progress-alias.patch"
+
+
+pkgmain() {
+	cd CI20_u-boot-ci20-v${VERSION}
+	process_patches
+
+	make ARCH=mips CROSS_COMPILE=${CLFS_TARGET}- ci20_mmc
+	make ARCH=mips CROSS_COMPILE=${CLFS_TARGET}-
+
+	mkdir -p ${PKG}/boot
+	cp spl/u-boot-spl.bin u-boot.img ${PKG}/boot/
+}
+

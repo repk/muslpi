@@ -1,0 +1,3 @@
+drwxr-xr-x boot/
+-rw-r--r-- boot/u-boot.img
+-rwxr-xr-x boot/u-boot-spl.bin

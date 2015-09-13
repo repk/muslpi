@@ -45,7 +45,7 @@ get_args() {
 		shift 2
 	done
 
-	if [ "${PKGS}" == "" ] || [ "${PKGLIST_FILE}" == "" ]; then
+	if [ "${PKGS}" == "" ] && [ "${PKGLIST_FILE}" == "" ]; then
 		usage
 	fi
 }

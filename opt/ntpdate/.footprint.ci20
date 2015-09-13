@@ -1,0 +1,7 @@
+drwxr-xr-x etc/
+drwxr-xr-x etc/rc.d/
+-rwxr-xr-x etc/rc.d/ntpdate
+drwxr-xr-x usr/
+drwxr-xr-x usr/bin/
+-rwxr-xr-x usr/bin/ntpdate
+drwxr-xr-x usr/sbin/

@@ -1,0 +1,9 @@
+drwxr-xr-x include/
+-rw-r--r-- include/mpf2mpfr.h
+-rw-r--r-- include/mpfr.h
+drwxr-xr-x lib/
+-rw-r--r-- lib/libmpfr.a
+lrwxrwxrwx lib/libmpfr.so
+lrwxrwxrwx lib/libmpfr.so.4
+-rwxr-xr-x lib/libmpfr.so.4.1.3
+drwxr-xr-x share/

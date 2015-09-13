@@ -19,12 +19,15 @@ by default without setting any breakpoints or usage of libthread_db.
  /* This comment documents high-level logic of this file.
  
  Waiting for events in sync mode
-@@ -2265,7 +2273,7 @@
- 		status = 0;
- 	    }
+diff -rup gdb-7.10-old/gdb/mips-linux-nat.c gdb-7.10/gdb/mips-linux-nat.c
+--- gdb-7.10-old/gdb/mips-linux-nat.c	2015-09-08 00:15:37.000000000 +0200
++++ gdb-7.10/gdb/mips-linux-nat.c	2015-09-08 00:15:58.000000000 +0200
+@@ -31,7 +31,7 @@
+ #include "gdb_proc_service.h"
+ #include "gregset.h"
  
--	  if (non_stop)
-+	  if (1)
- 	    {
- 	      /* Add the new thread to GDB's lists as soon as possible
- 		 so that:
+-#include <sgidefs.h>
++#include <asm/sgidefs.h>
+ #include <sys/ptrace.h>
+ #include <asm/ptrace.h>
+ 

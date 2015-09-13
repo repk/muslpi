@@ -1,0 +1,22 @@
+# Description: U-Boot tools
+# URL: http://www.denx.de/wiki/U-Boot/WebHome
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+# Depends on:
+
+
+NAME=u-boot-tools
+VERSION=2014.04
+HOST_PKG=1
+
+DEPENDS=""
+SOURCES="ftp://ftp.denx.de/pub/u-boot/u-boot-${VERSION}.tar.bz2"
+
+pkgmain() {
+	cd u-boot-${VERSION}
+
+	make sandbox_config
+	make -j${NR_JOBS} V=1 tools
+
+	install -d -m 0755 ${PKG}/bin
+	install -m 0755 tools/mk{,env}image ${PKG}/bin
+}

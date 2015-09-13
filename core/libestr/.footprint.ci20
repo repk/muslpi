@@ -1,0 +1,10 @@
+drwxr-xr-x usr/
+drwxr-xr-x usr/include/
+-rw-r--r-- usr/include/libestr.h
+drwxr-xr-x usr/lib/
+-rw-r--r-- usr/lib/libestr.a
+lrwxrwxrwx usr/lib/libestr.so
+lrwxrwxrwx usr/lib/libestr.so.0
+-rwxr-xr-x usr/lib/libestr.so.0.0.0
+drwxr-xr-x usr/lib/pkgconfig/
+-rw-r--r-- usr/lib/pkgconfig/libestr.pc

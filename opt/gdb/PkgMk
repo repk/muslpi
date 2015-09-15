@@ -9,7 +9,7 @@ VERSION=7.10
 
 DEPENDS=""
 SOURCES="http://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
-PATCHES="gdb-linux_nat.patch"
+PATCHES="gdb-linux_nat.patch gdb-fix-build-missing-makeinfo.patch"
 
 
 pkgmain() {

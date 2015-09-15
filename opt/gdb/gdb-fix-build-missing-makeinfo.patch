@@ -1,0 +1,45 @@
+diff -rup a/gdb/doc/Makefile.in b/gdb/doc/Makefile.in
+--- a/gdb/doc/Makefile.in
++++ b/gdb/doc/Makefile.in
+@@ -485,7 +485,7 @@ gdb.pdf: ${GDB_DOC_FILES}
+ # GDB MANUAL: info file
+ gdb.info: ${GDB_DOC_FILES}
+ 	$(MAKEINFO_CMD) $(READLINE_TEXI_INCFLAG) -I ${GDBMI_DIR} -I $(srcdir) \
+-		-o gdb.info $(srcdir)/gdb.texinfo
++		-o gdb.info $(srcdir)/gdb.texinfo | true
+ 
+ # GDB MANUAL: roff translations
+ # Try to use a recent texi2roff.  v2 was put on prep in jan91.
+@@ -560,15 +560,15 @@ gdb.mm: $(GDB_DOC_FILES) links2roff
+ # GDB MANUAL: HTML file
+ 
+ gdb/index.html: ${GDB_DOC_FILES}
+-	$(MAKEHTML) $(MAKEHTMLFLAGS) $(READLINE_TEXI_INCFLAG) -I ${GDBMI_DIR} -I $(srcdir) $(srcdir)/gdb.texinfo
++	$(MAKEHTML) $(MAKEHTMLFLAGS) $(READLINE_TEXI_INCFLAG) -I ${GDBMI_DIR} -I $(srcdir) $(srcdir)/gdb.texinfo | true
+ 
+ stabs.info: $(STABS_DOC_FILES)
+-	$(MAKEINFO_CMD) -I $(srcdir) -o stabs.info $(srcdir)/stabs.texinfo
++	$(MAKEINFO_CMD) -I $(srcdir) -o stabs.info $(srcdir)/stabs.texinfo | true
+ 
+ # STABS DOCUMENTATION: HTML file
+ 
+ stabs/index.html: $(STABS_DOC_FILES)
+-	$(MAKEHTML) $(MAKEHTMLFLAGS) -I $(srcdir) $(srcdir)/stabs.texinfo
++	$(MAKEHTML) $(MAKEHTMLFLAGS) -I $(srcdir) $(srcdir)/stabs.texinfo | true
+ 
+ # Clean these up before each run.  Avoids a catch 22 with not being
+ # able to re-generate these files (to fix a corruption) because these
+@@ -607,10 +607,10 @@ annotate.pdf: $(ANNOTATE_DOC_FILES)
+ 	$(TEXI2DVI) --pdf -I $(srcdir) $(srcdir)/annotate.texinfo
+ 
+ annotate.info: $(ANNOTATE_DOC_FILES)
+-	$(MAKEINFO_CMD) -I $(srcdir) -o annotate.info $(srcdir)/annotate.texinfo
++	$(MAKEINFO_CMD) -I $(srcdir) -o annotate.info $(srcdir)/annotate.texinfo | true
+ 
+ annotate/index.html: $(ANNOTATE_DOC_FILES)
+-	$(MAKEHTML) $(MAKEHTMLFLAGS) -I $(srcdir) $(srcdir)/annotate.texinfo
++	$(MAKEHTML) $(MAKEHTMLFLAGS) -I $(srcdir) $(srcdir)/annotate.texinfo | true
+ 
+ # Man pages
+ gdb.1: $(GDB_DOC_FILES)
+

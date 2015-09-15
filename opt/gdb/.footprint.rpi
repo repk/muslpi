@@ -10,6 +10,7 @@ drwxr-xr-x usr/include/
 -rw-r--r-- usr/include/dis-asm.h
 drwxr-xr-x usr/include/gdb/
 -rw-r--r-- usr/include/gdb/jit-reader.h
+-rw-r--r-- usr/include/plugin-api.h
 -rw-r--r-- usr/include/symcat.h
 drwxr-xr-x usr/lib/
 -rw-r--r-- usr/lib/charset.alias
@@ -19,6 +20,7 @@ drwxr-xr-x usr/lib/
 drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/gdb/
 drwxr-xr-x usr/share/gdb/syscalls/
+-rw-r--r-- usr/share/gdb/syscalls/aarch64-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/amd64-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/arm-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/gdb-syscalls.dtd

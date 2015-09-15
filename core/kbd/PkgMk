@@ -8,7 +8,7 @@ VERSION=1.15.5
 
 
 DEPENDS="gettext"
-SOURCES="ftp://ftp.altlinux.org/pub/people/legion/${NAME}/${NAME}-${VERSION}.tar.gz"
+SOURCES="ftp://ftp.kernel.org/pub/linux/utils/${NAME}/${NAME}-${VERSION}.tar.xz"
 PATCHES="kbd.patch"
 FILES="config.cache"
 

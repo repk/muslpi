@@ -1,0 +1,25 @@
+# Description: /proc file system utilities
+# URL: http://sourceforge.net/projects/procps-ng/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=procps-ng
+VERSION=3.3.11
+
+
+DEPENDS=""
+SOURCES="http://downloads.sourceforge.net/project/procps-ng/Production/${NAME}-${VERSION}.tar.xz"
+FILES="config.cache"
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+	copy_files
+
+	LIBS=-lintl							\
+	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\
+		--prefix=/usr --cache-file=config.cache --disable-modern-top
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

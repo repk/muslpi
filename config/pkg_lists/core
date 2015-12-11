@@ -18,7 +18,6 @@ PKGLIST="core/fhs		\
 	 core/iana-etc		\
 	 core/m4		\
 	 core/bison		\
-	 core/procps		\
 	 core/libtool		\
 	 core/flex		\
 	 core/iptables		\
@@ -33,6 +32,7 @@ PKGLIST="core/fhs		\
 	 core/findutils		\
 	 core/gawk		\
 	 core/gettext		\
+	 core/procps-ng		\
 	 core/grep		\
 	 core/groff		\
 	 core/gzip		\

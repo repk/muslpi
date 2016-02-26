@@ -4,12 +4,12 @@
 
 
 NAME=musl
-VERSION=1.1.10
+VERSION=1.1.14
 
 
 DEPENDS="gcc-static"
 SOURCES="http://www.musl-libc.org/releases/${NAME}-${VERSION}.tar.gz"
-PATCHES="musl-uselocal.diff musl-utmp-wtmp-path.diff"
+PATCHES="musl-utmp-wtmp-path.diff"
 
 
 pkgmain() {

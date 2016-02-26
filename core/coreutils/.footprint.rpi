@@ -32,6 +32,7 @@ drwxr-xr-x bin/
 -rwxr-xr-x bin/uname
 drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
+-rwxr-xr-x usr/bin/base32
 -rwxr-xr-x usr/bin/base64
 -rwxr-xr-x usr/bin/chcon
 -rwxr-xr-x usr/bin/cksum

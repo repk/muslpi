@@ -4,11 +4,11 @@
 
 
 NAME=coreutils-man
-VERSION=8.21
+VERSION=8.25
 
 
 DEPENDS="coreutils"
-SOURCES="https://distfiles.gentoo.org/distfiles/coreutils-${VERSION}-man.tar.xz"
+SOURCES="http://gentoo.osuosl.org/distfiles/coreutils-${VERSION}-man.tar.xz"
 
 
 pkgmain() {

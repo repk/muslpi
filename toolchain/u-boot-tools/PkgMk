@@ -5,7 +5,7 @@
 
 
 NAME=u-boot-tools
-VERSION=2014.04
+VERSION=2016.01
 HOST_PKG=1
 
 DEPENDS=""

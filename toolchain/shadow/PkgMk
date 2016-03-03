@@ -4,12 +4,12 @@
 
 
 NAME=shadow
-VERSION=4.1.4.2
+VERSION=4.2.1
 HOST_PKG=1
 
 
 DEPENDS=""
-SOURCES="http://pkg-shadow.alioth.debian.org/releases/${NAME}-${VERSION}.tar.bz2"
+SOURCES="http://pkg-shadow.alioth.debian.org/releases/${NAME}-${VERSION}.tar.xz"
 PATCHES="shadow.patch"
 FILES="config.cache"
 

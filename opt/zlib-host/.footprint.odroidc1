@@ -1,0 +1,14 @@
+drwxr-xr-x include/
+-rw-r--r-- include/zconf.h
+-rw-r--r-- include/zlib.h
+drwxr-xr-x lib/
+-rw-r--r-- lib/libz.a
+lrwxrwxrwx lib/libz.so
+lrwxrwxrwx lib/libz.so.1
+-rwxr-xr-x lib/libz.so.1.2.8
+drwxr-xr-x lib/pkgconfig/
+-rw-r--r-- lib/pkgconfig/zlib.pc
+drwxr-xr-x share/
+drwxr-xr-x share/man/
+drwxr-xr-x share/man/man3/
+-rw-r--r-- share/man/man3/zlib.3

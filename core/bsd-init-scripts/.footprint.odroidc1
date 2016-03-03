@@ -1,0 +1,10 @@
+drwxr-xr-x etc/
+lrwxrwxrwx etc/mtab
+-rwxr-xr-x etc/rc
+-rw-r--r-- etc/rc.conf
+drwxr-xr-x etc/rc.d/
+-rwxr-xr-x etc/rc.modules
+-rwxr-xr-x etc/rc.multi
+-rwxr-xr-x etc/rc.shutdown
+-rwxr-xr-x etc/rc.single
+-rw-r--r-- etc/sysctl.conf

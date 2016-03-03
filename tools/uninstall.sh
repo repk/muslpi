@@ -70,42 +70,46 @@ pkg_remove() {
 remove_cross() {
 	# CROSS PACKAGE
 	_FOOTPRINT="${CROSS_INSTALLDB}/${PKG_NAME}"
-	_FLOCK="${CROSS_INSTALLDB}/.${PKG_NAME}.lock"
-	(
-		flock -x 200
-		get_package ${_FOOTPRINT}
-		if [ $? -eq 0 ]; then
-			dbg 2 "Removing installed files from footprint: ${FOOTPRINT}"
-			pkg_remove ${CLFS_DIR} ${_FOOTPRINT}
-			remove ${_FOOTPRINT}
-			dbg 1 "${PKG_NAME} cross package uninstalled successfully"
-			rm ${_FLOCK}
-			exit 0
-		fi
-		rm ${_FLOCK}
-		exit -1
-	) 200>${_FLOCK}
+	_LOCK="${CROSS_INSTALLDB}/.${PKG_NAME}.lock"
+
+	mkdir ${_LOCK}
+	while [ $? -ne 0 ]; do
+		mkdir ${_LOCK}
+	done
+	get_package ${_FOOTPRINT}
+	if [ $? -eq 0 ]; then
+		dbg 2 "Removing installed files from footprint: ${FOOTPRINT}"
+		pkg_remove ${CLFS_DIR} ${_FOOTPRINT}
+		remove ${_FOOTPRINT}
+		dbg 1 "${PKG_NAME} cross package uninstalled successfully"
+		rmdir ${_LOCK}
+		exit 0
+	fi
+	rmdir ${_LOCK}
+	exit -1
 }
 
 
 remove_host() {
 	# HOST PACKAGE
 	_FOOTPRINT="${HOST_INSTALLDB}/${PKG_NAME}"
-	_FLOCK="${HOST_INSTALLDB}/.${PKG_NAME}.lock"
-	(
-		flock -x 200
-		get_package ${_FOOTPRINT}
-		if [ $? -eq 0 ]; then
-			dbg 2 "Removing installed files from footprint: ${FOOTPRINT}"
-			pkg_remove ${TOOLCHAIN_DIR} ${_FOOTPRINT}
-			remove ${_FOOTPRINT}
-			dbg 1 "${PKG_NAME} host package uninstalled successfully"
-			rm ${_FLOCK}
-			exit 0
-		fi
-		rm ${_FLOCK}
-		exit -1
-	) 200>${_FLOCK}
+	_LOCK="${HOST_INSTALLDB}/.${PKG_NAME}.lock"
+
+	mkdir ${_LOCK}
+	while [ $? -ne 0 ]; do
+		mkdir ${_LOCK}
+	done
+	get_package ${_FOOTPRINT}
+	if [ $? -eq 0 ]; then
+		dbg 2 "Removing installed files from footprint: ${FOOTPRINT}"
+		pkg_remove ${TOOLCHAIN_DIR} ${_FOOTPRINT}
+		remove ${_FOOTPRINT}
+		dbg 1 "${PKG_NAME} host package uninstalled successfully"
+		rmdir ${_LOCK}
+		exit 0
+	fi
+	rmdir ${_LOCK}
+	exit -1
 }
 
 

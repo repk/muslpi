@@ -16,7 +16,7 @@ pkgmain() {
 	export GOROOT_FINAL=/usr/lib/go
 	export GOARCH=${MODE}
 	export CC_FOR_TARGET=${CC}
-	export CFLAGS_FOR_TARGET=${CFLAGS}
+	export CFLAGS_FOR_TARGET="${CFLAGS}"
 	#export GOHOSTARCH=${MODE}
 
 	unset CC

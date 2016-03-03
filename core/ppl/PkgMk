@@ -19,10 +19,10 @@ pkgmain() {
 	patch_unknown_target Watchdog/config.sub
 	process_patches
 
-	CPPFLAGS=-fexceptions					\
-	CXXFLAGS="-I${TOOLCHAIN_DIR}/include " \
-	CXXFLAGS+=" -Wl,-L${TOOLCHAIN_DIR}/lib " \
-	./configure --prefix=/usr --build=${CLFS_HOST}		\
+	CPPFLAGS=-fexceptions						\
+	CXXFLAGS="-I${TOOLCHAIN_DIR}/include "				\
+	CXXFLAGS="${CXXFLAGS} -Wl,-L${TOOLCHAIN_DIR}/lib "		\
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
 		--host=${CLFS_TARGET} --with-gmp-prefix=${CLFS_DIR}/usr	\
 		--with-gmpxx-prefix=${CLFS_DIR}/usr --enable-shared	\
 		--disable-optimization  --enable-check=quick

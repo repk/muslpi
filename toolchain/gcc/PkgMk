@@ -59,10 +59,10 @@ pkgmain() {
 	make -j${NR_JOBS} AS_FOR_TARGET="${CLFS_TARGET}-as" LD_FOR_TARGET="${CLFS_TARGET}-ld"
 	make install
 
-    if [ -d ${PKG}/lib64 ]; then
-        mv ${PKG}/lib64/* ${PKG}/lib/
-        rm -rf ${PKG}/lib64
-    fi
+	if [ -d ${PKG}/lib64 ]; then
+		mv ${PKG}/lib64/* ${PKG}/lib/
+		rm -rf ${PKG}/lib64
+	fi
 
 	${TOOLS_BASEDIR}/uninstall.sh gcc-static host
 }

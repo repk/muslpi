@@ -7,6 +7,7 @@ PKGLIST="opt/strace		\
 	 opt/tmux		\
 	 opt/libffi		\
 	 opt/libffi-host	\
+	 opt/zlib-host		\
 	 opt/glib-host		\
 	 opt/glib		\
 	 opt/ntpdate		\

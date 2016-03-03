@@ -1,0 +1,22 @@
+# Description: Compression Library
+# URL: http://www.zlib.net/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=zlib
+VERSION=1.2.8
+
+
+DEPENDS=""
+SOURCES="http://zlib.net/${NAME}-${VERSION}.tar.gz"
+HOST_PKG=1
+
+
+pkgmain() {
+	cd ${NAME}-${VERSION}
+
+	./configure --prefix=/ --enable-shared
+
+	make -j${NR_JOBS}
+	make DESTDIR=${PKG} install
+}

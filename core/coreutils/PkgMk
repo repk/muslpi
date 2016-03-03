@@ -22,7 +22,7 @@ pkgmain() {
 		--prefix=/usr --enable-no-install-program=uptime,kill	\
 		--cache-file=config.cache --enable-install-program=hostname
 
-	cp -v Makefile{,.orig}
+	cp -v Makefile Makefile.orig
 	sed -e 's/^#run_help2man\|^run_help2man/#&/' \
 		-e 's/^\##run_help2man/run_help2man/' Makefile.orig > Makefile
 
@@ -30,14 +30,25 @@ pkgmain() {
 	make DESTDIR=${PKG} install
 
 	mkdir ${PKG}/bin
-	mv -v ${PKG}/usr/bin/{cat,chgrp,chmod,chown,cp,date} ${PKG}/bin
-	mv -v ${PKG}/usr/bin/{dd,df,echo,false,hostname,ln,ls,mkdir} ${PKG}/bin
-	mv -v ${PKG}/usr/bin/{mv,pwd,rm,rmdir,stty,true,uname} ${PKG}/bin
+	mv -v ${PKG}/usr/bin/cat ${PKG}/usr/bin/chgrp			\
+		${PKG}/usr/bin/chmod ${PKG}/usr/bin/chown		\
+		${PKG}/usr/bin/cp ${PKG}/usr/bin/date ${PKG}/bin
+	mv -v ${PKG}/usr/bin/dd ${PKG}/usr/bin/df ${PKG}/usr/bin/echo	\
+		${PKG}/usr/bin/false ${PKG}/usr/bin/hostname		\
+		${PKG}/usr/bin/ln ${PKG}/usr/bin/ls			\
+		${PKG}/usr/bin/mkdir ${PKG}/bin
+	mv -v ${PKG}/usr/bin/mv ${PKG}/usr/bin/pwd ${PKG}/usr/bin/rm	\
+		${PKG}/usr/bin/rmdir ${PKG}/usr/bin/stty		\
+		${PKG}/usr/bin/true ${PKG}/usr/bin/uname ${PKG}/bin
 	mv -v ${PKG}/usr/bin/chroot ${PKG}/usr/sbin
 
 	#This is needed by CLFS bootscripts
-	mv -v ${PKG}/usr/bin/{[,basename,head,install,nice} ${PKG}/bin
-	mv -v ${PKG}/usr/bin/{readlink,sleep,sync,test,touch} ${PKG}/bin
+	mv -v ${PKG}/usr/bin/[ ${PKG}/usr/bin/basename			\
+		${PKG}/usr/bin/head ${PKG}/usr/bin/install		\
+		${PKG}/usr/bin/nice ${PKG}/bin
+	mv -v ${PKG}/usr/bin/readlink ${PKG}/usr/bin/sleep		\
+		${PKG}/usr/bin/sync ${PKG}/usr/bin/test			\
+		${PKG}/usr/bin/touch ${PKG}/bin
 	ln -sfv ../../bin/install ${PKG}/usr/bin
 
 	#Remove unecessary man pages

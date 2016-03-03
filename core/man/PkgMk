@@ -14,15 +14,15 @@ SOURCES="http://distfiles.gentoo.org/distfiles/${NAME}-${VERSION}.tar.gz"
 pkgmain() {
 	cd ${NAME}-${VERSION}
 
-	cp configure{,.orig}
+	cp configure configure.orig
 	sed -e "/PREPATH=/s@=.*@=\"${CLFS_DIR}/sbin:${CLFS_DIR}/bin:${CLFS_DIR}/usr/sbin:${CLFS_DIR}/usr/bin\"@g" -e "s@-is@&R@g" configure.orig > configure
-	cp src/man.conf.in{,.orig}
+	cp src/man.conf.in src/man.conf.in.orig
 	sed -e 's@MANPATH./usr/man@#&@g' src/man.conf.in.orig > src/man.conf.in
 
 
 	CC="${CC} -DPOSIX" ./configure -confdir=/etc
 
-	cp conf_script{,.orig}
+	cp conf_script conf_script.orig
 	sed "s@${CLFS_DIR}@@" conf_script.orig > conf_script
 	gcc src/makemsg.c -o src/makemsg
 

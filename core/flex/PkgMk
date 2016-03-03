@@ -17,7 +17,7 @@ pkgmain() {
 	patch_unknown_target config.sub
 	copy_files
 
-	cp -v Makefile.in{,.orig}
+	cp -v Makefile.in Makefile.in.orig
 	sed "s/-I@includedir@//g" Makefile.in.orig > Makefile.in
 
 	./configure --build=${CLFS_HOST} --host=${CLFS_TARGET}		\

@@ -24,5 +24,8 @@ pkgmain() {
 	make DESTDIR=${PKG} install
 
 	mkdir ${PKG}/usr/bin
-	mv ${PKG}/bin/z{egrep,cmp,diff,fgrep,force,grep,less,more,new} ${PKG}/usr/bin
+	mv ${PKG}/bin/zegrep ${PKG}/bin/zcmp ${PKG}/bin/zdiff		\
+		${PKG}/bin/zfgrep ${PKG}/bin/zforce ${PKG}/bin/zgrep	\
+		${PKG}/bin/zless ${PKG}/bin/zmore ${PKG}/bin/znew	\
+		${PKG}/usr/bin
 }

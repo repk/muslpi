@@ -25,7 +25,7 @@ pkgmain() {
 	cp -v bzip2-shared ${PKG}/bin/bzip2
 	cp -av libbz2.so* ${PKG}/lib
 	ln -sfv ../../lib/libbz2.so.1.0 ${PKG}/usr/lib/libbz2.so
-	rm -v ${PKG}/usr/bin/{bunzip2,bzcat,bzip2}
+	rm -v ${PKG}/usr/bin/bunzip2 ${PKG}/usr/bin/bzcat ${PKG}/usr/bin/bzip2
 	ln -sfv bzip2 ${PKG}/bin/bunzip2
 	ln -sfv bzip2 ${PKG}/bin/bzcat
 }

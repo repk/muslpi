@@ -18,5 +18,5 @@ pkgmain() {
 	make -j${NR_JOBS} V=1 tools
 
 	install -d -m 0755 ${PKG}/bin
-	install -m 0755 tools/mk{,env}image ${PKG}/bin
+	install -m 0755 tools/mkimage tools/mkenvimage ${PKG}/bin
 }

@@ -27,8 +27,11 @@ pkgmain() {
 	make DESTDIR=${PKG} install
 
 	mkdir ${PKG}/usr/lib
-	mv -v ${PKG}/lib/lib{panelw,menuw,formw,ncursesw,ncurses++w}.a ${PKG}/usr/lib
-	rm -v ${PKG}/lib/lib{ncursesw,menuw,panelw,formw}.so
+	mv -v ${PKG}/lib/libpanelw.a ${PKG}/lib/libmenuw.a		\
+		${PKG}/lib/libformw.a ${PKG}/lib/libncursesw.a		\
+		${PKG}/lib/libncurses++w.a ${PKG}/usr/lib
+	rm -v ${PKG}/lib/libncursesw.so ${PKG}/lib/libmenuw.so		\
+		${PKG}/lib/libpanelw.so ${PKG}/lib/libformw.so
 	ln -sfv ../../lib/libncursesw.so.5 ${PKG}/usr/lib/libncursesw.so
 	ln -sfv ../../lib/libmenuw.so.5 ${PKG}/usr/lib/libmenuw.so
 	ln -sfv ../../lib/libpanelw.so.5 ${PKG}/usr/lib/libpanelw.so

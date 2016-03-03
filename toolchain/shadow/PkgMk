@@ -25,7 +25,7 @@ pkgmain() {
 		--program-prefix=${CLFS_TARGET}- --without-nscd		\
 		--cache-file=config.cache
 
-	cp config.h{,.orig}
+	cp config.h config.h.orig
 	sed "/PASSWD_PROGRAM/s/passwd/${CLFS_TARGET}-&/" config.h.orig >config.h
 
 	make -j${NR_JOBS}

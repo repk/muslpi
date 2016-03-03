@@ -24,8 +24,8 @@ pkgmain() {
 	make DESTDIR=${PKG} install-doc
 
 	mkdir ${PKG}/usr/lib
-	mv -v ${PKG}/lib/lib{readline,history}.a ${PKG}/usr/lib
-	rm -v ${PKG}/lib/lib{readline,history}.so
+	mv -v ${PKG}/lib/libreadline.a ${PKG}/lib/libhistory.a ${PKG}/usr/lib
+	rm -v ${PKG}/lib/libreadline.so ${PKG}/lib/libhistory.so
 	ln -sfv ../../lib/libreadline.so.6 ${PKG}/usr/lib/libreadline.so
 	ln -sfv ../../lib/libhistory.so.6 ${PKG}/usr/lib/libhistory.so
 }

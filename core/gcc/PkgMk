@@ -16,7 +16,7 @@ pkgmain() {
 	cd ${NAME}-${VERSION}
 	process_patches
 
-	cp libiberty/Makefile.in{,.orig}
+	cp libiberty/Makefile.in libiberty/Makefile.in.orig
 	sed 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in.orig > \
 		libiberty/Makefile.in
 

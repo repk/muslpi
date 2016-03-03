@@ -21,5 +21,7 @@ pkgmain() {
 	make -j${NR_JOBS}
 	make DESTDIR=${PKG} install
 	mkdir ${PKG}/bin
-	mv -v ${PKG}/usr/bin/{xz,lzma,lzcat,unlzma,unxz,xzcat} ${PKG}/bin
+	mv -v ${PKG}/usr/bin/xz ${PKG}/usr/bin/lzma			\
+		${PKG}/usr/bin/lzcat ${PKG}/usr/bin/unlzma		\
+		${PKG}/usr/bin/unxz ${PKG}/usr/bin/xzcat ${PKG}/bin
 }

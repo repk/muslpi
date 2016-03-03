@@ -275,7 +275,7 @@ makepkg() {
 		if [ ! -d usr/share ]; then
 			mkdir usr/share
 		fi
-		mv usr/{,share/}man
+		mv usr/man usr/share/man
 	fi
 
 

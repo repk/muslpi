@@ -26,5 +26,7 @@ pkgmain() {
 	make DESTDIR=${PKG} install
 
 	mkdir ${PKG}/bin
-	mv -v ${PKG}/usr/bin/{kbd_mode,dumpkeys,loadkeys,openvt,setfont} ${PKG}/bin
+	mv -v ${PKG}/usr/bin/kbd_mode ${PKG}/usr/bin/dumpkeys		\
+		${PKG}/usr/bin/loadkeys ${PKG}/usr/bin/openvt		\
+		${PKG}/usr/bin/setfont ${PKG}/bin
 }

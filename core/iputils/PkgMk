@@ -28,5 +28,5 @@ pkgmain() {
 	install -v -m755 clockdiff ${PKG}/usr/bin
 	install -v -m755 rdisc ${PKG}/usr/bin
 	install -v -m755 tracepath ${PKG}/usr/bin
-	install -v -m755 trace{path,route}6 ${PKG}/usr/bin
+	install -v -m755 tracepath6 traceroute6 ${PKG}/usr/bin
 }

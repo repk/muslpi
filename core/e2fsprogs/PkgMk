@@ -28,7 +28,8 @@ pkgmain() {
 	make DESTDIR=${PKG} install-libs
 
 
-	rm -v ${PKG}/usr/lib/lib{com_err,e2p,ext2fs,ss}.so
+	rm -v ${PKG}/usr/lib/libcom_err.so ${PKG}/usr/lib/libe2p.so	\
+		${PKG}/usr/lib/libext2fs.so ${PKG}/usr/lib/libss.so
 	ln -sv ../../lib/libcom_err.so.2 ${PKG}/usr/lib/libcom_err.so
 	ln -sv ../../lib/libe2p.so.2 ${PKG}/usr/lib/libe2p.so
 	ln -sv ../../lib/libext2fs.so.2 ${PKG}/usr/lib/libext2fs.so

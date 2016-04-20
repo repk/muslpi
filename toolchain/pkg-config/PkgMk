@@ -15,12 +15,12 @@ PATCHES="pkg-config-sysroot.patch"
 pkgmain() {
 	cd ${NAME}-${VERSION}
 
-    process_patches
+	process_patches
 
 	PC_PATH="${CLFS_DIR}/usr/lib/pkgconfig:${CLFS_DIR}/usr/share/pkgconfig"
 
-	./configure --prefix=${PKG} --with-pc-sysroot=${CLFS_DIR}	\
-        --with-internal-glib --with-pc-path="${PC_PATH}"
+	./configure --prefix=${PKG} --with-internal-glib		\
+		--with-pc-path="${PC_PATH}"
 
 	make -j${NR_JOBS}
 	make install

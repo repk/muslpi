@@ -17,8 +17,8 @@
 
 # Print error message
 error() {
-	echo -e "ERROR : $1" >&2
-	exit -1
+	echo "ERROR : $1" >&2
+	exit 255
 }
 
 

@@ -1,0 +1,15 @@
+diff -rup a/src/gpg-error-config.in b/src/gpg-error-config.in
+--- a/src/gpg-error-config.in	2017-03-10 19:41:50.368859307 +0100
++++ b/src/gpg-error-config.in	2017-03-10 19:44:49.342842464 +0100
+@@ -36,6 +36,11 @@ if test $# -eq 0; then
+     usage 1 1>&2
+ fi
+ 
++if test -n "${GPG_ERROR_CONFIG_SYSROOT}"; then
++    includedir=${GPG_ERROR_CONFIG_SYSROOT}/${includedir}
++    libdir=${GPG_ERROR_CONFIG_SYSROOT}/${libdir}
++fi
++
+ while test $# -gt 0; do
+     case "$1" in
+ 	-*=*)

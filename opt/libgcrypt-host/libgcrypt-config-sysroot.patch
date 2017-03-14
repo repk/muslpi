@@ -1,0 +1,25 @@
+diff -rup a/src/libgcrypt-config.in b/src/libgcrypt-config.in
+--- a/src/libgcrypt-config.in	2017-03-10 20:21:06.870637538 +0100
++++ b/src/libgcrypt-config.in	2017-03-10 20:20:21.718641787 +0100
+@@ -68,6 +68,21 @@ if test $# -eq 0; then
+     usage 1 1>&2
+ fi
+ 
++if test -n "${LIBGCRYPT_CONFIG_SYSROOT}"; then
++    includedir=${LIBGCRYPT_CONFIG_SYSROOT}/${includedir}
++    libdir=${LIBGCRYPT_CONFIG_SYSROOT}/${libdir}
++fi
++
++_gpg_error_libs=`gpg-error-config --libs`
++if test -n "${_gpg_error_libs}"; then
++    gpg_error_libs=${_gpg_error_libs}
++fi
++
++_gpg_error_cflags=`gpg-error-config --cflags`
++if test -n "${_gpg_error_cflags}"; then
++    gpg_error_cflags=${_gpg_error_cflags}
++fi
++
+ while test $# -gt 0; do
+     case "$1" in
+ 	# Set up `optarg'.

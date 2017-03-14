@@ -14,6 +14,7 @@ PKGLIST="opt/strace		\
 	 opt/libgpg-error	\
 	 opt/libgpg-error-host	\
 	 opt/libgcrypt		\
+	 opt/libgcrypt-host	\
 	 opt/libnettle		\
 	 opt/gnutls		\
 	 opt/curl		\

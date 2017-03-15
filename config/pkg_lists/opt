@@ -9,6 +9,7 @@ PKGLIST="opt/strace		\
 	 opt/libffi-host	\
 	 opt/zlib-host		\
 	 opt/glib-host		\
+	 opt/pcre		\
 	 opt/glib		\
 	 opt/ntpdate		\
 	 opt/libgpg-error	\

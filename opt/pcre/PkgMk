@@ -1,0 +1,23 @@
+# Description: Perl Compatible Regex
+# URL: http://www.pcre.org/
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=pcre
+VERSION=8.40
+
+DEPENDS=""
+SOURCES="https://ftp.pcre.org/pub/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+pkgmain() {
+	cd ${NAME}-$VERSION
+
+	./configure --prefix=/usr --build=${CLFS_HOST}			\
+		--host=${CLFS_TARGET} --enable-unicode-properties	\
+		--enable-utf8
+
+	make -j${NR_JOBS}
+	fix_temporary_libtool_files
+	make DESTDIR=${PKG} install
+}
+

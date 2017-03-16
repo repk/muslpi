@@ -8,6 +8,7 @@ PKGLIST="opt/strace		\
 	 opt/libffi		\
 	 opt/libffi-host	\
 	 opt/zlib-host		\
+	 opt/pcre-host		\
 	 opt/glib-host		\
 	 opt/pcre		\
 	 opt/glib		\

@@ -4,23 +4,21 @@
 
 
 NAME=glib
-VERSION=2.44.1
+VERSION=2.50.3
 
 
-DEPENDS=""
-SOURCES="http://ftp.gnome.org/pub/gnome/sources/${NAME}/2.44/${NAME}-${VERSION}.tar.xz"
-PATCHES="glib-missing-include-dirs.patch"
+DEPENDS="zlib libffi pcre"
+SOURCES="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/${NAME}-${VERSION}.tar.xz"
 FILES="config.cache"
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
 
-	process_patches
 	copy_files
 
 	#disable man pages as it needs xsltproc to build
-	CFLAGS="-D_GNU_SOURCE -D_BSD_SOURCE"			\
+	CFLAGS="-D_DEFAULT_SOURCE"				\
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
 		--host=${CLFS_TARGET} --enable-man=no		\
 		--cache-file=config.cache

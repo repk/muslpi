@@ -4,22 +4,19 @@
 
 
 NAME=glib
-VERSION=2.38.2
+VERSION=2.50.3
 
 
-DEPENDS="zlib libffi"
-SOURCES="http://ftp.gnome.org/pub/gnome/sources/glib/2.38/glib-2.38.2.tar.xz"
-PATCHES="glib.patch"
+DEPENDS="zlib libffi pcre"
+SOURCES="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/${NAME}-${VERSION}.tar.xz"
 HOST_PKG=1
 
 
 pkgmain() {
 	cd ${NAME}-$VERSION
 
-	process_patches
-
 	#disable man pages as it needs xsltproc to build
-	CFLAGS="${CFLAGS} -D_GNU_SOURCE -D_BSD_SOURCE"			\
+	CFLAGS="${CFLAGS} -D_DEFAULT_SOURCE"				\
 	./configure --prefix=/ --enable-man=no --disable-systemtap
 
 	make -j${NR_JOBS}

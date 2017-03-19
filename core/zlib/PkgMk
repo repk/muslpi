@@ -4,7 +4,7 @@
 
 
 NAME=zlib
-VERSION=1.2.8
+VERSION=1.2.11
 
 
 DEPENDS=""
@@ -14,10 +14,10 @@ SOURCES="http://zlib.net/${NAME}-${VERSION}.tar.gz"
 pkgmain() {
 	cd ${NAME}-${VERSION}
 
-	./configure --prefix=${PKG}/usr --enable-shared
+	./configure --prefix=/usr --enable-shared
 
 	make -j${NR_JOBS}
-	make install
+	make DESTDIR=${PKG} install
 
 	mkdir ${PKG}/lib/
 	mv -v ${PKG}/usr/lib/libz.so.* ${PKG}/lib/

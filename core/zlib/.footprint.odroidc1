@@ -1,6 +1,6 @@
 drwxr-xr-x lib/
 lrwxrwxrwx lib/libz.so.1
--rwxr-xr-x lib/libz.so.1.2.8
+-rwxr-xr-x lib/libz.so.1.2.11
 drwxr-xr-x usr/
 drwxr-xr-x usr/include/
 -rw-r--r-- usr/include/zconf.h

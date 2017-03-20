@@ -5,7 +5,7 @@ drwxr-xr-x lib/
 -rw-r--r-- lib/libz.a
 lrwxrwxrwx lib/libz.so
 lrwxrwxrwx lib/libz.so.1
--rwxr-xr-x lib/libz.so.1.2.8
+-rwxr-xr-x lib/libz.so.1.2.11
 drwxr-xr-x lib/pkgconfig/
 -rw-r--r-- lib/pkgconfig/zlib.pc
 drwxr-xr-x share/

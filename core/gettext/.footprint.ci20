@@ -1,4 +1,5 @@
 drwxr-xr-x lib/
+-rw-r--r-- lib/libintl.a
 lrwxrwxrwx lib/libintl.so
 lrwxrwxrwx lib/libintl.so.8
 -rw-r--r-- lib/libintl.so.8.1.2
@@ -49,7 +50,6 @@ lrwxrwxrwx usr/lib/libgettextpo.so.0
 -rwxr-xr-x usr/lib/libgettextpo.so.0.5.2
 -rwxr-xr-x usr/lib/libgettextsrc-0.18.3.so
 lrwxrwxrwx usr/lib/libgettextsrc.so
--rw-r--r-- usr/lib/libintl.a
 drwxr-xr-x usr/share/
 drwxr-xr-x usr/share/aclocal/
 -rw-r--r-- usr/share/aclocal/codeset.m4

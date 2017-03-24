@@ -71,6 +71,7 @@ drwxr-xr-x usr/share/consolefonts/
 -rw-r--r-- usr/share/consolefonts/drdos8x6.psfu.gz
 -rw-r--r-- usr/share/consolefonts/drdos8x8.psfu.gz
 -rw-r--r-- usr/share/consolefonts/ERRORS
+-rw-r--r-- usr/share/consolefonts/eurlatgr.psfu.gz
 -rw-r--r-- usr/share/consolefonts/Goha-12.psfu.gz
 -rw-r--r-- usr/share/consolefonts/Goha-14.psfu.gz
 -rw-r--r-- usr/share/consolefonts/Goha-16.psfu.gz
@@ -142,6 +143,7 @@ drwxr-xr-x usr/share/consolefonts/
 -rw-r--r-- usr/share/consolefonts/lat0-12.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat0-14.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat0-16.psfu.gz
+-rw-r--r-- usr/share/consolefonts/lat0-sun16.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat1-08.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat1-10.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat1-12.psfu.gz
@@ -153,6 +155,7 @@ drwxr-xr-x usr/share/consolefonts/
 -rw-r--r-- usr/share/consolefonts/lat2-14.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat2-16.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat2a-16.psfu.gz
+-rw-r--r-- usr/share/consolefonts/lat2-sun16.psfu.gz
 -rw-r--r-- usr/share/consolefonts/Lat2-Terminus16.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat4-08.psfu.gz
 -rw-r--r-- usr/share/consolefonts/lat4-10.psfu.gz
@@ -199,10 +202,13 @@ drwxr-xr-x usr/share/consolefonts/
 -rw-r--r-- usr/share/consolefonts/LatArCyrHeb-16.psfu.gz
 -rw-r--r-- usr/share/consolefonts/LatArCyrHeb-16+.psfu.gz
 -rw-r--r-- usr/share/consolefonts/LatArCyrHeb-19.psfu.gz
+-rw-r--r-- usr/share/consolefonts/latarcyrheb-sun16.psfu.gz
+-rw-r--r-- usr/share/consolefonts/latarcyrheb-sun32.psfu.gz
 -rw-r--r-- usr/share/consolefonts/LatGrkCyr-12x22.psfu.gz
 -rw-r--r-- usr/share/consolefonts/LatGrkCyr-8x16.psfu.gz
 -rw-r--r-- usr/share/consolefonts/LatKaCyrHeb-14.psfu.gz
 -rw-r--r-- usr/share/consolefonts/Mik_8x16.gz
+-rw-r--r-- usr/share/consolefonts/pancyrillic.f16.psfu.gz
 drwxr-xr-x usr/share/consolefonts/partialfonts/
 -rw-r--r-- usr/share/consolefonts/partialfonts/8859-10.a0-ff.08.gz
 -rw-r--r-- usr/share/consolefonts/partialfonts/8859-10.a0-ff.14.gz
@@ -250,6 +256,8 @@ drwxr-xr-x usr/share/consolefonts/partialfonts/
 -rw-r--r-- usr/share/consolefonts/README.Cyrillic
 -rw-r--r-- usr/share/consolefonts/README.drdos
 -rw-r--r-- usr/share/consolefonts/README.Ethiopic
+-rw-r--r-- usr/share/consolefonts/README.eurlatgr
+-rw-r--r-- usr/share/consolefonts/README.eurlatgr.mappings
 -rw-r--r-- usr/share/consolefonts/README.Greek
 -rw-r--r-- usr/share/consolefonts/README.Hebrew
 -rw-r--r-- usr/share/consolefonts/README.lat0
@@ -258,6 +266,7 @@ drwxr-xr-x usr/share/consolefonts/partialfonts/
 -rw-r--r-- usr/share/consolefonts/README.lat9
 -rw-r--r-- usr/share/consolefonts/README.LatGrkCyr
 -rw-r--r-- usr/share/consolefonts/README.psfu
+-rw-r--r-- usr/share/consolefonts/README.Sun
 -rw-r--r-- usr/share/consolefonts/ruscii_8x16.psfu.gz
 -rw-r--r-- usr/share/consolefonts/ruscii_8x8.psfu.gz
 -rw-r--r-- usr/share/consolefonts/sun12x22.psfu.gz
@@ -338,6 +347,12 @@ drwxr-xr-x usr/share/keymaps/i386/azerty/
 -rw-r--r-- usr/share/keymaps/i386/azerty/fr-pc.map.gz
 -rw-r--r-- usr/share/keymaps/i386/azerty/wangbe2.map.gz
 -rw-r--r-- usr/share/keymaps/i386/azerty/wangbe.map.gz
+drwxr-xr-x usr/share/keymaps/i386/bepo/
+-rw-r--r-- usr/share/keymaps/i386/bepo/fr-bepo-latin9.map.gz
+-rw-r--r-- usr/share/keymaps/i386/bepo/fr-bepo.map.gz
+drwxr-xr-x usr/share/keymaps/i386/carpalx/
+-rw-r--r-- usr/share/keymaps/i386/carpalx/carpalx-full.map.gz
+-rw-r--r-- usr/share/keymaps/i386/carpalx/carpalx.map.gz
 drwxr-xr-x usr/share/keymaps/i386/colemak/
 -rw-r--r-- usr/share/keymaps/i386/colemak/en-latin9.map.gz
 drwxr-xr-x usr/share/keymaps/i386/dvorak/
@@ -345,8 +360,10 @@ drwxr-xr-x usr/share/keymaps/i386/dvorak/
 -rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-ca-fr.map.gz
 -rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-es.map.gz
 -rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-fr.map.gz
+-rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-la.map.gz
 -rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-l.map.gz
 -rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak.map.gz
+-rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-programmer.map.gz
 -rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-r.map.gz
 -rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-ru.map.gz
 -rw-r--r-- usr/share/keymaps/i386/dvorak/dvorak-sv-a1.map.gz
@@ -409,8 +426,6 @@ drwxr-xr-x usr/share/keymaps/i386/qwerty/
 -rw-r--r-- usr/share/keymaps/i386/qwerty/es.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/et.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/et-nodeadkeys.map.gz
--rw-r--r-- usr/share/keymaps/i386/qwerty/fi-latin1.map.gz
--rw-r--r-- usr/share/keymaps/i386/qwerty/fi-latin9.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/fi.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/gr.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/gr-pc.map.gz
@@ -432,6 +447,8 @@ drwxr-xr-x usr/share/keymaps/i386/qwerty/
 -rw-r--r-- usr/share/keymaps/i386/qwerty/lt.baltic.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/lt.l4.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/lt.map.gz
+-rw-r--r-- usr/share/keymaps/i386/qwerty/lv.map.gz
+-rw-r--r-- usr/share/keymaps/i386/qwerty/lv-tilde.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/mk0.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/mk-cp1251.map.gz
 -rw-r--r-- usr/share/keymaps/i386/qwerty/mk.map.gz

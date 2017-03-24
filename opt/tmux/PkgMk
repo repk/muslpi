@@ -4,11 +4,11 @@
 
 
 NAME=tmux
-VERSION=1.8
+VERSION=2.3
 
 
 DEPENDS="libevent"
-SOURCES="http://downloads.sourceforge.net/project/${NAME}/${NAME}/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
+SOURCES="https://github.com/tmux/tmux/releases/download/${VERSION}/${NAME}-${VERSION}.tar.gz"
 
 
 pkgmain() {

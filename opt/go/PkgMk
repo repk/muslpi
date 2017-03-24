@@ -13,19 +13,26 @@ pkgmain() {
 	cd ${NAME}
 	process_patches
 
+
 	export GOROOT_FINAL=/usr/lib/go
-	export GOARCH=${MODE}
 	export CC_FOR_TARGET=${CC}
 	export CFLAGS_FOR_TARGET="${CFLAGS}"
 	#export GOHOSTARCH=${MODE}
+	#
+	if [ $(echo ${ARCH} | grep -c "arm") -eq 1 ]; then
+		export GOARCH="arm"
+	else
+		echo "Unknow Arch"
+		exit 0
+	fi
 
 	unset CC
 	unset CXX
-	unset CFLAGS
 	unset LDFLAGS
+	export CFLAGS="-Wno-error=shift-negative-value"
 
 	cd src
-	./make.bash
+	CGO_ENABLED=0 ./make.bash
 
 	install -d -m 755 ${PKG}/usr
 	install -d -m 755 ${PKG}/usr/bin

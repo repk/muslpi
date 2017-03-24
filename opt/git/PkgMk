@@ -4,21 +4,19 @@
 
 
 NAME=git
-VERSION=1.8.5.4
+VERSION=2.12.0
 
 
 DEPENDS="expat curl"
-SOURCES="https://git-core.googlecode.com/files/${NAME}-${VERSION}.tar.gz"
-PATCHES="git-cross-curl.patch"
-
+SOURCES="https://www.kernel.org/pub/software/scm/${NAME}/${NAME}-${VERSION}.tar.xz"
+PATCHES="git-force-http-push.patch"
 
 pkgmain() {
 	cd ${NAME}-$VERSION
-
 	process_patches
 
 	make -j${NR_JOBS} CC=${CC} prefix=/usr NO_PERL=1 NO_PYTHON=1	\
 		CFLAGS="${CFLAGS} -DNO_SYS_POLL_H" LDFLAGS="-lintl"	\
-		gitexecdir=/usr/lib/git-core				\
+		gitexecdir=/usr/lib/git-core NO_REGEX=NeedsStartEnd	\
 		INSTALLSITEMAN3DIR=/usr/share/man/man3 DESTDIR=${PKG} install
 }

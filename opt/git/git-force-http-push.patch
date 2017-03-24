@@ -1,0 +1,30 @@
+diff -rup a/Makefile b/Makefile
+--- a/Makefile	2017-03-14 11:06:43.298243755 +0100
++++ b/Makefile	2017-03-14 11:08:10.695235530 +0100
+@@ -1117,21 +1117,12 @@ else
+ 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
+ 	PROGRAM_OBJS += http-fetch.o
+ 	PROGRAMS += $(REMOTE_CURL_NAMES)
+-	curl_check := $(shell (echo 070908; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
+-	ifeq "$(curl_check)" "070908"
+-		ifndef NO_EXPAT
+-			PROGRAM_OBJS += http-push.o
+-		endif
+-	endif
+-	curl_check := $(shell (echo 072200; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
+-	ifeq "$(curl_check)" "072200"
+-		USE_CURL_FOR_IMAP_SEND = YesPlease
+-	endif
+-	ifdef USE_CURL_FOR_IMAP_SEND
+-		BASIC_CFLAGS += -DUSE_CURL_FOR_IMAP_SEND
+-		IMAP_SEND_BUILDDEPS = http.o
+-		IMAP_SEND_LDFLAGS += $(CURL_LIBCURL)
++	ifndef NO_EXPAT
++		PROGRAM_OBJS += http-push.o
+ 	endif
++	BASIC_CFLAGS += -DUSE_CURL_FOR_IMAP_SEND
++	IMAP_SEND_BUILDDEPS = http.o
++	IMAP_SEND_LDFLAGS += $(CURL_LIBCURL)
+ 	ifndef NO_EXPAT
+ 		ifdef EXPATDIR
+ 			BASIC_CFLAGS += -I$(EXPATDIR)/include

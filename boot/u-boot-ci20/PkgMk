@@ -9,7 +9,7 @@ VERSION=2013.10
 
 DEPENDS=""
 SOURCES="https://github.com/MIPS/CI20_u-boot/archive/ci20-v${VERSION}.tar.gz"
-PATCHES="u-boot-compiler-gcc5.patch u-boot-extern-inline.patch u-boot-show_boot_progress-alias.patch"
+PATCHES="u-boot-compiler-gcc6.patch"
 
 
 pkgmain() {

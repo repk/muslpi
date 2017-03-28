@@ -1,4 +1,4 @@
-Add linux/compiler-gcc5/h from the kernel sources at:
+Add linux/compiler-gcc6/h from the kernel sources at:
 
 commit 5631b8fba640a4ab2f8a954f63a603fa34eda96b
 Author: Steven Noonan <steven at uplinklabs.net>
@@ -12,11 +12,11 @@ Signed-off-by: Hans de Goede <hdegoede at redhat.com>
  1 file changed, 65 insertions(+)
  create mode 100644 include/linux/compiler-gcc5.h
 
-diff --git a/include/linux/compiler-gcc5.h b/include/linux/compiler-gcc5.h
+diff --git a/include/linux/compiler-gcc6.h b/include/linux/compiler-gcc6.h
 new file mode 100644
 index 0000000..c8c5659
 --- /dev/null
-+++ b/include/linux/compiler-gcc5.h
++++ b/include/linux/compiler-gcc6.h
 @@ -0,0 +1,65 @@
 +#ifndef __LINUX_COMPILER_H
 +#error "Please don't include <linux/compiler-gcc5.h> directly, include <linux/compiler.h> instead."

@@ -5,7 +5,7 @@
 
 NAME=linux-ci20
 VERSION=3.18
-
+PATCHES="linux-compiler-gcc6.patch"
 
 DEPENDS=""
 SOURCES="https://github.com/MIPS/CI20_linux/archive/ci20-v${VERSION}.tar.gz"
@@ -13,6 +13,8 @@ SOURCES="https://github.com/MIPS/CI20_linux/archive/ci20-v${VERSION}.tar.gz"
 
 pkgmain() {
 	cd CI20_linux-ci20-v${VERSION}
+
+	process_patches
 
 	make ARCH=mips mrproper
 	make ARCH=mips CROSS_COMPILE=${CLFS_TARGET}- ci20_defconfig

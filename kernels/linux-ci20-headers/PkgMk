@@ -8,7 +8,7 @@ VERSION=3.18
 
 
 DEPENDS=""
-SOURCES="https://github.com/MIPS/CI20_linux/archive/CI20_linux-ci20-v${VERSION}.tar.gz"
+SOURCES="https://github.com/MIPS/CI20_linux/archive/ci20-v${VERSION}.tar.gz"
 
 
 pkgmain() {

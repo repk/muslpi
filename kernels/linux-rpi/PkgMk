@@ -4,12 +4,11 @@
 
 
 NAME=linux-rpi
-VERSION=4.0.y
+VERSION=4.9.y
 
 
 DEPENDS=""
 SOURCES="https://github.com/raspberrypi/linux/archive/rpi-${VERSION}.tar.gz"
-
 
 pkgmain() {
 	cd linux-rpi-$VERSION

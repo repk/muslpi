@@ -4,7 +4,7 @@
 
 
 NAME=linux-rpi-headers
-VERSION=4.0.y
+VERSION=4.9.y
 
 
 DEPENDS=""

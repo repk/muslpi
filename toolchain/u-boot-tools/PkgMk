@@ -10,9 +10,11 @@ HOST_PKG=1
 
 DEPENDS=""
 SOURCES="ftp://ftp.denx.de/pub/u-boot/u-boot-${VERSION}.tar.bz2"
+PATCHES="linux-gcc6-compiler.patch"
 
 pkgmain() {
 	cd u-boot-${VERSION}
+	process_patches
 
 	make sandbox_config
 	make -j${NR_JOBS} V=1 tools

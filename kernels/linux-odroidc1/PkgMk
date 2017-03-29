@@ -1,0 +1,34 @@
+# Description: Linux kernel for Hardkernel Odroidc1
+# URL: https://kernel.org
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=linux-odroidc1
+VERSION=3.10.y
+
+
+DEPENDS=""
+SOURCES="https://github.com/hardkernel/linux/archive/odroidc-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd linux-odroidc-${VERSION}
+
+	make ARCH=arm mrproper
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- odroidc_defconfig
+	make -j${NR_JOBS} ARCH=arm CROSS_COMPILE=${CLFS_TARGET}-
+	make -j${NR_JOBS} ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- modules
+
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- INSTALL_MOD_PATH=${PKG} \
+		DEPMOD=${TOOLCHAIN_DIR}/sbin/depmod modules_install
+	mkdir -p ${PKG}/boot
+
+	rm ${PKG}/lib/modules/${VERSION}/build
+	rm ${PKG}/lib/modules/${VERSION}/source
+	ln -s ../../../usr/src/linux-odroidc-${VERSION}			\
+		${PKG}/lib/modules/${VERSION}/build
+	ln -s ../../../usr/src/linux-odroidc-${VERSION}			\
+		${PKG}/lib/modules/${VERSION}/source
+
+	cp arch/arm/boot/Image ${PKG}/boot/kernel.img
+}

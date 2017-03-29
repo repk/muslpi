@@ -1,0 +1,23 @@
+# Description: Linux kernel for Hardkernel Odroidc1
+# URL: https://kernel.org
+# Maintainer: Remi Pommarel, repk at triplefau dot lt
+
+
+NAME=linux-odroidc1-headers
+VERSION=3.10.y
+
+
+DEPENDS=""
+SOURCES="https://github.com/hardkernel/linux/archive/odroidc-${VERSION}.tar.gz"
+
+
+pkgmain() {
+	cd linux-odroidc-${VERSION}
+
+	make ARCH=arm mrproper
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- odroidc_defconfig
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}- headers_check
+	make ARCH=arm CROSS_COMPILE=${CLFS_TARGET}-			\
+		INSTALL_HDR_PATH=${PKG}/usr headers_install
+}
+

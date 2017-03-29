@@ -3,8 +3,8 @@ PKGLIST="core/fhs		\
 	 core/pass-files	\
 	 core/gmp		\
 	 core/mpfr		\
-	 core/ppl		\
-	 core/cloog-ppl		\
+	 core/isl		\
+	 core/cloog		\
 	 core/mpc		\
 	 core/zlib		\
 	 core/binutils		\

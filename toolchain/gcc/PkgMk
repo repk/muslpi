@@ -4,13 +4,13 @@
 
 
 NAME=gcc
-VERSION=5.2.0
+VERSION=6.3.0
 HOST_PKG=1
 
 
 DEPENDS="gcc-static musl"
 SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
-PATCHES="gcc-${VERSION}-musl.diff gcc-libiberty-path.patch"
+PATCHES="gcc-libiberty-path.patch"
 
 
 pkgmain() {
@@ -53,7 +53,7 @@ pkgmain() {
 		--with-mpfr=${TOOLCHAIN_DIR}				\
 		--with-gmp=${TOOLCHAIN_DIR}				\
 		--with-mpc=${TOOLCHAIN_DIR}				\
-		--with-ppl=${TOOLCHAIN_DIR}				\
+		--with-cloog=${TOOLCHAIN_DIR}				\
 		${GCC_CONF}
 
 	make -j${NR_JOBS} AS_FOR_TARGET="${CLFS_TARGET}-as" LD_FOR_TARGET="${CLFS_TARGET}-ld"

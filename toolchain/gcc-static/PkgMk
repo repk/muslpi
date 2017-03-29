@@ -4,18 +4,17 @@
 
 
 NAME=gcc-static
-VERSION=5.2.0
+VERSION=6.3.0
 HOST_PKG=1
 
 
 DEPENDS="gmp mpfr cloog mpc binutils"
 SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/gcc-${VERSION}/gcc-${VERSION}.tar.gz"
-PATCHES="gcc-${VERSION}-musl.diff"
 
 
 pkgmain() {
 	cd gcc-${VERSION}
-	process_patches
+
 	mkdir build
 	cd build
 

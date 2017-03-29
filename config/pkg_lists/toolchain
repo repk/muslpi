@@ -1,8 +1,8 @@
 PKGLIST="kernels/${KERNEL}-headers	\
 	 toolchain/gmp			\
 	 toolchain/mpfr			\
-	 toolchain/ppl			\
-	 toolchain/cloog-ppl		\
+	 toolchain/isl			\
+	 toolchain/cloog		\
 	 toolchain/mpc			\
 	 toolchain/binutils		\
 	 toolchain/gcc-static		\

@@ -4,12 +4,12 @@
 
 
 NAME=gcc
-VERSION=5.2.0
+VERSION=6.3.0
 
 
 DEPENDS="mpfr gmp mpc ppl cloog-ppl"
 SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
-PATCHES="gcc-sdt.patch gcc-${VERSION}-musl.diff"
+PATCHES="gcc-sdt.patch"
 
 
 pkgmain() {
@@ -67,5 +67,5 @@ pkgmain() {
 	ln -sfv ../usr/bin/cpp ${PKG}/lib/cpp
 	ln -sfv gcc ${PKG}/usr/bin/cc
 	mv ${PKG}/usr/lib/libgcc_s.so.1 ${PKG}/lib/
-	ln -sfv /lib/libgcc_s.so.1 ${PKG}/usr/lib/libgcc_s.so.1
+	ln -sfv ../../lib/libgcc_s.so.1 ${PKG}/usr/lib/libgcc_s.so.1
 }

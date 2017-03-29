@@ -5,9 +5,9 @@ drwxr-xr-x lib/
 -rw-r--r-- lib/libgmp.a
 lrwxrwxrwx lib/libgmp.so
 lrwxrwxrwx lib/libgmp.so.10
--rwxr-xr-x lib/libgmp.so.10.0.5
+-rwxr-xr-x lib/libgmp.so.10.3.0
 -rw-r--r-- lib/libgmpxx.a
 lrwxrwxrwx lib/libgmpxx.so
 lrwxrwxrwx lib/libgmpxx.so.4
--rwxr-xr-x lib/libgmpxx.so.4.2.5
+-rwxr-xr-x lib/libgmpxx.so.4.5.0
 drwxr-xr-x share/

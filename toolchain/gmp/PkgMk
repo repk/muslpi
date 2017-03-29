@@ -4,7 +4,7 @@
 
 
 NAME=gmp
-VERSION=5.0.5
+VERSION=6.1.0
 HOST_PKG=1
 
 

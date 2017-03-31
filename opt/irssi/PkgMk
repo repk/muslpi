@@ -4,15 +4,15 @@
 
 
 NAME=irssi
-VERSION=0.8.16
+VERSION=1.0.2
 
 
 DEPENDS="libffi glib ncurses"
-SOURCES="http://www.irssi.org/files/irssi-0.8.16-rc1.tar.gz"
+SOURCES="https://github.com/${NAME}/${NAME}/releases/download/${VERSION}/${NAME}-${VERSION}.tar.gz"
 
 
 pkgmain() {
-	cd ${NAME}-$VERSION-rc1
+	cd ${NAME}-$VERSION
 
 	./configure --prefix=/usr --build=${CLFS_HOST}		\
 		--host=${CLFS_TARGET} --prefix=/usr

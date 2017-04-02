@@ -25,5 +25,7 @@ pkgmain() {
 	install -v -m644 wpa_cli ${PKG}/usr/sbin/
 	install -v -m644 wpa_supplicant ${PKG}/usr/sbin/
 	install -v -m644 doc/docbook/wpa_supplicant.conf.5 ${PKG}/usr/share/man/man5/
-	install -v -m644 doc/docbook/wpa_{cli,passphrase,supplicant}.8 ${PKG}/usr/share/man/man8/
+	install -v -m644 doc/docbook/wpa_cli.8 ${PKG}/usr/share/man/man8/
+	install -v -m644 doc/docbook/wpa_passphrase.8 ${PKG}/usr/share/man/man8/
+	install -v -m644 doc/docbook/wpa_supplicant.8 ${PKG}/usr/share/man/man8/
 }

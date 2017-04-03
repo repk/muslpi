@@ -28,12 +28,12 @@ drwxr-xr-x usr/share/gdb/syscalls/
 -rw-r--r-- usr/share/gdb/syscalls/mips-n32-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/mips-n64-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/mips-o32-linux.xml
--rw-r--r-- usr/share/gdb/syscalls/ppc64-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/ppc-linux.xml
+-rw-r--r-- usr/share/gdb/syscalls/ppc64-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/s390-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/s390x-linux.xml
--rw-r--r-- usr/share/gdb/syscalls/sparc64-linux.xml
 -rw-r--r-- usr/share/gdb/syscalls/sparc-linux.xml
+-rw-r--r-- usr/share/gdb/syscalls/sparc64-linux.xml
 drwxr-xr-x usr/share/gdb/system-gdbinit/
 -rw-r--r-- usr/share/gdb/system-gdbinit/elinos.py
 -rw-r--r-- usr/share/gdb/system-gdbinit/wrs-linux.py

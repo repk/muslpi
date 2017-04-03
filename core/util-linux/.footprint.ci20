@@ -303,9 +303,9 @@ drwxr-xr-x usr/share/man/man8/
 -rw-r--r-- usr/share/man/man8/losetup.8
 -rw-r--r-- usr/share/man/man8/lsblk.8
 -rw-r--r-- usr/share/man/man8/lslocks.8
+-rw-r--r-- usr/share/man/man8/mips.8
 -rw-r--r-- usr/share/man/man8/mips32.8
 -rw-r--r-- usr/share/man/man8/mips64.8
--rw-r--r-- usr/share/man/man8/mips.8
 -rw-r--r-- usr/share/man/man8/mkfs.8
 -rw-r--r-- usr/share/man/man8/mkfs.bfs.8
 -rw-r--r-- usr/share/man/man8/mkfs.cramfs.8

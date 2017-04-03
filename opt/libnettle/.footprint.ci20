@@ -48,10 +48,10 @@ drwxr-xr-x usr/include/nettle/
 -rw-r--r-- usr/include/nettle/salsa20.h
 -rw-r--r-- usr/include/nettle/serpent.h
 -rw-r--r-- usr/include/nettle/sexp.h
+-rw-r--r-- usr/include/nettle/sha.h
 -rw-r--r-- usr/include/nettle/sha1.h
 -rw-r--r-- usr/include/nettle/sha2.h
 -rw-r--r-- usr/include/nettle/sha3.h
--rw-r--r-- usr/include/nettle/sha.h
 -rw-r--r-- usr/include/nettle/twofish.h
 -rw-r--r-- usr/include/nettle/umac.h
 -rw-r--r-- usr/include/nettle/yarrow.h

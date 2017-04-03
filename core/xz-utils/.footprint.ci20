@@ -25,6 +25,7 @@ lrwxrwxrwx usr/bin/xzfgrep
 -rwxr-xr-x usr/bin/xzless
 -rwxr-xr-x usr/bin/xzmore
 drwxr-xr-x usr/include/
+-rw-r--r-- usr/include/lzma.h
 drwxr-xr-x usr/include/lzma/
 -rw-r--r-- usr/include/lzma/base.h
 -rw-r--r-- usr/include/lzma/bcj.h
@@ -33,7 +34,6 @@ drwxr-xr-x usr/include/lzma/
 -rw-r--r-- usr/include/lzma/container.h
 -rw-r--r-- usr/include/lzma/delta.h
 -rw-r--r-- usr/include/lzma/filter.h
--rw-r--r-- usr/include/lzma.h
 -rw-r--r-- usr/include/lzma/hardware.h
 -rw-r--r-- usr/include/lzma/index.h
 -rw-r--r-- usr/include/lzma/index_hash.h

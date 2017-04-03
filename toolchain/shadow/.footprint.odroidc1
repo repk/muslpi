@@ -118,11 +118,11 @@ drwxr-xr-x share/locale/pl/
 drwxr-xr-x share/locale/pl/LC_MESSAGES/
 -rw-r--r-- share/locale/pl/LC_MESSAGES/shadow.mo
 drwxr-xr-x share/locale/pt/
+drwxr-xr-x share/locale/pt/LC_MESSAGES/
+-rw-r--r-- share/locale/pt/LC_MESSAGES/shadow.mo
 drwxr-xr-x share/locale/pt_BR/
 drwxr-xr-x share/locale/pt_BR/LC_MESSAGES/
 -rw-r--r-- share/locale/pt_BR/LC_MESSAGES/shadow.mo
-drwxr-xr-x share/locale/pt/LC_MESSAGES/
--rw-r--r-- share/locale/pt/LC_MESSAGES/shadow.mo
 drwxr-xr-x share/locale/ro/
 drwxr-xr-x share/locale/ro/LC_MESSAGES/
 -rw-r--r-- share/locale/ro/LC_MESSAGES/shadow.mo

@@ -6,10 +6,11 @@ drwxr-xr-x usr/bin/
 drwxr-xr-x usr/conf/
 -rw-r--r-- usr/conf/monkey.conf
 -rw-r--r-- usr/conf/monkey.mime
+-rw-r--r-- usr/conf/plugins.load
 drwxr-xr-x usr/conf/plugins/
 drwxr-xr-x usr/conf/plugins/auth/
--rw-r--r-- usr/conf/plugins/auth/monkey.users
 -rw-r--r-- usr/conf/plugins/auth/README
+-rw-r--r-- usr/conf/plugins/auth/monkey.users
 drwxr-xr-x usr/conf/plugins/cgi/
 -rw-r--r-- usr/conf/plugins/cgi/cgi.conf
 drwxr-xr-x usr/conf/plugins/cheetah/
@@ -23,7 +24,6 @@ drwxr-xr-x usr/conf/plugins/dirlisting/themes/guineo/
 -rw-r--r-- usr/conf/plugins/dirlisting/themes/guineo/header.theme
 drwxr-xr-x usr/conf/plugins/fastcgi/
 -rw-r--r-- usr/conf/plugins/fastcgi/fastcgi.conf
--rw-r--r-- usr/conf/plugins.load
 drwxr-xr-x usr/conf/plugins/logger/
 -rw-r--r-- usr/conf/plugins/logger/logger.conf
 drwxr-xr-x usr/conf/plugins/mandril/
@@ -42,6 +42,7 @@ drwxr-xr-x usr/htdocs/imgs/
 -rw-r--r-- usr/htdocs/index.html
 drwxr-xr-x usr/htdocs/php/
 drwxr-xr-x usr/include/
+-rw-r--r-- usr/include/MKPlugin.h
 -rw-r--r-- usr/include/mk_cache.h
 -rw-r--r-- usr/include/mk_clock.h
 -rw-r--r-- usr/include/mk_config.h
@@ -64,9 +65,8 @@ drwxr-xr-x usr/include/
 -rw-r--r-- usr/include/mk_method.h
 -rw-r--r-- usr/include/mk_mimetype.h
 -rw-r--r-- usr/include/mk_plugin.h
--rw-r--r-- usr/include/MKPlugin.h
--rw-r--r-- usr/include/mk_rbtree_augmented.h
 -rw-r--r-- usr/include/mk_rbtree.h
+-rw-r--r-- usr/include/mk_rbtree_augmented.h
 -rw-r--r-- usr/include/mk_request.h
 -rw-r--r-- usr/include/mk_scheduler.h
 -rw-r--r-- usr/include/mk_server.h

@@ -80,11 +80,11 @@ drwxr-xr-x usr/share/locale/pl/
 drwxr-xr-x usr/share/locale/pl/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/pl/LC_MESSAGES/tar.mo
 drwxr-xr-x usr/share/locale/pt/
+drwxr-xr-x usr/share/locale/pt/LC_MESSAGES/
+-rw-r--r-- usr/share/locale/pt/LC_MESSAGES/tar.mo
 drwxr-xr-x usr/share/locale/pt_BR/
 drwxr-xr-x usr/share/locale/pt_BR/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/pt_BR/LC_MESSAGES/tar.mo
-drwxr-xr-x usr/share/locale/pt/LC_MESSAGES/
--rw-r--r-- usr/share/locale/pt/LC_MESSAGES/tar.mo
 drwxr-xr-x usr/share/locale/ro/
 drwxr-xr-x usr/share/locale/ro/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/ro/LC_MESSAGES/tar.mo

@@ -30,10 +30,10 @@ drwxr-xr-x usr/share/readline/
 -rw-r--r-- usr/share/readline/fileman.c
 -rw-r--r-- usr/share/readline/histexamp.c
 -rw-r--r-- usr/share/readline/manexamp.c
+-rw-r--r-- usr/share/readline/rl-fgets.c
 -rw-r--r-- usr/share/readline/rl.c
 -rw-r--r-- usr/share/readline/rlcat.c
 -rw-r--r-- usr/share/readline/rlevent.c
--rw-r--r-- usr/share/readline/rl-fgets.c
 -rw-r--r-- usr/share/readline/rlptytest.c
 -rw-r--r-- usr/share/readline/rltest.c
 -rw-r--r-- usr/share/readline/rlversion.c

@@ -4,8 +4,8 @@ drwxr-xr-x usr/bin/
 -rwxr-xr-x usr/bin/curl-config
 drwxr-xr-x usr/include/
 drwxr-xr-x usr/include/curl/
--rw-r--r-- usr/include/curl/curlbuild.h
 -rw-r--r-- usr/include/curl/curl.h
+-rw-r--r-- usr/include/curl/curlbuild.h
 -rw-r--r-- usr/include/curl/curlrules.h
 -rw-r--r-- usr/include/curl/curlver.h
 -rw-r--r-- usr/include/curl/easy.h
@@ -25,8 +25,8 @@ drwxr-xr-x usr/share/aclocal/
 -rw-r--r-- usr/share/aclocal/libcurl.m4
 drwxr-xr-x usr/share/man/
 drwxr-xr-x usr/share/man/man1/
--rw-r--r-- usr/share/man/man1/curl.1
 -rw-r--r-- usr/share/man/man1/curl-config.1
+-rw-r--r-- usr/share/man/man1/curl.1
 drwxr-xr-x usr/share/man/man3/
 -rw-r--r-- usr/share/man/man3/curl_easy_cleanup.3
 -rw-r--r-- usr/share/man/man3/curl_easy_duphandle.3
@@ -76,9 +76,9 @@ drwxr-xr-x usr/share/man/man3/
 -rw-r--r-- usr/share/man/man3/curl_unescape.3
 -rw-r--r-- usr/share/man/man3/curl_version.3
 -rw-r--r-- usr/share/man/man3/curl_version_info.3
--rw-r--r-- usr/share/man/man3/libcurl.3
 -rw-r--r-- usr/share/man/man3/libcurl-easy.3
 -rw-r--r-- usr/share/man/man3/libcurl-errors.3
 -rw-r--r-- usr/share/man/man3/libcurl-multi.3
 -rw-r--r-- usr/share/man/man3/libcurl-share.3
 -rw-r--r-- usr/share/man/man3/libcurl-tutorial.3
+-rw-r--r-- usr/share/man/man3/libcurl.3

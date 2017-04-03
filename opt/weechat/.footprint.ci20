@@ -82,11 +82,11 @@ drwxr-xr-x usr/share/locale/pl/
 drwxr-xr-x usr/share/locale/pl/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/pl/LC_MESSAGES/weechat.mo
 drwxr-xr-x usr/share/locale/pt/
+drwxr-xr-x usr/share/locale/pt/LC_MESSAGES/
+-rw-r--r-- usr/share/locale/pt/LC_MESSAGES/weechat.mo
 drwxr-xr-x usr/share/locale/pt_BR/
 drwxr-xr-x usr/share/locale/pt_BR/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/pt_BR/LC_MESSAGES/weechat.mo
-drwxr-xr-x usr/share/locale/pt/LC_MESSAGES/
--rw-r--r-- usr/share/locale/pt/LC_MESSAGES/weechat.mo
 drwxr-xr-x usr/share/locale/ru/
 drwxr-xr-x usr/share/locale/ru/LC_MESSAGES/
 -rw-r--r-- usr/share/locale/ru/LC_MESSAGES/weechat.mo

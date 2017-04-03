@@ -16,9 +16,9 @@ drwxr-xr-x usr/include/cloog/isl/
 -rw-r--r-- usr/include/cloog/isl/constraintset.h
 -rw-r--r-- usr/include/cloog/isl/domain.h
 -rw-r--r-- usr/include/cloog/loop.h
+-rw-r--r-- usr/include/cloog/matrix.h
 drwxr-xr-x usr/include/cloog/matrix/
 -rw-r--r-- usr/include/cloog/matrix/constraintset.h
--rw-r--r-- usr/include/cloog/matrix.h
 -rw-r--r-- usr/include/cloog/names.h
 -rw-r--r-- usr/include/cloog/options.h
 -rw-r--r-- usr/include/cloog/pprint.h

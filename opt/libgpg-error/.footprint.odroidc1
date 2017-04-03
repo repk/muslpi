@@ -14,10 +14,10 @@ drwxr-xr-x usr/share/aclocal/
 drwxr-xr-x usr/share/common-lisp/
 drwxr-xr-x usr/share/common-lisp/source/
 drwxr-xr-x usr/share/common-lisp/source/gpg-error/
--rw-r--r-- usr/share/common-lisp/source/gpg-error/gpg-error.asd
 -rw-r--r-- usr/share/common-lisp/source/gpg-error/gpg-error-codes.lisp
--rw-r--r-- usr/share/common-lisp/source/gpg-error/gpg-error.lisp
 -rw-r--r-- usr/share/common-lisp/source/gpg-error/gpg-error-package.lisp
+-rw-r--r-- usr/share/common-lisp/source/gpg-error/gpg-error.asd
+-rw-r--r-- usr/share/common-lisp/source/gpg-error/gpg-error.lisp
 drwxr-xr-x usr/share/locale/
 drwxr-xr-x usr/share/locale/cs/
 drwxr-xr-x usr/share/locale/cs/LC_MESSAGES/

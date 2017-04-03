@@ -43,7 +43,6 @@ drwxr-xr-x usr/share/man/man8/
 -rw-r--r-- usr/share/man/man8/arpd.8
 -rw-r--r-- usr/share/man/man8/bridge.8
 -rw-r--r-- usr/share/man/man8/ctstat.8
--rw-r--r-- usr/share/man/man8/ip.8
 -rw-r--r-- usr/share/man/man8/ip-address.8
 -rw-r--r-- usr/share/man/man8/ip-addrlabel.8
 -rw-r--r-- usr/share/man/man8/ip-l2tp.8
@@ -61,6 +60,7 @@ drwxr-xr-x usr/share/man/man8/
 -rw-r--r-- usr/share/man/man8/ip-token.8
 -rw-r--r-- usr/share/man/man8/ip-tunnel.8
 -rw-r--r-- usr/share/man/man8/ip-xfrm.8
+-rw-r--r-- usr/share/man/man8/ip.8
 -rw-r--r-- usr/share/man/man8/lnstat.8
 -rw-r--r-- usr/share/man/man8/nstat.8
 -rw-r--r-- usr/share/man/man8/routef.8
@@ -69,10 +69,9 @@ drwxr-xr-x usr/share/man/man8/
 -rw-r--r-- usr/share/man/man8/rtmon.8
 -rw-r--r-- usr/share/man/man8/rtstat.8
 -rw-r--r-- usr/share/man/man8/ss.8
--rw-r--r-- usr/share/man/man8/tc.8
 -rw-r--r-- usr/share/man/man8/tc-bfifo.8
--rw-r--r-- usr/share/man/man8/tc-cbq.8
 -rw-r--r-- usr/share/man/man8/tc-cbq-details.8
+-rw-r--r-- usr/share/man/man8/tc-cbq.8
 -rw-r--r-- usr/share/man/man8/tc-choke.8
 -rw-r--r-- usr/share/man/man8/tc-codel.8
 -rw-r--r-- usr/share/man/man8/tc-drr.8
@@ -89,6 +88,7 @@ drwxr-xr-x usr/share/man/man8/
 -rw-r--r-- usr/share/man/man8/tc-sfq.8
 -rw-r--r-- usr/share/man/man8/tc-stab.8
 -rw-r--r-- usr/share/man/man8/tc-tbf.8
+-rw-r--r-- usr/share/man/man8/tc.8
 drwxr-xr-x var/
 drwxr-xr-x var/lib/
 drwxr-xr-x var/lib/arpd/

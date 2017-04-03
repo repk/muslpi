@@ -2,8 +2,8 @@ drwxr-xr-x usr/
 drwxr-xr-x usr/bin/
 -rwxr-xr-x usr/bin/xmlwf
 drwxr-xr-x usr/include/
--rw-r--r-- usr/include/expat_external.h
 -rw-r--r-- usr/include/expat.h
+-rw-r--r-- usr/include/expat_external.h
 drwxr-xr-x usr/lib/
 -rw-r--r-- usr/lib/libexpat.a
 lrwxrwxrwx usr/lib/libexpat.so

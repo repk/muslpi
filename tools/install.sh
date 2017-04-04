@@ -33,7 +33,7 @@ install_pkg() {
 	_OLD=${PWD}
 
 	cd ${_INSTALL_DIR}
-	bsdtar -pxjf ${PKG_ROOT}/${PKG_FILE}
+	tar -pxjf ${PKG_ROOT}/${PKG_FILE}
 	cd ${_OLD}
 }
 

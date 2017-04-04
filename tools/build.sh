@@ -279,7 +279,8 @@ makepkg() {
 	fi
 
 
-	bsdtar -cjf ${PKG_TAR} *
+	find * -print0 | LC_ALL=C sort -z | \
+		tar --no-recursion --null -T - -cjf ${PKG_TAR}
 	if [ $? -ne 0 ]; then
 		error "Failed to make package"
 	fi

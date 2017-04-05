@@ -148,10 +148,8 @@ drwxr-xr-x usr/include/linux/android/
 -rw-r--r-- usr/include/linux/blktrace_api.h
 -rw-r--r-- usr/include/linux/bpf.h
 -rw-r--r-- usr/include/linux/bpf_common.h
--rw-r--r-- usr/include/linux/bpf_perf_event.h
 -rw-r--r-- usr/include/linux/bpqether.h
 -rw-r--r-- usr/include/linux/bsg.h
--rw-r--r-- usr/include/linux/bt-bmc.h
 -rw-r--r-- usr/include/linux/btrfs.h
 drwxr-xr-x usr/include/linux/byteorder/
 -rw-r--r-- usr/include/linux/byteorder/..install.cmd
@@ -426,7 +424,6 @@ drwxr-xr-x usr/include/linux/netfilter/ipset/
 -rw-r--r-- usr/include/linux/netfilter/nf_conntrack_sctp.h
 -rw-r--r-- usr/include/linux/netfilter/nf_conntrack_tcp.h
 -rw-r--r-- usr/include/linux/netfilter/nf_conntrack_tuple_common.h
--rw-r--r-- usr/include/linux/netfilter/nf_log.h
 -rw-r--r-- usr/include/linux/netfilter/nf_nat.h
 -rw-r--r-- usr/include/linux/netfilter/nf_tables.h
 -rw-r--r-- usr/include/linux/netfilter/nf_tables_compat.h
@@ -611,8 +608,6 @@ drwxr-xr-x usr/include/linux/nfsd/
 -rw-r--r-- usr/include/linux/pktcdvd.h
 -rw-r--r-- usr/include/linux/pmu.h
 -rw-r--r-- usr/include/linux/poll.h
--rw-r--r-- usr/include/linux/posix_acl.h
--rw-r--r-- usr/include/linux/posix_acl_xattr.h
 -rw-r--r-- usr/include/linux/posix_types.h
 -rw-r--r-- usr/include/linux/ppdev.h
 -rw-r--r-- usr/include/linux/ppp-comp.h
@@ -706,8 +701,6 @@ drwxr-xr-x usr/include/linux/tc_act/
 -rw-r--r-- usr/include/linux/tc_act/tc_nat.h
 -rw-r--r-- usr/include/linux/tc_act/tc_pedit.h
 -rw-r--r-- usr/include/linux/tc_act/tc_skbedit.h
--rw-r--r-- usr/include/linux/tc_act/tc_skbmod.h
--rw-r--r-- usr/include/linux/tc_act/tc_tunnel_key.h
 -rw-r--r-- usr/include/linux/tc_act/tc_vlan.h
 drwxr-xr-x usr/include/linux/tc_ematch/
 -rw-r--r-- usr/include/linux/tc_ematch/..install.cmd
@@ -820,8 +813,6 @@ drwxr-xr-x usr/include/mtd/
 drwxr-xr-x usr/include/rdma/
 -rw-r--r-- usr/include/rdma/..install.cmd
 -rw-r--r-- usr/include/rdma/.install
--rw-r--r-- usr/include/rdma/cxgb3-abi.h
--rw-r--r-- usr/include/rdma/cxgb4-abi.h
 drwxr-xr-x usr/include/rdma/hfi/
 -rw-r--r-- usr/include/rdma/hfi/..install.cmd
 -rw-r--r-- usr/include/rdma/hfi/.install
@@ -830,11 +821,6 @@ drwxr-xr-x usr/include/rdma/hfi/
 -rw-r--r-- usr/include/rdma/ib_user_mad.h
 -rw-r--r-- usr/include/rdma/ib_user_sa.h
 -rw-r--r-- usr/include/rdma/ib_user_verbs.h
--rw-r--r-- usr/include/rdma/mlx4-abi.h
--rw-r--r-- usr/include/rdma/mlx5-abi.h
--rw-r--r-- usr/include/rdma/mthca-abi.h
--rw-r--r-- usr/include/rdma/nes-abi.h
--rw-r--r-- usr/include/rdma/ocrdma-abi.h
 -rw-r--r-- usr/include/rdma/rdma_netlink.h
 -rw-r--r-- usr/include/rdma/rdma_user_cm.h
 -rw-r--r-- usr/include/rdma/rdma_user_rxe.h
@@ -867,7 +853,6 @@ drwxr-xr-x usr/include/sound/
 -rw-r--r-- usr/include/sound/hdspm.h
 -rw-r--r-- usr/include/sound/sb16_csp.h
 -rw-r--r-- usr/include/sound/sfnt_info.h
--rw-r--r-- usr/include/sound/snd_sst_tokens.h
 -rw-r--r-- usr/include/sound/tlv.h
 -rw-r--r-- usr/include/sound/usb_stream.h
 drwxr-xr-x usr/include/uapi/

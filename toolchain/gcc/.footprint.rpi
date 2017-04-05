@@ -1026,10 +1026,8 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/linux/android/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/blktrace_api.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/bpf.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/bpf_common.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/bpf_perf_event.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/bpqether.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/bsg.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/bt-bmc.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/btrfs.h
 drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/linux/byteorder/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/byteorder/..install.cmd
@@ -1304,7 +1302,6 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/linux/netfilter/ipset/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/netfilter/nf_conntrack_sctp.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/netfilter/nf_conntrack_tcp.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/netfilter/nf_conntrack_tuple_common.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/netfilter/nf_log.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/netfilter/nf_nat.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/netfilter/nf_tables.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/netfilter/nf_tables_compat.h
@@ -1489,8 +1486,6 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/linux/nfsd/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/pktcdvd.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/pmu.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/poll.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/posix_acl.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/posix_acl_xattr.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/posix_types.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/ppdev.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/ppp-comp.h
@@ -1584,8 +1579,6 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/linux/tc_act/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/tc_act/tc_nat.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/tc_act/tc_pedit.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/tc_act/tc_skbedit.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/tc_act/tc_skbmod.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/tc_act/tc_tunnel_key.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/tc_act/tc_vlan.h
 drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/linux/tc_ematch/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/linux/tc_ematch/..install.cmd
@@ -1731,8 +1724,6 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/netpacket/
 drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/rdma/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/..install.cmd
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/.install
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/cxgb3-abi.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/cxgb4-abi.h
 drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/rdma/hfi/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/hfi/..install.cmd
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/hfi/.install
@@ -1741,11 +1732,6 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/rdma/hfi/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/ib_user_mad.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/ib_user_sa.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/ib_user_verbs.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/mlx4-abi.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/mlx5-abi.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/mthca-abi.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/nes-abi.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/ocrdma-abi.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/rdma_netlink.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/rdma_user_cm.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/rdma/rdma_user_rxe.h
@@ -1789,7 +1775,6 @@ drwxr-xr-x arm-repkhardfp-linux-musleabi/sys-include/sound/
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sound/hdspm.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sound/sb16_csp.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sound/sfnt_info.h
--rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sound/snd_sst_tokens.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sound/tlv.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/sound/usb_stream.h
 -rw-r--r-- arm-repkhardfp-linux-musleabi/sys-include/spawn.h

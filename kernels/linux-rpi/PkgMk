@@ -4,7 +4,7 @@
 
 
 NAME=linux-rpi
-VERSION=4.9.y
+VERSION=4.8.y
 
 
 DEPENDS=""

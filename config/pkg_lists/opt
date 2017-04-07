@@ -23,6 +23,7 @@ PKGLIST="opt/strace		\
 	 opt/weechat		\
 	 opt/expat		\
 	 opt/git		\
+	 opt/go-host		\
 	 opt/go			\
 	 opt/nginx		\
 	 opt/net"

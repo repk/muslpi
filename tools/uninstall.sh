@@ -86,7 +86,7 @@ remove_cross() {
 		exit 0
 	fi
 	rmdir ${_LOCK}
-	exit -1
+	exit 255
 }
 
 
@@ -109,7 +109,7 @@ remove_host() {
 		exit 0
 	fi
 	rmdir ${_LOCK}
-	exit -1
+	exit 255
 }
 
 

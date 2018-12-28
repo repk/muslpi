@@ -10,7 +10,7 @@ HOST_PKG=1
 
 DEPENDS="gcc-static musl"
 SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
-PATCHES="gcc-libiberty-path.patch"
+PATCHES="gcc-libiberty-path.patch gcc-ubsan.patch"
 
 
 pkgmain() {

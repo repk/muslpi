@@ -10,11 +10,13 @@ HOST_PKG=1
 
 DEPENDS="gmp mpfr cloog mpc binutils"
 SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/gcc-${VERSION}/gcc-${VERSION}.tar.gz"
+PATCHES="gcc-ubsan.patch"
 
 
 pkgmain() {
 	cd gcc-${VERSION}
 
+	process_patches
 	mkdir build
 	cd build
 

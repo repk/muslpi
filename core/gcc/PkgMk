@@ -9,7 +9,7 @@ VERSION=6.3.0
 
 DEPENDS="mpfr gmp mpc ppl cloog-ppl"
 SOURCES="ftp://ftp.uvsq.fr/pub/gcc/releases/${NAME}-${VERSION}/${NAME}-${VERSION}.tar.gz"
-PATCHES="gcc-sdt.patch"
+PATCHES="gcc-sdt.patch gcc-ubsan.patch"
 
 
 pkgmain() {

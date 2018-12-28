@@ -16,7 +16,7 @@ pkgmain() {
 	cd ${NAME}-$VERSION
 
 	./configure --prefix=/usr --build=${CLFS_HOST}			\
-		--host=${CLFS_TARGET}
+		--host=${CLFS_TARGET} --disable-guile
 
 	make -j${NR_JOBS}
 	fix_temporary_libtool_files

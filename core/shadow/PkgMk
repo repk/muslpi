@@ -4,12 +4,11 @@
 
 
 NAME=shadow
-VERSION=4.1.4.2
+VERSION=4.6
 
 
 DEPENDS=""
-SOURCES="http://pkg-shadow.alioth.debian.org/releases/${NAME}-${VERSION}.tar.bz2"
-PATCHES="shadow.patch"
+SOURCES="https://github.com/shadow-maint/${NAME}/releases/download/${VERSION}/${NAME}-${VERSION}.tar.xz"
 FILES="config.cache"
 
 
@@ -31,7 +30,7 @@ pkgmain() {
 		-e 's@/var/spool/mail@/var/mail@' login.defs.orig >	\
 		${PKG}/etc/login.defs
 
-    #Chande default group tu users(id=100)
+	#Chande default group tu users(id=100)
 	cp ${PKG}/etc/default/useradd useradd
 	sed 's@GROUP=1000@GROUP=100@' useradd > ${PKG}/etc/default/useradd
 

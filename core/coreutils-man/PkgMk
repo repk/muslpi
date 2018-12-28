@@ -8,7 +8,7 @@ VERSION=8.25
 
 
 DEPENDS="coreutils"
-SOURCES="http://gentoo.osuosl.org/distfiles/coreutils-${VERSION}-man.tar.xz"
+SOURCES="https://dev.gentoo.org/~vapier/dist/coreutils-${VERSION}-man.tar.xz"
 
 
 pkgmain() {

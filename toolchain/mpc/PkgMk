@@ -9,7 +9,7 @@ HOST_PKG=1
 
 
 DEPENDS="gmp mpfr"
-SOURCES="http://www.multiprecision.org/${NAME}/download/${NAME}-${VERSION}.tar.gz"
+SOURCES="https://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
 
 
 pkgmain() {

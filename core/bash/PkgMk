@@ -8,7 +8,7 @@ VERSION=4.3
 
 
 DEPENDS="readline"
-SOURCES="ftp://ftp.cwru.edu/pub/${NAME}/${NAME}-${VERSION}.tar.gz"
+SOURCES="https://ftp.gnu.org/gnu/${NAME}/${NAME}-${VERSION}.tar.gz"
 PATCHES="bash.patch"
 FILES="config.cache profile"
 

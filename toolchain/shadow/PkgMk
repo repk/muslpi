@@ -4,12 +4,12 @@
 
 
 NAME=shadow
-VERSION=4.2.1
+VERSION=4.6
 HOST_PKG=1
 
 
 DEPENDS=""
-SOURCES="http://pkg-shadow.alioth.debian.org/releases/${NAME}-${VERSION}.tar.xz"
+SOURCES="https://github.com/shadow-maint/${NAME}/releases/download/${VERSION}/${NAME}-${VERSION}.tar.xz"
 PATCHES="shadow.patch"
 FILES="config.cache"
 

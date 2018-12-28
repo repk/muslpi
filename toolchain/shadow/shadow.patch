@@ -1,7 +1,7 @@
 diff -rup a/configure b/configure
---- a/configure	2014-05-09 18:49:42.000000000 +0200
-+++ b/configure	2016-02-28 10:41:59.000000000 +0100
-@@ -783,6 +783,7 @@ includedir
+--- a/configure	2018-04-29 18:45:48.000000000 +0200
++++ b/configure	2018-12-28 14:43:39.206031050 +0100
+@@ -788,6 +788,7 @@ runstatedir
  localstatedir
  sharedstatedir
  sysconfdir
@@ -9,15 +9,15 @@ diff -rup a/configure b/configure
  datadir
  datarootdir
  libexecdir
-@@ -882,6 +883,7 @@ libexecdir='${exec_prefix}/libexec'
+@@ -889,6 +890,7 @@ libexecdir='${exec_prefix}/libexec'
  datarootdir='${prefix}/share'
  datadir='${datarootdir}'
  sysconfdir='${prefix}/etc'
 +sysroot='/'
  sharedstatedir='${prefix}/com'
  localstatedir='${prefix}/var'
- includedir='${prefix}/include'
-@@ -1170,6 +1172,11 @@ do
+ runstatedir='${localstatedir}/run'
+@@ -1187,6 +1189,11 @@ do
    | --syscon=* | --sysco=* | --sysc=* | --sys=* | --sy=*)
      sysconfdir=$ac_optarg ;;
  
@@ -29,27 +29,55 @@ diff -rup a/configure b/configure
    -target | --target | --targe | --targ | --tar | --ta | --t)
      ac_prev=target_alias ;;
    -target=* | --target=* | --targe=* | --targ=* | --tar=* | --ta=* | --t=*)
-@@ -1271,7 +1278,7 @@ fi
+@@ -1288,7 +1295,7 @@ fi
  
  # Check all directory arguments for consistency.
  for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 -		datadir sysconfdir sharedstatedir localstatedir includedir \
 +		datadir sysconfdir sysroot sharedstatedir localstatedir includedir \
  		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
- 		libdir localedir mandir
+ 		libdir localedir mandir runstatedir
  do
-@@ -1424,6 +1431,7 @@ Fine tuning of the installation director
+@@ -1441,6 +1448,7 @@ Fine tuning of the installation director
    --sbindir=DIR           system admin executables [EPREFIX/sbin]
    --libexecdir=DIR        program executables [EPREFIX/libexec]
    --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
 +  --sysroot=DIR           sysroot []
    --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
    --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
-   --libdir=DIR            object code libraries [EPREFIX/lib]
+   --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
+diff -rup a/lib/Makefile.am b/lib/Makefile.am
+--- a/lib/Makefile.am	2018-04-29 18:42:37.000000000 +0200
++++ b/lib/Makefile.am	2018-12-28 14:43:39.197031066 +0100
+@@ -2,6 +2,7 @@
+ AUTOMAKE_OPTIONS = 1.0 foreign
+ 
+ DEFS = 
++AM_CPPFLAGS = -DSYSROOT=\"$(sysroot)\"
+ 
+ noinst_LTLIBRARIES = libshadow.la
+ 
+diff -rup a/lib/Makefile.in b/lib/Makefile.in
+--- a/lib/Makefile.in	2018-04-29 18:45:50.000000000 +0200
++++ b/lib/Makefile.in	2018-12-28 14:43:39.197031066 +0100
+@@ -336,11 +336,13 @@ sbindir = @sbindir@
+ sharedstatedir = @sharedstatedir@
+ srcdir = @srcdir@
+ sysconfdir = @sysconfdir@
++sysroot = @sysroot@
+ target_alias = @target_alias@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ AUTOMAKE_OPTIONS = 1.0 foreign
++AM_CPPFLAGS = -DSYSROOT=\"$(sysroot)\"
+ noinst_LTLIBRARIES = libshadow.la
+ libshadow_la_LDFLAGS = -version-info 0:0:0
+ libshadow_la_SOURCES = commonio.c commonio.h defines.h encrypt.c \
 diff -rup a/lib/commonio.c b/lib/commonio.c
---- a/lib/commonio.c	2014-05-08 10:43:11.000000000 +0200
-+++ b/lib/commonio.c	2016-02-28 10:47:39.000000000 +0100
-@@ -466,8 +466,8 @@ static void dec_lock_count (void)
+--- a/lib/commonio.c	2018-04-29 18:42:37.000000000 +0200
++++ b/lib/commonio.c	2018-12-28 14:43:39.193031074 +0100
+@@ -483,8 +483,8 @@ static void dec_lock_count (void)
  			/* Tell nscd when lock count goes to zero,
  			   if any of the files were changed.  */
  			if (nscd_need_reload) {
@@ -61,8 +89,8 @@ diff -rup a/lib/commonio.c b/lib/commonio.c
  			}
  #ifdef HAVE_LCKPWDF
 diff -rup a/lib/defines.h b/lib/defines.h
---- a/lib/defines.h	2014-03-01 19:59:51.000000000 +0100
-+++ b/lib/defines.h	2016-02-28 10:41:59.000000000 +0100
+--- a/lib/defines.h	2018-04-29 18:42:37.000000000 +0200
++++ b/lib/defines.h	2018-12-28 14:43:39.193031074 +0100
 @@ -299,20 +299,20 @@ char *strchr (), *strrchr (), *strtok ()
  	(strncpy((A), (B), sizeof(A) - 1), (A)[sizeof(A) - 1] = '\0')
  
@@ -89,9 +117,9 @@ diff -rup a/lib/defines.h b/lib/defines.h
  #endif
  
 diff -rup a/lib/getdef.c b/lib/getdef.c
---- a/lib/getdef.c	2014-05-08 10:43:12.000000000 +0200
-+++ b/lib/getdef.c	2016-02-28 10:41:59.000000000 +0100
-@@ -139,7 +139,7 @@ static struct itemdef def_table[] = {
+--- a/lib/getdef.c	2018-04-29 18:42:37.000000000 +0200
++++ b/lib/getdef.c	2018-12-28 14:43:39.193031074 +0100
+@@ -152,7 +152,7 @@ static struct itemdef knowndef_table[] =
  };
  
  #ifndef LOGINDEFS
@@ -99,10 +127,10 @@ diff -rup a/lib/getdef.c b/lib/getdef.c
 +#define LOGINDEFS SYSROOT"/etc/login.defs"
  #endif
  
- static char def_fname[] = LOGINDEFS;	/* login config defs file       */
+ static const char* def_fname = LOGINDEFS;	/* login config defs file       */
 diff -rup a/lib/gshadow_.h b/lib/gshadow_.h
---- a/lib/gshadow_.h	2014-03-01 19:59:51.000000000 +0100
-+++ b/lib/gshadow_.h	2016-02-28 10:41:59.000000000 +0100
+--- a/lib/gshadow_.h	2018-04-29 18:42:37.000000000 +0200
++++ b/lib/gshadow_.h	2018-12-28 14:43:39.197031066 +0100
 @@ -71,5 +71,5 @@ void endsgent ();
  int putsgent ();
  #endif
@@ -110,37 +138,9 @@ diff -rup a/lib/gshadow_.h b/lib/gshadow_.h
 -#define	GSHADOW	"/etc/gshadow"
 +#define	GSHADOW	SYSROOT"/etc/gshadow"
  #endif				/* ifndef _H_GSHADOW */
-diff -rup a/lib/Makefile.am b/lib/Makefile.am
---- a/lib/Makefile.am	2014-03-01 19:59:51.000000000 +0100
-+++ b/lib/Makefile.am	2016-02-28 10:41:59.000000000 +0100
-@@ -2,6 +2,7 @@
- AUTOMAKE_OPTIONS = 1.0 foreign
- 
- DEFS = 
-+AM_CPPFLAGS = -DSYSROOT=\"$(sysroot)\"
- 
- noinst_LTLIBRARIES = libshadow.la
- 
-diff -rup a/lib/Makefile.in b/lib/Makefile.in
---- a/lib/Makefile.in	2014-05-09 18:49:45.000000000 +0200
-+++ b/lib/Makefile.in	2016-02-28 10:41:59.000000000 +0100
-@@ -324,11 +324,13 @@ sbindir = @sbindir@
- sharedstatedir = @sharedstatedir@
- srcdir = @srcdir@
- sysconfdir = @sysconfdir@
-+sysroot = @sysroot@
- target_alias = @target_alias@
- top_build_prefix = @top_build_prefix@
- top_builddir = @top_builddir@
- top_srcdir = @top_srcdir@
- AUTOMAKE_OPTIONS = 1.0 foreign
-+AM_CPPFLAGS = -DSYSROOT=\"$(sysroot)\"
- noinst_LTLIBRARIES = libshadow.la
- libshadow_la_LDFLAGS = -version-info 0:0:0
- libshadow_la_SOURCES = commonio.c commonio.h defines.h encrypt.c \
 diff -rup a/lib/port.h b/lib/port.h
---- a/lib/port.h	2014-03-01 19:59:51.000000000 +0100
-+++ b/lib/port.h	2016-02-28 10:41:59.000000000 +0100
+--- a/lib/port.h	2018-04-29 18:42:37.000000000 +0200
++++ b/lib/port.h	2018-12-28 14:43:39.198031065 +0100
 @@ -52,7 +52,7 @@
   * PORT_DAY - Day of the week to a bit value (0 = Sunday).
   */
@@ -150,34 +150,22 @@ diff -rup a/lib/port.h b/lib/port.h
  #define	PORT_IDS	64
  #define	PORT_TTY	64
  #define	PORT_TIMES	24
-diff -rup a/libmisc/limits.c b/libmisc/limits.c
---- a/libmisc/limits.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/libmisc/limits.c	2016-02-28 10:41:59.000000000 +0100
-@@ -56,7 +56,7 @@
- #endif
- #ifdef LIMITS
- #ifndef LIMITS_FILE
--#define LIMITS_FILE "/etc/limits"
-+#define LIMITS_FILE SYSROOT"/etc/limits"
- #endif
- #define LOGIN_ERROR_RLIMIT	1
- #define LOGIN_ERROR_LOGIN	2
 diff -rup a/libmisc/Makefile.am b/libmisc/Makefile.am
---- a/libmisc/Makefile.am	2014-03-01 19:59:51.000000000 +0100
-+++ b/libmisc/Makefile.am	2016-02-28 10:41:59.000000000 +0100
-@@ -1,6 +1,8 @@
+--- a/libmisc/Makefile.am	2018-04-29 18:42:37.000000000 +0200
++++ b/libmisc/Makefile.am	2018-12-28 14:43:38.816031738 +0100
+@@ -1,7 +1,7 @@
  
  EXTRA_DIST = .indent.pro xgetXXbyYY.c
  
-+AM_CPPFLAGS = -DSYSROOT=\"$(sysroot)\"
-+
- INCLUDES = -I$(top_srcdir)/lib
+-AM_CPPFLAGS = -I$(top_srcdir)/lib
++AM_CPPFLAGS = -I$(top_srcdir)/lib -DSYSROOT=\"$(sysroot)\"
  
  noinst_LIBRARIES = libmisc.a
+ 
 diff -rup a/libmisc/Makefile.in b/libmisc/Makefile.in
---- a/libmisc/Makefile.in	2014-05-09 18:49:45.000000000 +0200
-+++ b/libmisc/Makefile.in	2016-02-28 10:41:59.000000000 +0100
-@@ -343,11 +343,13 @@ sbindir = @sbindir@
+--- a/libmisc/Makefile.in	2018-04-29 18:45:50.000000000 +0200
++++ b/libmisc/Makefile.in	2018-12-28 14:43:38.816031738 +0100
+@@ -356,12 +356,13 @@ sbindir = @sbindir@
  sharedstatedir = @sharedstatedir@
  srcdir = @srcdir@
  sysconfdir = @sysconfdir@
@@ -187,13 +175,26 @@ diff -rup a/libmisc/Makefile.in b/libmisc/Makefile.in
  top_builddir = @top_builddir@
  top_srcdir = @top_srcdir@
  EXTRA_DIST = .indent.pro xgetXXbyYY.c
-+AM_CPPFLAGS = -DSYSROOT=\"$(sysroot)\"
- INCLUDES = -I$(top_srcdir)/lib
+-AM_CPPFLAGS = -I$(top_srcdir)/lib
++AM_CPPFLAGS = -I$(top_srcdir)/lib -DSYSROOT=\"$(sysroot)\"
  noinst_LIBRARIES = libmisc.a
  libmisc_a_SOURCES = \
+ 	addgrps.c \
+diff -rup a/libmisc/limits.c b/libmisc/limits.c
+--- a/libmisc/limits.c	2018-04-29 18:42:37.000000000 +0200
++++ b/libmisc/limits.c	2018-12-28 14:43:38.816031738 +0100
+@@ -56,7 +56,7 @@
+ #endif
+ #ifdef LIMITS
+ #ifndef LIMITS_FILE
+-#define LIMITS_FILE "/etc/limits"
++#define LIMITS_FILE SYSROOT"/etc/limits"
+ #endif
+ #define LOGIN_ERROR_RLIMIT	1
+ #define LOGIN_ERROR_LOGIN	2
 diff -rup a/libmisc/xgetpwnam.c b/libmisc/xgetpwnam.c
---- a/libmisc/xgetpwnam.c	2014-03-01 18:50:05.000000000 +0100
-+++ b/libmisc/xgetpwnam.c	2016-02-28 10:41:59.000000000 +0100
+--- a/libmisc/xgetpwnam.c	2018-04-29 18:42:37.000000000 +0200
++++ b/libmisc/xgetpwnam.c	2018-12-28 14:43:38.816031738 +0100
 @@ -49,7 +49,12 @@
   * This file provide wrapper to the getpwnam or getpwnam_r functions.
   */
@@ -314,9 +315,96 @@ diff -rup a/libmisc/xgetpwnam.c b/libmisc/xgetpwnam.c
 +
  #include "xgetXXbyYY.c"
  
+diff -rup a/src/Makefile.am b/src/Makefile.am
+--- a/src/Makefile.am	2018-04-29 18:42:37.000000000 +0200
++++ b/src/Makefile.am	2018-12-28 14:43:39.205031052 +0100
+@@ -3,14 +3,16 @@ EXTRA_DIST = \
+ 	.indent.pro
+ 
+ ubindir = ${prefix}/bin
+-usbindir = ${prefix}/sbin
++usbindir = ${prefix}/bin
+ suidperms = 4755
+ sgidperms = 2755
+ 
+ AM_CPPFLAGS = \
+ 	-I${top_srcdir}/lib \
+ 	-I$(top_srcdir)/libmisc \
+-	-DLOCALEDIR=\"$(datadir)/locale\"
++	-DLOCALEDIR=\"$(datadir)/locale\" \
++	-DSYSROOT=\"$(sysroot)\" \
++	-DSG=\"`echo sg | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`\" -DVIGR=\"`echo vigr | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`\"
+ 
+ # XXX why are login and su in /bin anyway (other than for
+ # historical reasons)?
+@@ -124,13 +126,13 @@ vipw_LDADD     = $(LDADD) $(LIBSELINUX)
+ 
+ install-am: all-am
+ 	$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+-	ln -sf newgrp	$(DESTDIR)$(ubindir)/sg
+-	ln -sf vipw	$(DESTDIR)$(usbindir)/vigr
++	ln -sf `echo newgrp | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'` $(DESTDIR)$(ubindir)/`echo sg | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'
++	ln -sf `echo vipw | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'` $(DESTDIR)$(usbindir)/`echo vigr | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`
+ 	for i in $(suidbins); do \
+-		chmod $(suidperms) $(DESTDIR)$(bindir)/$$i; \
++		chmod -f 4755 $(DESTDIR)$(bindir)/`echo $$i | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+ 	done
+ 	for i in $(suidubins); do \
+-		chmod $(suidperms) $(DESTDIR)$(ubindir)/$$i; \
++		chmod -f 4755 $(DESTDIR)$(ubindir)/`echo $$i | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+ 	done
+ if WITH_TCB
+ 	for i in $(shadowsgidubins); do \
+diff -rup a/src/Makefile.in b/src/Makefile.in
+--- a/src/Makefile.in	2018-04-29 18:45:51.000000000 +0200
++++ b/src/Makefile.in	2018-12-28 14:43:39.205031052 +0100
+@@ -501,6 +501,7 @@ sbindir = @sbindir@
+ sharedstatedir = @sharedstatedir@
+ srcdir = @srcdir@
+ sysconfdir = @sysconfdir@
++sysroot = @sysroot@
+ target_alias = @target_alias@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+@@ -509,13 +510,15 @@ EXTRA_DIST = \
+ 	.indent.pro
+ 
+ ubindir = ${prefix}/bin
+-usbindir = ${prefix}/sbin
++usbindir = ${prefix}/bin
+ suidperms = 4755
+ sgidperms = 2755
+ AM_CPPFLAGS = \
+ 	-I${top_srcdir}/lib \
+ 	-I$(top_srcdir)/libmisc \
+-	-DLOCALEDIR=\"$(datadir)/locale\"
++	-DLOCALEDIR=\"$(datadir)/locale\" \
++	-DSYSROOT=\"$(sysroot)\" \
++	-DSG=\"`echo sg | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`\" -DVIGR=\"`echo vigr | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`\"
+ 
+ suidbins = su
+ suidubins = chage chfn chsh expiry gpasswd newgrp $(am__append_2) \
+@@ -1233,13 +1236,13 @@ uninstall-am: uninstall-binPROGRAMS unin
+ 
+ install-am: all-am
+ 	$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+-	ln -sf newgrp	$(DESTDIR)$(ubindir)/sg
+-	ln -sf vipw	$(DESTDIR)$(usbindir)/vigr
++	ln -sf `echo newgrp | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'` $(DESTDIR)$(ubindir)/`echo sg | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`
++	ln -sf `echo vipw | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'` $(DESTDIR)$(usbindir)/`echo vigr | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`
+ 	for i in $(suidbins); do \
+-		chmod $(suidperms) $(DESTDIR)$(bindir)/$$i; \
++		chmod -f 4755 $(DESTDIR)$(bindir)/`echo $$i | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+ 	done
+ 	for i in $(suidubins); do \
+-		chmod $(suidperms) $(DESTDIR)$(ubindir)/$$i; \
++		chmod -f 4755 $(DESTDIR)$(ubindir)/`echo $$i | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+ 	done
+ @WITH_TCB_TRUE@	for i in $(shadowsgidubins); do \
+ @WITH_TCB_TRUE@		chown root:shadow $(DESTDIR)$(ubindir)/$$i; \
 diff -rup a/src/chage.c b/src/chage.c
---- a/src/chage.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/chage.c	2016-02-28 10:41:59.000000000 +0100
+--- a/src/chage.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/chage.c	2018-12-28 14:43:39.204031054 +0100
 @@ -816,7 +816,7 @@ int main (int argc, char **argv)
  
  	ruid = getuid ();
@@ -327,8 +415,8 @@ diff -rup a/src/chage.c b/src/chage.c
  	if (amroot && (is_selinux_enabled () > 0)) {
  		amroot = (selinux_check_passwd_access (PASSWD__ROOTOK) == 0);
 diff -rup a/src/chfn.c b/src/chfn.c
---- a/src/chfn.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/chfn.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/chfn.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/chfn.c	2018-12-28 14:43:39.204031054 +0100
 @@ -745,7 +745,7 @@ int main (int argc, char **argv)
  
  	SYSLOG ((LOG_INFO, "changed user '%s' information", user));
@@ -339,8 +427,8 @@ diff -rup a/src/chfn.c b/src/chfn.c
  	closelog ();
  	exit (E_SUCCESS);
 diff -rup a/src/chgpasswd.c b/src/chgpasswd.c
---- a/src/chgpasswd.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/chgpasswd.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/chgpasswd.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/chgpasswd.c	2018-12-28 14:43:39.204031054 +0100
 @@ -580,7 +580,7 @@ int main (int argc, char **argv)
  
  	close_files ();
@@ -351,8 +439,8 @@ diff -rup a/src/chgpasswd.c b/src/chgpasswd.c
  	return (0);
  }
 diff -rup a/src/chpasswd.c b/src/chpasswd.c
---- a/src/chpasswd.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/chpasswd.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/chpasswd.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/chpasswd.c	2018-12-28 14:43:39.204031054 +0100
 @@ -623,7 +623,7 @@ int main (int argc, char **argv)
  		close_files ();
  	}
@@ -363,8 +451,8 @@ diff -rup a/src/chpasswd.c b/src/chpasswd.c
  	return (0);
  }
 diff -rup a/src/chsh.c b/src/chsh.c
---- a/src/chsh.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/chsh.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/chsh.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/chsh.c	2018-12-28 14:43:39.204031054 +0100
 @@ -56,7 +56,7 @@
  #include "exitcodes.h"
  
@@ -393,8 +481,8 @@ diff -rup a/src/chsh.c b/src/chsh.c
  	closelog ();
  	exit (E_SUCCESS);
 diff -rup a/src/gpasswd.c b/src/gpasswd.c
---- a/src/gpasswd.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/gpasswd.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/gpasswd.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/gpasswd.c	2018-12-28 14:43:39.204031054 +0100
 @@ -86,7 +86,7 @@ static char *myname = NULL;
  /* The UID of the caller */
  static uid_t bywho;
@@ -404,7 +492,7 @@ diff -rup a/src/gpasswd.c b/src/gpasswd.c
  
  /* The number of retries for th user to provide and repeat a new password */
  #ifndef	RETRIES
-@@ -1183,12 +1183,14 @@ int main (int argc, char **argv)
+@@ -1182,12 +1182,14 @@ int main (int argc, char **argv)
  	 * output, etc.
  	 */
        output:
@@ -419,7 +507,7 @@ diff -rup a/src/gpasswd.c b/src/gpasswd.c
  	pwd_init ();
  
  	open_files ();
-@@ -1201,7 +1203,7 @@ int main (int argc, char **argv)
+@@ -1200,7 +1202,7 @@ int main (int argc, char **argv)
  
  	close_files ();
  
@@ -429,9 +517,9 @@ diff -rup a/src/gpasswd.c b/src/gpasswd.c
  	exit (E_SUCCESS);
  }
 diff -rup a/src/groupadd.c b/src/groupadd.c
---- a/src/groupadd.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/groupadd.c	2016-02-28 10:47:39.000000000 +0100
-@@ -617,7 +617,7 @@ int main (int argc, char **argv)
+--- a/src/groupadd.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/groupadd.c	2018-12-28 14:43:39.204031054 +0100
+@@ -624,7 +624,7 @@ int main (int argc, char **argv)
  	grp_update ();
  	close_files ();
  
@@ -441,9 +529,9 @@ diff -rup a/src/groupadd.c b/src/groupadd.c
  	return E_SUCCESS;
  }
 diff -rup a/src/groupdel.c b/src/groupdel.c
---- a/src/groupdel.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/groupdel.c	2016-02-28 10:47:39.000000000 +0100
-@@ -477,7 +477,7 @@ int main (int argc, char **argv)
+--- a/src/groupdel.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/groupdel.c	2018-12-28 14:43:39.204031054 +0100
+@@ -491,7 +491,7 @@ int main (int argc, char **argv)
  
  	close_files ();
  
@@ -453,9 +541,9 @@ diff -rup a/src/groupdel.c b/src/groupdel.c
  	return E_SUCCESS;
  }
 diff -rup a/src/groupmod.c b/src/groupmod.c
---- a/src/groupmod.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/groupmod.c	2016-02-28 10:47:39.000000000 +0100
-@@ -864,7 +864,7 @@ int main (int argc, char **argv)
+--- a/src/groupmod.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/groupmod.c	2018-12-28 14:43:39.204031054 +0100
+@@ -876,7 +876,7 @@ int main (int argc, char **argv)
  
  	close_files ();
  
@@ -465,8 +553,8 @@ diff -rup a/src/groupmod.c b/src/groupmod.c
  	return E_SUCCESS;
  }
 diff -rup a/src/grpck.c b/src/grpck.c
---- a/src/grpck.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/grpck.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/grpck.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/grpck.c	2018-12-28 14:43:39.204031054 +0100
 @@ -869,7 +869,7 @@ int main (int argc, char **argv)
  	/* Commit the change in the database if needed */
  	close_files (changed);
@@ -477,9 +565,9 @@ diff -rup a/src/grpck.c b/src/grpck.c
  	/*
  	 * Tell the user what we did and exit.
 diff -rup a/src/grpconv.c b/src/grpconv.c
---- a/src/grpconv.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/grpconv.c	2016-02-28 10:47:39.000000000 +0100
-@@ -271,7 +271,7 @@ int main (int argc, char **argv)
+--- a/src/grpconv.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/grpconv.c	2018-12-28 14:43:39.204031054 +0100
+@@ -272,7 +272,7 @@ int main (int argc, char **argv)
  		/* continue */
  	}
  
@@ -489,8 +577,8 @@ diff -rup a/src/grpconv.c b/src/grpconv.c
  	return 0;
  }
 diff -rup a/src/grpunconv.c b/src/grpunconv.c
---- a/src/grpunconv.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/grpunconv.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/grpunconv.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/grpunconv.c	2018-12-28 14:43:39.204031054 +0100
 @@ -235,7 +235,7 @@ int main (int argc, char **argv)
  		/* continue */
  	}
@@ -501,8 +589,8 @@ diff -rup a/src/grpunconv.c b/src/grpunconv.c
  	return 0;
  }
 diff -rup a/src/login_nopam.c b/src/login_nopam.c
---- a/src/login_nopam.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/login_nopam.c	2016-02-28 10:41:59.000000000 +0100
+--- a/src/login_nopam.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/login_nopam.c	2018-12-28 14:43:39.204031054 +0100
 @@ -59,7 +59,7 @@
  
   /* Path name of the access control file. */
@@ -513,8 +601,8 @@ diff -rup a/src/login_nopam.c b/src/login_nopam.c
  
  /* Delimiters for fields and for lists of users, ttys or hosts. */
 diff -rup a/src/logoutd.c b/src/logoutd.c
---- a/src/logoutd.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/logoutd.c	2016-02-28 10:41:59.000000000 +0100
+--- a/src/logoutd.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/logoutd.c	2018-12-28 14:43:39.204031054 +0100
 @@ -50,7 +50,7 @@ const char *Prog;
  #endif
  
@@ -524,96 +612,10 @@ diff -rup a/src/logoutd.c b/src/logoutd.c
  #endif
  
  /* local function prototypes */
-diff -rup a/src/Makefile.am b/src/Makefile.am
---- a/src/Makefile.am	2014-05-08 10:43:11.000000000 +0200
-+++ b/src/Makefile.am	2016-02-28 10:41:59.000000000 +0100
-@@ -3,7 +3,7 @@ EXTRA_DIST = \
- 	.indent.pro
- 
- ubindir = ${prefix}/bin
--usbindir = ${prefix}/sbin
-+usbindir = ${prefix}/bin
- suidperms = 4755
- sgidperms = 2755
- 
-@@ -66,7 +66,7 @@ LDADD          = $(INTLLIBS) \
- 		 $(LIBTCB) \
- 		 $(top_builddir)/libmisc/libmisc.a \
- 		 $(top_builddir)/lib/libshadow.la
--AM_CPPFLAGS    = -DLOCALEDIR=\"$(datadir)/locale\"
-+AM_CPPFLAGS    = -DSYSROOT=\"$(sysroot)\" -DLOCALEDIR=\"$(datadir)/locale\" -DSG=\"`echo sg | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`\" -DVIGR=\"`echo vigr | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`\"
- 
- if ACCT_TOOLS_SETUID
- LIBPAM_SUID  = $(LIBPAM)
-@@ -118,13 +118,13 @@ vipw_LDADD     = $(LDADD) $(LIBSELINUX)
- 
- install-am: all-am
- 	$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
--	ln -sf newgrp	$(DESTDIR)$(ubindir)/sg
--	ln -sf vipw	$(DESTDIR)$(usbindir)/vigr
-+	ln -sf `echo newgrp | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'` $(DESTDIR)$(ubindir)/`echo sg | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`
-+	ln -sf `echo vipw | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'` $(DESTDIR)$(usbindir)/`echo vigr | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`
- 	for i in $(suidbins); do \
--		chmod -f $(suidperms) $(DESTDIR)$(bindir)/$$i; \
-+		chmod -f 4755 $(DESTDIR)$(bindir)/`echo $$i | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
- 	done
- 	for i in $(suidubins); do \
--		chmod -f $(suidperms) $(DESTDIR)$(ubindir)/$$i; \
-+		chmod -f 4755 $(DESTDIR)$(ubindir)/`echo $$i | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
- 	done
- if WITH_TCB
- 	for i in $(shadowsgidubins); do \
-diff -rup a/src/Makefile.in b/src/Makefile.in
---- a/src/Makefile.in	2014-05-09 18:49:48.000000000 +0200
-+++ b/src/Makefile.in	2016-02-28 10:41:59.000000000 +0100
-@@ -489,6 +489,7 @@ sbindir = @sbindir@
- sharedstatedir = @sharedstatedir@
- srcdir = @srcdir@
- sysconfdir = @sysconfdir@
-+sysroot = @sysroot@
- target_alias = @target_alias@
- top_build_prefix = @top_build_prefix@
- top_builddir = @top_builddir@
-@@ -497,7 +498,7 @@ EXTRA_DIST = \
- 	.indent.pro
- 
- ubindir = ${prefix}/bin
--usbindir = ${prefix}/sbin
-+usbindir = ${prefix}/bin
- suidperms = 4755
- sgidperms = 2755
- INCLUDES = \
-@@ -512,7 +513,7 @@ LDADD = $(INTLLIBS) \
- 		 $(top_builddir)/libmisc/libmisc.a \
- 		 $(top_builddir)/lib/libshadow.la
- 
--AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\"
-+AM_CPPFLAGS = -DSYSROOT=\"$(sysroot)\" -DLOCALEDIR=\"$(datadir)/locale\" -DSG=\"`echo sg | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`\" -DVIGR=\"`echo vigr | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`\"
- @ACCT_TOOLS_SETUID_FALSE@LIBPAM_SUID = 
- @ACCT_TOOLS_SETUID_TRUE@LIBPAM_SUID = $(LIBPAM)
- @USE_PAM_FALSE@LIBCRYPT_NOPAM = $(LIBCRYPT)
-@@ -1221,13 +1222,13 @@ uninstall-am: uninstall-binPROGRAMS unin
- 
- install-am: all-am
- 	$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
--	ln -sf newgrp	$(DESTDIR)$(ubindir)/sg
--	ln -sf vipw	$(DESTDIR)$(usbindir)/vigr
-+	ln -sf `echo newgrp | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'` $(DESTDIR)$(ubindir)/`echo sg | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`
-+	ln -sf `echo vipw | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'` $(DESTDIR)$(usbindir)/`echo vigr | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`
- 	for i in $(suidbins); do \
--		chmod -f $(suidperms) $(DESTDIR)$(bindir)/$$i; \
-+		chmod -f 4755 $(DESTDIR)$(bindir)/`echo $$i | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
- 	done
- 	for i in $(suidubins); do \
--		chmod -f $(suidperms) $(DESTDIR)$(ubindir)/$$i; \
-+		chmod -f 4755 $(DESTDIR)$(ubindir)/`echo $$i | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
- 	done
- @WITH_TCB_TRUE@	for i in $(shadowsgidubins); do \
- @WITH_TCB_TRUE@		chown root:shadow $(DESTDIR)$(ubindir)/$$i; \
 diff -rup a/src/newgrp.c b/src/newgrp.c
---- a/src/newgrp.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/newgrp.c	2016-02-28 10:41:59.000000000 +0100
-@@ -306,7 +306,7 @@ static void syslog_sg (const char *name,
+--- a/src/newgrp.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/newgrp.c	2018-12-28 14:43:39.204031054 +0100
+@@ -317,7 +317,7 @@ static void syslog_sg (const char *name,
  		if ((pid_t)-1 == child) {
  			/* error in fork() */
  			fprintf (stderr, _("%s: failure forking: %s\n"),
@@ -622,7 +624,7 @@ diff -rup a/src/newgrp.c b/src/newgrp.c
  #ifdef WITH_AUDIT
  			if (group) {
  				snprintf (audit_buf, sizeof(audit_buf),
-@@ -429,7 +429,7 @@ int main (int argc, char **argv)
+@@ -443,7 +443,7 @@ int main (int argc, char **argv)
  	 */
  	Prog = Basename (argv[0]);
  	is_newgrp = (strcmp (Prog, "newgrp") == 0);
@@ -632,9 +634,9 @@ diff -rup a/src/newgrp.c b/src/newgrp.c
  	argc--;
  	argv++;
 diff -rup a/src/newusers.c b/src/newusers.c
---- a/src/newusers.c	2014-05-09 12:20:28.000000000 +0200
-+++ b/src/newusers.c	2016-02-28 10:47:39.000000000 +0100
-@@ -1230,8 +1230,8 @@ int main (int argc, char **argv)
+--- a/src/newusers.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/newusers.c	2018-12-28 14:43:39.205031052 +0100
+@@ -1231,8 +1231,8 @@ int main (int argc, char **argv)
  
  	close_files ();
  
@@ -646,8 +648,8 @@ diff -rup a/src/newusers.c b/src/newusers.c
  #ifdef USE_PAM
  	unsigned int i;
 diff -rup a/src/passwd.c b/src/passwd.c
---- a/src/passwd.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/passwd.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/passwd.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/passwd.c	2018-12-28 14:43:39.205031052 +0100
 @@ -815,7 +815,7 @@ int main (int argc, char **argv)
  	 * The program behaves differently when executed by root than when
  	 * executed by a normal user.
@@ -681,8 +683,8 @@ diff -rup a/src/passwd.c b/src/passwd.c
  	SYSLOG ((LOG_INFO, "password for '%s' changed by '%s'", name, myname));
  	closelog ();
 diff -rup a/src/pwck.c b/src/pwck.c
---- a/src/pwck.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/pwck.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/pwck.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/pwck.c	2018-12-28 14:43:39.205031052 +0100
 @@ -876,7 +876,7 @@ int main (int argc, char **argv)
  
  	close_files (changed);
@@ -693,9 +695,9 @@ diff -rup a/src/pwck.c b/src/pwck.c
  	/*
  	 * Tell the user what we did and exit.
 diff -rup a/src/pwconv.c b/src/pwconv.c
---- a/src/pwconv.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/pwconv.c	2016-02-28 10:47:39.000000000 +0100
-@@ -325,7 +325,7 @@ int main (int argc, char **argv)
+--- a/src/pwconv.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/pwconv.c	2018-12-28 14:43:39.205031052 +0100
+@@ -327,7 +327,7 @@ int main (int argc, char **argv)
  		/* continue */
  	}
  
@@ -705,8 +707,8 @@ diff -rup a/src/pwconv.c b/src/pwconv.c
  	return E_SUCCESS;
  }
 diff -rup a/src/pwunconv.c b/src/pwunconv.c
---- a/src/pwunconv.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/pwunconv.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/pwunconv.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/pwunconv.c	2018-12-28 14:43:39.205031052 +0100
 @@ -249,7 +249,7 @@ int main (int argc, char **argv)
  		/* continue */
  	}
@@ -717,8 +719,8 @@ diff -rup a/src/pwunconv.c b/src/pwunconv.c
  	return 0;
  }
 diff -rup a/src/suauth.c b/src/suauth.c
---- a/src/suauth.c	2014-03-01 18:50:05.000000000 +0100
-+++ b/src/suauth.c	2016-02-28 10:41:59.000000000 +0100
+--- a/src/suauth.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/suauth.c	2018-12-28 14:43:39.205031052 +0100
 @@ -40,7 +40,7 @@
  #include "prototypes.h"
  
@@ -729,9 +731,9 @@ diff -rup a/src/suauth.c b/src/suauth.c
  
  #define	NOACTION	0
 diff -rup a/src/useradd.c b/src/useradd.c
---- a/src/useradd.c	2014-05-09 12:20:28.000000000 +0200
-+++ b/src/useradd.c	2016-02-28 10:47:39.000000000 +0100
-@@ -73,11 +73,11 @@
+--- a/src/useradd.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/useradd.c	2018-12-28 14:58:28.630463260 +0100
+@@ -75,11 +75,11 @@
  #endif
  
  #ifndef SKEL_DIR
@@ -746,15 +748,48 @@ diff -rup a/src/useradd.c b/src/useradd.c
  #endif
  /*
   * Needed for MkLinux DR1/2/2.1 - J.
-@@ -111,6 +111,7 @@ static uid_t user_id;
+@@ -113,6 +113,7 @@ static uid_t user_id;
  static gid_t user_gid;
  static const char *user_comment = "";
  static const char *user_home = "";
 +static int sysroot = 0;
  static const char *user_shell = "";
  static const char *create_mail_spool = "";
- #ifdef WITH_SELINUX
-@@ -802,6 +803,8 @@ static void new_pwent (struct passwd *pw
+ 
+@@ -353,7 +354,7 @@ static void get_defaults (void)
+ 
+ 		len = strlen(prefix) + strlen(USER_DEFAULTS_FILE) + 2;
+ 		default_file = malloc(len);
+-		wlen = snprintf(default_file, len, "%s/%s", prefix, USER_DEFAULTS_FILE);
++		wlen = snprintf(default_file, len, SYSROOT "%s/%s", prefix, USER_DEFAULTS_FILE);
+ 		assert (wlen == (int) len -1);
+ 	}
+ 
+@@ -453,7 +454,7 @@ static void get_defaults (void)
+ 
+ 				len = strlen(prefix) + strlen(cp) + 2;
+ 				_def_template = xmalloc(len);
+-				wlen = snprintf(_def_template, len, "%s/%s", prefix, cp);
++				wlen = snprintf(_def_template, len, SYSROOT "%s/%s", prefix, cp);
+ 				assert (wlen == (int) len -1);
+ 				def_template = _def_template;
+ 			}
+@@ -527,12 +528,12 @@ static int set_defaults (void)
+ 
+ 		len = strlen(prefix) + strlen(NEW_USER_FILE) + 2;
+ 		new_file = malloc(len);
+-		wlen = snprintf(new_file, len, "%s/%s", prefix, NEW_USER_FILE);
++		wlen = snprintf(new_file, len, SYSROOT "%s/%s", prefix, NEW_USER_FILE);
+ 		assert (wlen == (int) len -1);
+ 
+ 		len = strlen(prefix) + strlen(USER_DEFAULTS_FILE) + 2;
+ 		default_file = malloc(len);
+-		wlen = snprintf(default_file, len, "%s/%s", prefix, USER_DEFAULTS_FILE);
++		wlen = snprintf(default_file, len, SYSROOT "%s/%s", prefix, USER_DEFAULTS_FILE);
+ 		assert (wlen == (int) len -1);
+ 	}
+ 
+@@ -859,6 +860,8 @@ static void new_pwent (struct passwd *pw
  	pwent->pw_gid = user_gid;
  	pwent->pw_gecos = (char *) user_comment;
  	pwent->pw_dir = (char *) user_home;
@@ -763,7 +798,7 @@ diff -rup a/src/useradd.c b/src/useradd.c
  	pwent->pw_shell = (char *) user_shell;
  }
  
-@@ -1348,14 +1351,15 @@ static void process_flags (int argc, cha
+@@ -1414,21 +1417,22 @@ static void process_flags (int argc, cha
  		}
  		if (!dflg) {
  			char *uh;
@@ -779,9 +814,17 @@ diff -rup a/src/useradd.c b/src/useradd.c
  			user_home = uh;
 +			sysroot = 1;
  		}
- 	}
- 
-@@ -1814,7 +1818,7 @@ static void usr_update (void)
+ 		if(prefix[0]) {
+ 			size_t len = strlen(prefix) + strlen(user_home) + 2;
+ 			int wlen;
+ 			char* _prefix_user_home; /* to avoid const warning */
+ 			_prefix_user_home = xmalloc(len);
+-			wlen = snprintf(_prefix_user_home, len, "%s/%s", prefix, user_home);
++			wlen = snprintf(_prefix_user_home, len, SYSROOT "%s/%s", prefix, user_home);
+ 			assert (wlen == (int) len -1);
+ 			prefix_user_home = _prefix_user_home;
+ 		}
+@@ -1938,7 +1942,7 @@ static void usr_update (void)
  	SYSLOG ((LOG_INFO,
  	         "new user: name=%s, UID=%u, GID=%u, home=%s, shell=%s",
  	         user_name, (unsigned int) user_id,
@@ -790,27 +833,31 @@ diff -rup a/src/useradd.c b/src/useradd.c
  
  	/*
  	 * Initialize faillog and lastlog entries for this UID in case
-@@ -1952,8 +1956,8 @@ static void create_mail (void)
+@@ -2082,11 +2086,11 @@ static void create_mail (void)
  		if (NULL == spool) {
  			spool = "/var/mail";
  		}
--		file = alloca (strlen (spool) + strlen (user_name) + 2);
--		sprintf (file, "%s/%s", spool, user_name);
-+		file = alloca (strlen(SYSROOT) + strlen (spool) + strlen (user_name) + 2);
-+		sprintf (file, SYSROOT"%s/%s", spool, user_name);
+-		file = alloca (strlen (prefix) + strlen (spool) + strlen (user_name) + 2);
++		file = alloca (strlen(SYSROOT) + strlen(prefix) + strlen (spool) + strlen (user_name) + 2);
+ 		if(prefix[0])
+-			sprintf (file, "%s/%s/%s", prefix, spool, user_name);
++			sprintf (file, SYSROOT "%s/%s/%s", prefix, spool, user_name);
+ 		else
+-			sprintf (file, "%s/%s", spool, user_name);
++			sprintf (file, SYSROOT "%s/%s", spool, user_name);
  		fd = open (file, O_CREAT | O_WRONLY | O_TRUNC | O_EXCL, 0);
  		if (fd < 0) {
  			perror (_("Creating mailbox file"));
-@@ -2088,7 +2092,7 @@ int main (int argc, char **argv)
+@@ -2227,7 +2231,7 @@ int main (int argc, char **argv)
  	/*
  	 * Start with a quick check to see if the user exists.
  	 */
--	if (getpwnam (user_name) != NULL) { /* local, no need for xgetpwnam */
+-	if (prefix_getpwnam (user_name) != NULL) { /* local, no need for xgetpwnam */
 +	if (xgetpwnam (user_name) != NULL) { /* local, no need for xgetpwnam */
  		fprintf (stderr, _("%s: user '%s' already exists\n"), Prog, user_name);
  #ifdef WITH_AUDIT
  		audit_logger (AUDIT_ADD_USER, Prog,
-@@ -2239,8 +2243,8 @@ int main (int argc, char **argv)
+@@ -2387,8 +2391,8 @@ int main (int argc, char **argv)
  	}
  #endif				/* WITH_SELINUX */
  
@@ -822,19 +869,23 @@ diff -rup a/src/useradd.c b/src/useradd.c
  	return E_SUCCESS;
  }
 diff -rup a/src/userdel.c b/src/userdel.c
---- a/src/userdel.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/userdel.c	2016-02-28 10:47:39.000000000 +0100
-@@ -827,7 +827,8 @@ static int remove_mailbox (void)
- 	if (NULL == maildir) {
- 		return 0;
- 	}
--	snprintf (mailfile, sizeof mailfile, "%s/%s", maildir, user_name);
-+	snprintf (mailfile, sizeof mailfile, SYSROOT "%s/%s",
-+			maildir, user_name);
+--- a/src/userdel.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/userdel.c	2018-12-28 14:43:39.206031050 +0100
+@@ -838,11 +838,11 @@ static int remove_mailbox (void)
+ 	mailfile = xmalloc (len);
  
- 	if (access (mailfile, F_OK) != 0) {
- 		if (ENOENT == errno) {
-@@ -1275,8 +1276,8 @@ int main (int argc, char **argv)
+ 	if (prefix[0]) {
+-		(void) snprintf (mailfile, len, "%s/%s/%s",
++		(void) snprintf (mailfile, len, SYSROOT "%s/%s/%s",
+ 	    	             prefix, maildir, user_name);
+ 	}
+ 	else {
+-		(void) snprintf (mailfile, len, "%s/%s",
++		(void) snprintf (mailfile, len, SYSROOT "%s/%s",
+ 	    	             maildir, user_name);
+ 	}
+ 	mailfile[len-1] = '\0';
+@@ -1326,8 +1326,8 @@ int main (int argc, char **argv)
  	errors += remove_tcbdir (user_name, user_id);
  #endif				/* WITH_TCB */
  
@@ -846,29 +897,52 @@ diff -rup a/src/userdel.c b/src/userdel.c
  	return ((0 != errors) ? E_HOMEDIR : E_SUCCESS);
  }
 diff -rup a/src/usermod.c b/src/usermod.c
---- a/src/usermod.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/usermod.c	2016-02-28 10:47:39.000000000 +0100
-@@ -2013,7 +2013,7 @@ static void move_mailbox (void)
- 	 * replacing /var/spool/mail/luser with a hard link to /etc/passwd
+--- a/src/usermod.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/usermod.c	2018-12-28 14:56:15.068698736 +0100
+@@ -1249,12 +1249,12 @@ static void process_flags (int argc, cha
+ 		size_t len = strlen(prefix) + strlen(user_home) + 2;
+ 		int wlen;
+ 		prefix_user_home = xmalloc(len);
+-		wlen = snprintf(prefix_user_home, len, "%s/%s", prefix, user_home);
++		wlen = snprintf(prefix_user_home, len, SYSROOT "%s/%s", prefix, user_home);
+ 		assert (wlen == (int) len -1);
+ 
+ 		len = strlen(prefix) + strlen(user_newhome) + 2;
+ 		prefix_user_newhome = xmalloc(len);
+-		wlen = snprintf(prefix_user_newhome, len, "%s/%s", prefix, user_newhome);
++		wlen = snprintf(prefix_user_newhome, len, SYSROOT "%s/%s", prefix, user_newhome);
+ 		assert (wlen == (int) len -1);
+ 	}
+ 	else {
+@@ -2005,11 +2005,11 @@ static void move_mailbox (void)
  	 * between stat and chown).  --marekm
  	 */
--	(void) snprintf (mailfile, sizeof mailfile, "%s/%s",
-+	(void) snprintf (mailfile, sizeof mailfile, SYSROOT"%s/%s",
- 	                 maildir, user_name);
- 	mailfile[(sizeof mailfile) - 1] = '\0';
- 	fd = open (mailfile, O_RDONLY | O_NONBLOCK, 0);
-@@ -2052,8 +2052,8 @@ static void move_mailbox (void)
- 	(void) close (fd);
- 
- 	if (lflg) {
--		(void) snprintf (newmailfile, sizeof newmailfile, "%s/%s",
--		                 maildir, user_newname);
-+		(void) snprintf (newmailfile, sizeof newmailfile,
-+				SYSROOT "%s/%s", maildir, user_newname);
- 		newmailfile[(sizeof newmailfile) - 1] = '\0';
- 		if (   (link (mailfile, newmailfile) != 0)
- 		    || (unlink (mailfile) != 0)) {
-@@ -2193,8 +2193,8 @@ int main (int argc, char **argv)
+ 	if (prefix[0]) {
+-		(void) snprintf (mailfile, len, "%s/%s/%s",
++		(void) snprintf (mailfile, len, SYSROOT "%s/%s/%s",
+ 	    	             prefix, maildir, user_name);
+ 	}
+ 	else {
+-		(void) snprintf (mailfile, len, "%s/%s",
++		(void) snprintf (mailfile, len, SYSROOT "%s/%s",
+ 	    	             maildir, user_name);
+ 	}
+ 	mailfile[len-1] = '\0';
+@@ -2053,11 +2053,11 @@ static void move_mailbox (void)
+ 		len = strlen (prefix) + strlen (maildir) + strlen (user_newname) + 2;
+ 		newmailfile = alloca(len);
+ 		if (prefix[0]) {
+-			(void) snprintf (newmailfile, len, "%s/%s/%s",
++			(void) snprintf (newmailfile, len, SYSROOT "%s/%s/%s",
+ 			                 prefix, maildir, user_newname);
+ 		}
+ 		else {
+-			(void) snprintf (newmailfile, len, "%s/%s",
++			(void) snprintf (newmailfile, len, SYSROOT "%s/%s",
+ 			                 maildir, user_newname);
+ 		}
+ 		newmailfile[len - 1] = '\0';
+@@ -2251,8 +2251,8 @@ int main (int argc, char **argv)
  	}
  #endif
  
@@ -880,8 +954,8 @@ diff -rup a/src/usermod.c b/src/usermod.c
  #ifdef WITH_SELINUX
  	if (Zflg) {
 diff -rup a/src/vipw.c b/src/vipw.c
---- a/src/vipw.c	2014-03-01 19:59:51.000000000 +0100
-+++ b/src/vipw.c	2016-02-28 10:47:39.000000000 +0100
+--- a/src/vipw.c	2018-04-29 18:42:37.000000000 +0200
++++ b/src/vipw.c	2018-12-28 14:43:39.205031052 +0100
 @@ -444,7 +444,7 @@ int main (int argc, char **argv)
  
  	process_root_flag ("-R", argc, argv);

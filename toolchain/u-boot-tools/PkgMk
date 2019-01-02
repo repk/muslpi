@@ -5,12 +5,11 @@
 
 
 NAME=u-boot-tools
-VERSION=2016.01
+VERSION=2018.11
 HOST_PKG=1
 
 DEPENDS=""
 SOURCES="ftp://ftp.denx.de/pub/u-boot/u-boot-${VERSION}.tar.bz2"
-PATCHES="linux-gcc6-compiler.patch"
 
 pkgmain() {
 	cd u-boot-${VERSION}
